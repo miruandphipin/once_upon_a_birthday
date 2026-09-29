@@ -6,191 +6,290 @@
 <title>For You 💗</title>
 
 <style>
-    * {
-        box-sizing: border-box;
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    cursor: none;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #fff5f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* 🎁 CON TRỎ QUÀ */
+.custom-cursor {
+    position: fixed;
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+
+    left: 0;
+    top: 0;
+
+    pointer-events: none;
+    z-index: 99999;
+
+    transform: translate(-8px, -8px);
+
+    display: block;
+}
+
+/* ✨ VỆT NHỎ SAU CHUỘT */
+.cursor-trail {
+    position: fixed;
+
+    width: 7px;
+    height: 7px;
+
+    background: #ff8fab;
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: 99998;
+
+    animation: trailFade 0.6s ease-out forwards;
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
     }
 
-    /* 🎁 ẢNH QUÀ LÀM CON TRỎ CHUỘT */
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+/* 💗 TRÁI TIM */
+.heart {
+    width: 180px;
+    height: 180px;
+
+    object-fit: contain;
+    user-select: none;
+
+    --heart-scale: 1;
+
+    transform: scale(var(--heart-scale));
+
+    animation:
+        gentleWiggle
+        2.5s
+        ease-in-out
+        infinite;
+}
+
+.heart.pop {
+    animation: heartPop 0.45s ease-out;
+}
+
+/* PRESS ME */
+.press {
+    margin-top: 18px;
+
+    color: #ff8fab;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+}
+
+/* NEXT */
+.next {
+    display: none;
+
+    width: 130px;
+    height: 130px;
+
+    border: 3px solid #ff8fab;
+
+    background: white;
+    color: #ff8fab;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.next.show {
+    display: flex;
+    animation: appear 0.5s ease-out forwards;
+}
+
+/* ✨ SAO */
+.star {
+    position: fixed;
+
+    width: 8px;
+    height: 8px;
+
+    background: #ff8fab;
+
+    transform: rotate(45deg);
+
+    pointer-events: none;
+
+    animation:
+        starFly
+        0.7s
+        ease-out
+        forwards;
+}
+
+/* 💗 LẮC NHẸ */
+@keyframes gentleWiggle {
+
+    0%, 100% {
+        transform:
+            scale(var(--heart-scale))
+            rotate(0deg);
+    }
+
+    25% {
+        transform:
+            scale(var(--heart-scale))
+            rotate(-3deg);
+    }
+
+    50% {
+        transform:
+            scale(var(--heart-scale))
+            rotate(3deg);
+    }
+
+    75% {
+        transform:
+            scale(var(--heart-scale))
+            rotate(-2deg);
+    }
+}
+
+/* 💥 POP */
+@keyframes heartPop {
+
+    0% {
+        transform:
+            scale(calc(var(--heart-scale) * 0.82));
+    }
+
+    55% {
+        transform:
+            scale(calc(var(--heart-scale) * 1.12));
+    }
+
+    100% {
+        transform:
+            scale(var(--heart-scale));
+    }
+}
+
+/* ✨ SAO BAY */
+@keyframes starFly {
+
+    0% {
+        opacity: 1;
+
+        transform:
+            translate(0, 0)
+            rotate(45deg)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(var(--x), var(--y))
+            rotate(180deg)
+            scale(0.3);
+    }
+}
+
+/* 💗 BIẾN MẤT */
+@keyframes disappear {
+
+    0% {
+        opacity: 1;
+
+        transform:
+            scale(var(--heart-scale));
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            scale(0);
+    }
+}
+
+/* 🎁 NEXT HIỆN */
+@keyframes appear {
+
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 📱 Điện thoại không có chuột */
+@media (hover: none) {
+
     html, body {
-        cursor: url("Qu%C3%A0%20Veloria%20.png") 16 16, auto;
+        cursor: auto;
     }
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: #fff5f8;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
+    .custom-cursor {
+        display: none;
     }
+}
 
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+@media (max-width: 600px) {
 
     .heart {
-        width: 180px;
-        height: 180px;
-        object-fit: contain;
-        user-select: none;
-
-        --heart-scale: 1;
-
-        transform: scale(var(--heart-scale));
-        animation: gentleWiggle 2.5s ease-in-out infinite;
-    }
-
-    .heart.pop {
-        animation: heartPop 0.45s ease-out;
+        width: 140px;
+        height: 140px;
     }
 
     .press {
-        margin-top: 18px;
-        color: #ff8fab;
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
-
-    .next {
-        display: none;
-
-        width: 130px;
-        height: 130px;
-
-        border: 3px solid #ff8fab;
-        background: white;
-        color: #ff8fab;
-
         font-size: 18px;
-        font-weight: bold;
-
-        align-items: center;
-        justify-content: center;
     }
-
-    .next.show {
-        display: flex;
-        animation: appear 0.5s ease-out forwards;
-    }
-
-    /* ✨ SAO KHI BẤM TRÁI TIM */
-    .star {
-        position: fixed;
-        width: 8px;
-        height: 8px;
-        background: #ff8fab;
-        transform: rotate(45deg);
-        pointer-events: none;
-        animation: starFly 0.7s ease-out forwards;
-    }
-
-    /* 💗 TRÁI TIM LẮC NHẸ */
-    @keyframes gentleWiggle {
-        0%, 100% {
-            transform: scale(var(--heart-scale)) rotate(0deg);
-        }
-
-        25% {
-            transform: scale(var(--heart-scale)) rotate(-3deg);
-        }
-
-        50% {
-            transform: scale(var(--heart-scale)) rotate(3deg);
-        }
-
-        75% {
-            transform: scale(var(--heart-scale)) rotate(-2deg);
-        }
-    }
-
-    /* 💥 HIỆU ỨNG POP */
-    @keyframes heartPop {
-        0% {
-            transform: scale(calc(var(--heart-scale) * 0.82));
-        }
-
-        55% {
-            transform: scale(calc(var(--heart-scale) * 1.12));
-        }
-
-        100% {
-            transform: scale(var(--heart-scale));
-        }
-    }
-
-    /* ✨ SAO BAY */
-    @keyframes starFly {
-        0% {
-            opacity: 1;
-            transform: translate(0, 0) rotate(45deg) scale(1);
-        }
-
-        100% {
-            opacity: 0;
-            transform:
-                translate(var(--x), var(--y))
-                rotate(180deg)
-                scale(0.3);
-        }
-    }
-
-    /* 💗 TRÁI TIM BIẾN MẤT */
-    @keyframes disappear {
-        0% {
-            opacity: 1;
-            transform: scale(var(--heart-scale));
-        }
-
-        100% {
-            opacity: 0;
-            transform: scale(0);
-        }
-    }
-
-    /* 🎁 NEXT HIỆN RA */
-    @keyframes appear {
-        0% {
-            opacity: 0;
-            transform: scale(0);
-        }
-
-        100% {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    @media (max-width: 600px) {
-        .heart {
-            width: 140px;
-            height: 140px;
-        }
-
-        .press {
-            font-size: 18px;
-        }
-    }
-
-    /* Điện thoại không có chuột */
-    @media (hover: none) {
-        html, body {
-            cursor: auto;
-        }
-    }
+}
 </style>
 </head>
 
 <body>
 
+<!-- 🎁 ẢNH DÙNG LÀM CON TRỎ -->
+<img
+    src="Qu%C3%A0%20Veloria%20.png"
+    class="custom-cursor"
+    id="customCursor"
+    alt=""
+>
+
 <div class="container">
 
-    <!-- 💗 ẢNH TRÁI TIM -->
+    <!-- 💗 TRÁI TIM -->
     <img
         src="Hapipi%20%2863%29.png"
         class="heart"
@@ -198,11 +297,17 @@
         alt="Heart"
     >
 
-    <div class="press" id="press">
+    <div
+        class="press"
+        id="press"
+    >
         press me
     </div>
 
-    <div class="next" id="next">
+    <div
+        class="next"
+        id="next"
+    >
         next ♡
     </div>
 
@@ -210,86 +315,135 @@
 
 <script>
 
-const heart = document.getElementById("heart");
-const press = document.getElementById("press");
-const next = document.getElementById("next");
+const cursor =
+    document.getElementById("customCursor");
+
+const heart =
+    document.getElementById("heart");
+
+const press =
+    document.getElementById("press");
+
+const next =
+    document.getElementById("next");
 
 let clicks = 0;
 
 
 /* =========================
-   💗 BẤM TRÁI TIM
+   🎁 CON TRỎ QUÀ
 ========================= */
 
-heart.addEventListener("click", function() {
+document.addEventListener(
+    "mousemove",
+    function(event) {
 
-    clicks++;
+        cursor.style.left =
+            event.clientX + "px";
 
-    // Trái tim lớn dần
-    const scale = 1 + clicks * 0.35;
-
-    heart.style.setProperty(
-        "--heart-scale",
-        scale
-    );
-
-    // Hiệu ứng pop
-    heart.classList.remove("pop");
-
-    void heart.offsetWidth;
-
-    heart.classList.add("pop");
-
-    // Sao bay ra
-    createStars();
+        cursor.style.top =
+            event.clientY + "px";
 
 
-    /* =========================
-       LẦN 3 = LẦN CUỐI
-    ========================= */
+        /* ✨ TẠO VỆT */
+        const trail =
+            document.createElement("div");
 
-    if (clicks === 3) {
+        trail.className =
+            "cursor-trail";
 
-        // Không cho bấm thêm
-        heart.style.pointerEvents = "none";
+        trail.style.left =
+            event.clientX + "px";
 
-        // Chờ hiệu ứng pop
-        setTimeout(() => {
+        trail.style.top =
+            event.clientY + "px";
 
-            // Trái tim biến mất
-            heart.style.animation =
-                "disappear 0.45s ease forwards";
-
-            // Chữ press me biến mất
-            press.style.transition =
-                "opacity 0.3s";
-
-            press.style.opacity = "0";
-
-        }, 450);
+        document.body.appendChild(trail);
 
 
-        // Hiện NEXT sau khi trái tim biến mất
-        setTimeout(() => {
+        setTimeout(function() {
 
-            heart.style.display = "none";
+            trail.remove();
 
-            press.style.display = "none";
+        }, 600);
 
-            next.classList.add("show");
-
-        }, 900);
     }
-});
+);
 
 
 /* =========================
-   ✨ TẠO SAO
+   💗 CLICK TRÁI TIM
+========================= */
+
+heart.addEventListener(
+    "click",
+    function() {
+
+        clicks++;
+
+        const scale =
+            1 + clicks * 0.35;
+
+        heart.style.setProperty(
+            "--heart-scale",
+            scale
+        );
+
+
+        heart.classList.remove("pop");
+
+        void heart.offsetWidth;
+
+        heart.classList.add("pop");
+
+
+        createStars();
+
+
+        /* LẦN 3 */
+        if (clicks === 3) {
+
+            heart.style.pointerEvents =
+                "none";
+
+
+            setTimeout(function() {
+
+                heart.style.animation =
+                    "disappear 0.45s ease forwards";
+
+                press.style.transition =
+                    "opacity 0.3s";
+
+                press.style.opacity = "0";
+
+            }, 450);
+
+
+            setTimeout(function() {
+
+                heart.style.display =
+                    "none";
+
+                press.style.display =
+                    "none";
+
+                next.classList.add("show");
+
+            }, 900);
+        }
+    }
+);
+
+
+/* =========================
+   ✨ SAO
 ========================= */
 
 function createStars() {
 
-    const rect = heart.getBoundingClientRect();
+    const rect =
+        heart.getBoundingClientRect();
 
     const centerX =
         rect.left + rect.width / 2;
@@ -303,7 +457,7 @@ function createStars() {
         const star =
             document.createElement("div");
 
-        star.classList.add("star");
+        star.className = "star";
 
         star.style.left =
             centerX + "px";
@@ -321,34 +475,42 @@ function createStars() {
 
         star.style.setProperty(
             "--x",
-            Math.cos(angle) * distance + "px"
+            Math.cos(angle) *
+            distance + "px"
         );
 
         star.style.setProperty(
             "--y",
-            Math.sin(angle) * distance + "px"
+            Math.sin(angle) *
+            distance + "px"
         );
 
 
         document.body.appendChild(star);
 
 
-        setTimeout(() => {
+        setTimeout(function() {
+
             star.remove();
+
         }, 700);
     }
 }
 
 
 /* =========================
-   ➡️ NÚT NEXT
+   ➡️ NEXT
 ========================= */
 
-next.addEventListener("click", function() {
+next.addEventListener(
+    "click",
+    function() {
 
-    window.location.href = "page2.html";
+        window.location.href =
+            "page2.html";
 
-});
+    }
+);
 
 </script>
 
