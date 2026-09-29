@@ -52,8 +52,6 @@ body {
     z-index: 99999;
 
     transform: translate(-8px, -8px);
-
-    display: block;
 }
 
 
@@ -77,6 +75,7 @@ body {
 }
 
 @keyframes trailFade {
+
     0% {
         opacity: 0.8;
         transform: scale(1);
@@ -86,6 +85,7 @@ body {
         opacity: 0;
         transform: scale(0);
     }
+
 }
 
 
@@ -152,7 +152,6 @@ body {
     border: 3px solid #ff8fab;
 
     background: white;
-
     color: #ff8fab;
 
     font-size: 18px;
@@ -166,12 +165,7 @@ body {
 
 .next.show {
     display: flex;
-
-    animation:
-        appear
-        0.5s
-        ease-out
-        forwards;
+    animation: appear 0.5s ease-out forwards;
 }
 
 
@@ -182,8 +176,8 @@ body {
 .star {
     position: fixed;
 
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
 
     background: #ff8fab;
 
@@ -309,33 +303,29 @@ body {
 
     0% {
         opacity: 0;
-
-        transform:
-            scale(0);
+        transform: scale(0);
     }
 
     100% {
         opacity: 1;
-
-        transform:
-            scale(1);
+        transform: scale(1);
     }
 
 }
 
 
 /* =========================================
-   📱 VÒNG NƯỚC MỎNG
+   📱 VÒNG NƯỚC
+   MỎNG - NHẸ - TỐI ĐA 10 VÒNG
 ========================================= */
 
 .touch-ripple {
     position: fixed;
 
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
 
-    /* 🌸 Viền thật mảnh và nhạt */
-    border: 1px solid rgba(255, 143, 171, 0.65);
+    border: 1px solid rgba(255, 143, 171, 0.6);
 
     border-radius: 50%;
 
@@ -345,30 +335,38 @@ body {
 
     transform:
         translate(-50%, -50%)
-        scale(0.2);
+        scale(0.25);
 
     animation:
         rippleWater
-        1s
+        1.1s
         ease-out
         forwards;
 }
 
 
-/* 💧 VÒNG NƯỚC LAN NHẸ */
+/* 💧 LAN RA → NHỎ DẦN → BIẾN MẤT */
 
 @keyframes rippleWater {
 
     0% {
-        opacity: 0.6;
+        opacity: 0.65;
 
         transform:
             translate(-50%, -50%)
-            scale(0.3);
+            scale(0.25);
     }
 
-    60% {
-        opacity: 0.25;
+    35% {
+        opacity: 0.5;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.3);
+    }
+
+    70% {
+        opacity: 0.2;
 
         transform:
             translate(-50%, -50%)
@@ -380,7 +378,7 @@ body {
 
         transform:
             translate(-50%, -50%)
-            scale(4);
+            scale(3.5);
     }
 
 }
@@ -431,9 +429,7 @@ body {
 <body>
 
 
-<!-- =========================================
-     🎁 CON TRỎ QUÀ - MÁY TÍNH
-========================================= -->
+<!-- 🎁 CON TRỎ QUÀ TRÊN MÁY TÍNH -->
 
 <img
     src="Qu%C3%A0%20Veloria%20.png"
@@ -443,12 +439,7 @@ body {
 >
 
 
-<!-- =========================================
-     📦 NỘI DUNG
-========================================= -->
-
 <div class="container">
-
 
     <!-- 💗 TRÁI TIM -->
 
@@ -479,16 +470,10 @@ body {
         next ♡
     </div>
 
-
 </div>
 
 
 <script>
-
-
-/* =========================================
-   🔗 LẤY CÁC PHẦN TỬ
-========================================= */
 
 const cursor =
     document.getElementById("customCursor");
@@ -508,7 +493,6 @@ let clicks = 0;
 
 /* =========================================
    🖱️ MÁY TÍNH
-   CON TRỎ QUÀ + BỤI SAO
 ========================================= */
 
 document.addEventListener(
@@ -521,8 +505,6 @@ document.addEventListener(
         cursor.style.top =
             event.clientY + "px";
 
-
-        /* ✨ Bụi nhỏ phía sau chuột */
 
         const trail =
             document.createElement("div");
@@ -550,14 +532,30 @@ document.addEventListener(
 
 
 /* =========================================
-   📱 HIỆU ỨNG ĐIỆN THOẠI
-   VÒNG NƯỚC + BỤI SAO
+   📱 QUẢN LÝ VÒNG NƯỚC
+   CHỈ GIỮ TỐI ĐA 10 VÒNG
 ========================================= */
+
+const touchRipples = [];
+
 
 function createTouchEffect(x, y) {
 
+    /* Nếu đã có 10 vòng thì xóa vòng cũ nhất */
 
-    /* 💧 VÒNG NƯỚC */
+    if (touchRipples.length >= 10) {
+
+        const oldRipple =
+            touchRipples.shift();
+
+        if (oldRipple) {
+            oldRipple.remove();
+        }
+
+    }
+
+
+    /* 💧 TẠO VÒNG MỚI */
 
     const ripple =
         document.createElement("div");
@@ -571,21 +569,35 @@ function createTouchEffect(x, y) {
     ripple.style.top =
         y + "px";
 
+
     document.body.appendChild(ripple);
 
+    touchRipples.push(ripple);
+
+
+    /* Khi animation kết thúc thì xóa */
 
     setTimeout(function() {
 
+        const index =
+            touchRipples.indexOf(ripple);
+
+        if (index !== -1) {
+            touchRipples.splice(index, 1);
+        }
+
         ripple.remove();
 
-    }, 1000);
+    }, 1100);
 
 
-    /* ✨ BỤI SAO THƯA HƠN */
+    /* =================================
+       ✨ BỤI SAO
+    ================================= */
 
     for (
         let i = 0;
-        i < 5;
+        i < 3;
         i++
     ) {
 
@@ -594,6 +606,7 @@ function createTouchEffect(x, y) {
 
         star.className =
             "star";
+
 
         star.style.left =
             x + "px";
@@ -609,8 +622,8 @@ function createTouchEffect(x, y) {
 
 
         const distance =
-            25
-            + Math.random() * 55;
+            20
+            + Math.random() * 45;
 
 
         star.style.setProperty(
@@ -619,6 +632,7 @@ function createTouchEffect(x, y) {
             * distance
             + "px"
         );
+
 
         star.style.setProperty(
             "--y",
@@ -643,7 +657,7 @@ function createTouchEffect(x, y) {
 
 
 /* =========================================
-   📱 CHẠM VÀO MÀN HÌNH
+   📱 CHẠM
 ========================================= */
 
 document.addEventListener(
@@ -669,12 +683,32 @@ document.addEventListener(
    📱 KÉO NGÓN TAY
 ========================================= */
 
+let lastTouchTime = 0;
+
 document.addEventListener(
     "touchmove",
     function(event) {
 
+        const now =
+            Date.now();
+
+
+        /* Giới hạn tạo vòng
+           để không bị quá dày */
+
+        if (
+            now - lastTouchTime < 120
+        ) {
+            return;
+        }
+
+
+        lastTouchTime = now;
+
+
         const touch =
             event.touches[0];
+
 
         createTouchEffect(
             touch.clientX,
@@ -699,8 +733,6 @@ heart.addEventListener(
         clicks++;
 
 
-        /* 💗 Tim lớn dần */
-
         const scale =
             1 + clicks * 0.35;
 
@@ -711,8 +743,6 @@ heart.addEventListener(
         );
 
 
-        /* 💥 Thu nhỏ rồi POP */
-
         heart.classList.remove("pop");
 
         void heart.offsetWidth;
@@ -720,22 +750,16 @@ heart.addEventListener(
         heart.classList.add("pop");
 
 
-        /* ✨ Sao quanh tim */
-
         createStars();
 
 
-        /* =================================
-           💗 LẦN THỨ 3
-        ================================= */
+        /* 💗 LẦN 3 */
 
         if (clicks === 3) {
 
             heart.style.pointerEvents =
                 "none";
 
-
-            /* 💨 Tim biến mất */
 
             setTimeout(
                 function() {
@@ -753,8 +777,6 @@ heart.addEventListener(
                 450
             );
 
-
-            /* ➡️ Hiện NEXT */
 
             setTimeout(
                 function() {
@@ -788,9 +810,11 @@ function createStars() {
     const rect =
         heart.getBoundingClientRect();
 
+
     const centerX =
         rect.left
         + rect.width / 2;
+
 
     const centerY =
         rect.top
@@ -805,6 +829,7 @@ function createStars() {
 
         const star =
             document.createElement("div");
+
 
         star.className =
             "star";
@@ -834,6 +859,7 @@ function createStars() {
             * distance
             + "px"
         );
+
 
         star.style.setProperty(
             "--y",
@@ -873,7 +899,6 @@ next.addEventListener(
 
     }
 );
-
 
 </script>
 
