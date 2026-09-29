@@ -10,6 +10,11 @@
         box-sizing: border-box;
     }
 
+    /* 🎁 ẢNH QUÀ LÀM CON TRỎ CHUỘT */
+    html, body {
+        cursor: url("Qu%C3%A0%20Veloria%20.png") 16 16, auto;
+    }
+
     body {
         margin: 0;
         min-height: 100vh;
@@ -32,7 +37,6 @@
         width: 180px;
         height: 180px;
         object-fit: contain;
-        cursor: pointer;
         user-select: none;
 
         --heart-scale: 1;
@@ -66,8 +70,6 @@
         font-size: 18px;
         font-weight: bold;
 
-        cursor: pointer;
-
         align-items: center;
         justify-content: center;
     }
@@ -77,6 +79,7 @@
         animation: appear 0.5s ease-out forwards;
     }
 
+    /* ✨ SAO KHI BẤM TRÁI TIM */
     .star {
         position: fixed;
         width: 8px;
@@ -87,6 +90,7 @@
         animation: starFly 0.7s ease-out forwards;
     }
 
+    /* 💗 TRÁI TIM LẮC NHẸ */
     @keyframes gentleWiggle {
         0%, 100% {
             transform: scale(var(--heart-scale)) rotate(0deg);
@@ -105,6 +109,7 @@
         }
     }
 
+    /* 💥 HIỆU ỨNG POP */
     @keyframes heartPop {
         0% {
             transform: scale(calc(var(--heart-scale) * 0.82));
@@ -119,6 +124,7 @@
         }
     }
 
+    /* ✨ SAO BAY */
     @keyframes starFly {
         0% {
             opacity: 1;
@@ -134,6 +140,7 @@
         }
     }
 
+    /* 💗 TRÁI TIM BIẾN MẤT */
     @keyframes disappear {
         0% {
             opacity: 1;
@@ -146,6 +153,7 @@
         }
     }
 
+    /* 🎁 NEXT HIỆN RA */
     @keyframes appear {
         0% {
             opacity: 0;
@@ -168,6 +176,13 @@
             font-size: 18px;
         }
     }
+
+    /* Điện thoại không có chuột */
+    @media (hover: none) {
+        html, body {
+            cursor: auto;
+        }
+    }
 </style>
 </head>
 
@@ -175,6 +190,7 @@
 
 <div class="container">
 
+    <!-- 💗 ẢNH TRÁI TIM -->
     <img
         src="Hapipi%20%2863%29.png"
         class="heart"
@@ -182,7 +198,9 @@
         alt="Heart"
     >
 
-    <div class="press" id="press">press me</div>
+    <div class="press" id="press">
+        press me
+    </div>
 
     <div class="next" id="next">
         next ♡
@@ -198,44 +216,64 @@ const next = document.getElementById("next");
 
 let clicks = 0;
 
-heart.addEventListener("click", function () {
+
+/* =========================
+   💗 BẤM TRÁI TIM
+========================= */
+
+heart.addEventListener("click", function() {
 
     clicks++;
 
-    // Mỗi lần bấm trái tim lớn hơn
+    // Trái tim lớn dần
     const scale = 1 + clicks * 0.35;
-    heart.style.setProperty("--heart-scale", scale);
+
+    heart.style.setProperty(
+        "--heart-scale",
+        scale
+    );
 
     // Hiệu ứng pop
     heart.classList.remove("pop");
+
     void heart.offsetWidth;
+
     heart.classList.add("pop");
 
     // Sao bay ra
     createStars();
 
-    // LẦN 3 = LẦN CUỐI
+
+    /* =========================
+       LẦN 3 = LẦN CUỐI
+    ========================= */
+
     if (clicks === 3) {
 
         // Không cho bấm thêm
         heart.style.pointerEvents = "none";
 
-        // Đợi hiệu ứng pop hoàn thành
+        // Chờ hiệu ứng pop
         setTimeout(() => {
 
             // Trái tim biến mất
-            heart.style.animation = "disappear 0.45s ease forwards";
+            heart.style.animation =
+                "disappear 0.45s ease forwards";
 
-            // "press me" cũng biến mất
-            press.style.transition = "opacity 0.3s";
+            // Chữ press me biến mất
+            press.style.transition =
+                "opacity 0.3s";
+
             press.style.opacity = "0";
 
         }, 450);
 
-        // Sau khi trái tim biến mất → hiện box NEXT
+
+        // Hiện NEXT sau khi trái tim biến mất
         setTimeout(() => {
 
             heart.style.display = "none";
+
             press.style.display = "none";
 
             next.classList.add("show");
@@ -245,24 +283,41 @@ heart.addEventListener("click", function () {
 });
 
 
+/* =========================
+   ✨ TẠO SAO
+========================= */
+
 function createStars() {
 
     const rect = heart.getBoundingClientRect();
 
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    const centerX =
+        rect.left + rect.width / 2;
+
+    const centerY =
+        rect.top + rect.height / 2;
+
 
     for (let i = 0; i < 10; i++) {
 
-        const star = document.createElement("div");
+        const star =
+            document.createElement("div");
 
         star.classList.add("star");
 
-        star.style.left = centerX + "px";
-        star.style.top = centerY + "px";
+        star.style.left =
+            centerX + "px";
 
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 60 + Math.random() * 100;
+        star.style.top =
+            centerY + "px";
+
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            60 + Math.random() * 100;
+
 
         star.style.setProperty(
             "--x",
@@ -274,7 +329,9 @@ function createStars() {
             Math.sin(angle) * distance + "px"
         );
 
+
         document.body.appendChild(star);
+
 
         setTimeout(() => {
             star.remove();
@@ -283,9 +340,14 @@ function createStars() {
 }
 
 
-// Bấm NEXT → sang page2.html
-next.addEventListener("click", function () {
+/* =========================
+   ➡️ NÚT NEXT
+========================= */
+
+next.addEventListener("click", function() {
+
     window.location.href = "page2.html";
+
 });
 
 </script>
