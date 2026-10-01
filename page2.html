@@ -1,45 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Date?</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>For Bibi ♡</title>
+
 
 <style>
 
+/* =========================================
+   CƠ BẢN
+========================================= */
+
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 html,
 body {
+    margin: 0;
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     font-family: Arial, sans-serif;
+
     cursor: none;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
+
+/* =========================================
+   🌸 NỀN SỌC HỒNG + TRẮNG
+========================================= */
 
 body {
-    background-color: #ffb6c9;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #fff8fa;
 
     background-image:
         repeating-linear-gradient(
             90deg,
-            #ffb6c9 0px,
-            #ffb6c9 55px,
-            #fff8fa 55px,
-            #fff8fa 65px
+            #fff8fa 0px,
+            #fff8fa 50px,
+            #ffb6c9 50px,
+            #ffb6c9 70px
         );
 
     background-size: 120px 100%;
+
     animation: stripeMove 4s linear infinite;
 }
 
@@ -55,11 +74,13 @@ body {
 
 }
 
-/* =========================
-   CUSTOM CURSOR
-========================= */
+
+/* =========================================
+   🎁 CON TRỎ QUÀ - GIỐNG PAGE 1
+========================================= */
 
 .custom-cursor {
+
     position: fixed;
 
     width: 45px;
@@ -74,10 +95,17 @@ body {
 
     z-index: 99999;
 
-    transform: translate(-8px, -8px);
+    transform:
+        translate(-8px, -8px);
 }
 
+
+/* =========================================
+   ✨ BỤI SAO SAU CHUỘT
+========================================= */
+
 .cursor-trail {
+
     position: fixed;
 
     width: 7px;
@@ -91,64 +119,110 @@ body {
 
     z-index: 99998;
 
-    animation: trailFade 0.6s ease-out forwards;
+    animation:
+        trailFade
+        0.6s
+        ease-out
+        forwards;
 }
+
 
 @keyframes trailFade {
 
     0% {
+
         opacity: 0.8;
-        transform: scale(1);
+
+        transform:
+            scale(1);
     }
 
     100% {
+
         opacity: 0;
-        transform: scale(0);
+
+        transform:
+            scale(0);
     }
 
 }
 
-/* =========================
-   MAIN FRAME
-========================= */
+
+/* =========================================
+   TRANG
+========================================= */
 
 .page {
-    width: 100%;
-    height: 100%;
+
+    width: 100vw;
+    height: 100vh;
 
     display: flex;
-    align-items: center;
+
     justify-content: center;
-
-    padding-bottom: 4vh;
-}
-
-.box {
-    width: min(700px, 90vw);
-    min-height: 560px;
-
-    background: #ff91b3;
-
-    border-radius: 35px;
-
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    padding: 40px;
 
     position: relative;
 
-    box-shadow:
-        0 15px 35px rgba(255, 91, 137, 0.25);
+    padding-bottom: 7vh;
+
+    overflow: hidden;
 }
 
-/* =========================
-   CHARACTER
-========================= */
+
+/* =========================================
+   💗 KHUNG CHÍNH
+========================================= */
+
+.question-box {
+
+    width:
+        min(88vw, 560px);
+
+    min-height: 500px;
+
+    padding: 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 10;
+
+    background:
+        rgba(255, 190, 208, 0.88);
+
+    border:
+        2px solid
+        rgba(255, 255, 255, 0.82);
+
+    border-radius: 28px;
+
+    box-shadow:
+
+        0 15px 45px
+        rgba(90, 30, 50, 0.18),
+
+        inset 0 0 30px
+        rgba(255, 255, 255, 0.18);
+}
+
+
+/* =========================================
+   🖼️ HÌNH NHÂN VẬT
+   KHÔNG FADE
+========================================= */
 
 .character {
+
     width: 180px;
     height: 180px;
 
@@ -161,77 +235,109 @@ body {
     opacity: 1;
 }
 
-/* =========================
-   QUESTION
-========================= */
+
+/* =========================================
+   💬 CÂU HỎI
+========================================= */
 
 .question {
+
     color: white;
 
-    font-size: clamp(22px, 4vw, 34px);
+    font-size: 24px;
 
-    text-align: center;
+    font-weight: 500;
 
-    line-height: 1.3;
+    line-height: 1.4;
 
-    margin-bottom: 35px;
+    max-width: 460px;
 
-    max-width: 600px;
+    margin-bottom: 28px;
+
+    text-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.28);
 }
 
-/* =========================
-   BUTTON AREA
-========================= */
+
+/* =========================================
+   YES + NO
+========================================= */
 
 .buttons {
+
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 30px;
 
+    width: 250px;
+
+    height: 50px;
+
     position: relative;
-
-    width: 100%;
-
-    min-height: 65px;
 }
 
-/* =========================
-   BUTTON
-========================= */
 
-button {
+/* =========================================
+   NÚT CHUNG
+========================================= */
+
+.choice {
+
+    width: 110px;
+    height: 48px;
+
     border: none;
+
+    border-radius: 12px;
 
     font-family: Arial, sans-serif;
 
-    font-size: 20px;
+    font-size: 18px;
 
-    padding: 14px 35px;
-
-    border-radius: 999px;
+    font-weight: 600;
 
     cursor: none;
 
-    transition: transform 0.15s ease;
+    transition:
+        transform 0.15s ease;
 }
+
+
+.choice:hover {
+
+    transform:
+        scale(1.05);
+}
+
+
+/* =========================================
+   YES
+========================================= */
 
 .yes {
-    background: white;
 
-    color: #ff7fa3;
+    background: #ff7fa3;
+
+    color: white;
 
     box-shadow:
-        0 7px 15px rgba(255, 80, 125, 0.25);
+        0 6px 18px
+        rgba(255, 95, 140, 0.35);
 }
 
-.yes:hover {
-    transform: scale(1.08);
-}
+
+/* =========================================
+   NO
+   KHÔNG SHADOW
+========================================= */
 
 .no {
+
     background: white;
 
     color: #ff7fa3;
@@ -239,7 +345,13 @@ button {
     box-shadow: none;
 }
 
+
+/* =========================================
+   NO SAU KHI CHẠY
+========================================= */
+
 .no.running {
+
     position: fixed;
 
     z-index: 50;
@@ -247,159 +359,269 @@ button {
     box-shadow: none;
 }
 
-/* =========================
-   GLOOMY SCREEN
-========================= */
 
-.gloom {
+/* =========================================
+   🌑 NỀN U ÁM
+========================================= */
+
+.dark-overlay {
+
     position: fixed;
 
-    inset: 0;
+    left: 0;
+    top: -100%;
 
-    background: #20202a;
+    width: 100%;
+    height: 100%;
 
-    z-index: 9999;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(15, 10, 25, 0.96),
+            rgba(30, 20, 40, 0.93)
+        );
 
-    transform: translateY(-100%);
+    z-index: 100;
 
-    transition: transform 0.7s ease;
+    pointer-events: none;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    color: white;
-
-    text-align: center;
+    opacity: 0;
 }
 
-.gloom.show {
-    transform: translateY(0);
+
+.dark-overlay.show {
+
+    pointer-events: auto;
+
+    animation:
+        darkFall
+        1.2s
+        ease-out
+        forwards;
 }
 
-.gloom-text {
-    font-size: clamp(25px, 5vw, 45px);
 
-    margin-bottom: 30px;
+@keyframes darkFall {
+
+    0% {
+
+        top: -100%;
+
+        opacity: 0;
+    }
+
+    30% {
+
+        opacity: 0.55;
+    }
+
+    100% {
+
+        top: 0;
+
+        opacity: 1;
+    }
+
 }
+
+
+/* =========================================
+   🔄 RESET
+========================================= */
 
 .reset {
-    background: white;
 
-    color: #333;
+    position: fixed;
 
-    font-size: 18px;
+    left: 50%;
+    top: 50%;
 
-    padding: 12px 30px;
+    transform:
+        translate(-50%, -50%)
+        scale(0.8);
 
-    border-radius: 999px;
+    width: 120px;
+    height: 48px;
 
     border: none;
 
+    border-radius: 12px;
+
+    background: #ff8fab;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
     cursor: none;
+
+    z-index: 101;
+
+    display: none;
+
+    opacity: 0;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.25);
 }
 
-/* =========================
-   MOBILE
-========================= */
+
+.reset.show {
+
+    display: block;
+
+    animation:
+        resetAppear
+        0.5s
+        ease-out
+        forwards;
+}
+
+
+@keyframes resetAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.8);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+}
+
+
+.reset:hover {
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.05);
+}
+
+
+/* =========================================
+   📱 ĐIỆN THOẠI
+========================================= */
 
 @media (hover: none) {
 
     html,
     body {
+
         cursor: auto;
     }
 
+
     .custom-cursor {
+
         display: none;
     }
 
+
     .cursor-trail {
+
         display: none;
+    }
+
+
+    .choice,
+    .reset {
+
+        cursor: pointer;
     }
 
 }
+
+
+/* =========================================
+   📱 MOBILE
+========================================= */
 
 @media (max-width: 600px) {
 
-    .box {
-        width: 90vw;
+    .page {
 
-        min-height: 500px;
-
-        padding: 25px;
-
-        border-radius: 28px;
+        padding-bottom: 5vh;
     }
+
+
+    .question-box {
+
+        width: 88vw;
+
+        min-height: 450px;
+
+        padding:
+            28px 20px 32px;
+
+        border-radius: 24px;
+    }
+
 
     .character {
+
         width: 145px;
         height: 145px;
+
+        margin-bottom: 12px;
     }
+
 
     .question {
-        font-size: 23px;
 
-        margin-bottom: 30px;
+        font-size: 20px;
+
+        padding: 0 8px;
+
+        margin-bottom: 24px;
     }
+
 
     .buttons {
-        gap: 15px;
+
+        width: 230px;
+
+        gap: 25px;
     }
 
-    button {
+
+    .choice {
+
+        width: 100px;
+
+        height: 45px;
+
         font-size: 17px;
-
-        padding: 12px 25px;
-    }
-
-}
-
-/* =========================
-   TOUCH RIPPLE
-========================= */
-
-.touch-ripple {
-    position: fixed;
-
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.55);
-
-    pointer-events: none;
-
-    transform: translate(-50%, -50%);
-
-    animation: ripple 0.6s ease-out forwards;
-
-    z-index: 99997;
-}
-
-@keyframes ripple {
-
-    0% {
-        opacity: 0.8;
-        transform: translate(-50%, -50%) scale(0.5);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
     }
 
 }
 
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================================
+     🎁 CON TRỎ QUÀ
+========================================= -->
 
 <img
     src="Qu%C3%A0%20Veloria%20.png"
@@ -408,66 +630,88 @@ button {
     alt=""
 >
 
+
 <div class="page">
 
-    <div class="box">
+
+    <!-- =================================
+         KHUNG CHÍNH
+    ================================= -->
+
+    <div class="question-box">
+
+
+        <!-- 🖼️ NHÂN VẬT -->
 
         <img
             src="smilee.png"
-            class="character"
             id="character"
+            class="character"
             alt=""
         >
 
+
+        <!-- 💬 CÂU HỎI -->
+
         <div class="question">
+
             Do you want to go on a date with me bibi?
+
         </div>
+
+
+        <!-- YES + NO -->
 
         <div class="buttons">
 
             <button
-                class="yes"
-                id="yesBtn"
+                class="choice yes"
+                id="yes"
             >
-                Yes ♡
+                Yes
             </button>
 
+
             <button
-                class="no"
-                id="noBtn"
+                class="choice no"
+                id="no"
             >
                 No
             </button>
 
         </div>
 
+
     </div>
 
 </div>
+
+
+<!-- 🌑 NỀN U ÁM -->
 
 <div
-    class="gloom"
-    id="gloom"
+    class="dark-overlay"
+    id="darkOverlay"
+></div>
+
+
+<!-- 🔄 RESET -->
+
+<button
+    class="reset"
+    id="reset"
 >
+    Reset
+</button>
 
-    <div class="gloom-text">
-        okay... :(
-    </div>
 
-    <button
-        class="reset"
-        id="resetBtn"
-    >
-        Reset
-    </button>
-
-</div>
 
 <script>
 
-/* =========================
-   ELEMENTS
-========================= */
+
+/* =========================================
+   ELEMENT
+========================================= */
 
 const cursor =
     document.getElementById("customCursor");
@@ -475,22 +719,22 @@ const cursor =
 const character =
     document.getElementById("character");
 
-const yesBtn =
-    document.getElementById("yesBtn");
+const yes =
+    document.getElementById("yes");
 
-const noBtn =
-    document.getElementById("noBtn");
+const no =
+    document.getElementById("no");
 
-const gloom =
-    document.getElementById("gloom");
+const darkOverlay =
+    document.getElementById("darkOverlay");
 
-const resetBtn =
-    document.getElementById("resetBtn");
+const reset =
+    document.getElementById("reset");
 
 
-/* =========================
-   CURSOR
-========================= */
+/* =========================================
+   🎁 CON TRỎ + BỤI SAO
+========================================= */
 
 document.addEventListener(
     "mousemove",
@@ -502,11 +746,13 @@ document.addEventListener(
         cursor.style.top =
             event.clientY + "px";
 
+
         const trail =
             document.createElement("div");
 
         trail.className =
             "cursor-trail";
+
 
         trail.style.left =
             event.clientX + "px";
@@ -514,17 +760,308 @@ document.addEventListener(
         trail.style.top =
             event.clientY + "px";
 
-        document.body.appendChild(trail);
+
+        document.body.appendChild(
+            trail
+        );
+
 
         setTimeout(
             function() {
+
                 trail.remove();
+
             },
             600
         );
 
-        mouseX = event.clientX;
-        mouseY = event.clientY;
+    }
+);
+
+
+/* =========================================
+   🖼️ ĐỔI HÌNH
+   KHÔNG FADE
+========================================= */
+
+let currentCharacter =
+    "smilee.png";
+
+
+function changeCharacter(newImage) {
+
+    if (
+        currentCharacter === newImage
+    ) {
+
+        return;
+
+    }
+
+
+    currentCharacter =
+        newImage;
+
+
+    /*
+       Đổi hình NGAY LẬP TỨC
+    */
+
+    character.src =
+        newImage;
+}
+
+
+/* =========================================
+   ĐẾM NO
+========================================= */
+
+let noCount = 0;
+
+
+/* =========================================
+   VỊ TRÍ NO TRƯỚC
+========================================= */
+
+let previousNoX = null;
+
+let previousNoY = null;
+
+
+/* =========================================
+   🕐 TRẠNG THÁI CRYY 2 GIÂY
+========================================= */
+
+let cryyLockUntil = 0;
+
+
+/*
+   Sau khi bấm No,
+   cryy được giữ ít nhất 2 giây.
+*/
+
+function isCryyLocked() {
+
+    return Date.now() <
+        cryyLockUntil;
+
+}
+
+
+/* =========================================
+   📍 KIỂM TRA CHUỘT
+========================================= */
+
+let mouseX = 0;
+
+let mouseY = 0;
+
+
+/* =========================================
+   KIỂM TRA CHUỘT CÓ TRONG NÚT
+========================================= */
+
+function isMouseInsideRect(
+    x,
+    y,
+    rect
+) {
+
+    return (
+
+        x >= rect.left
+        &&
+        x <= rect.right
+        &&
+        y >= rect.top
+        &&
+        y <= rect.bottom
+
+    );
+
+}
+
+
+/* =========================================
+   KHOẢNG CÁCH TỚI TÂM
+========================================= */
+
+function distanceToRectCenter(
+    x,
+    y,
+    rect
+) {
+
+    const centerX =
+        rect.left
+        +
+        rect.width / 2;
+
+
+    const centerY =
+        rect.top
+        +
+        rect.height / 2;
+
+
+    return Math.sqrt(
+
+        Math.pow(
+            x - centerX,
+            2
+        )
+
+        +
+
+        Math.pow(
+            y - centerY,
+            2
+        )
+
+    );
+
+}
+
+
+/* =========================================
+   🖱️ CẬP NHẬT BIỂU CẢM
+========================================= */
+
+function updateExpression() {
+
+    /*
+       Nếu đang trong 2 giây
+       của cryy → KHÔNG ĐỔI
+    */
+
+    if (
+        isCryyLocked()
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        noCount >= 5
+    ) {
+
+        return;
+
+    }
+
+
+    const yesRect =
+        yes.getBoundingClientRect();
+
+
+    const noRect =
+        no.getBoundingClientRect();
+
+
+    /*
+       =================================
+       CHUỘT NẰM TRONG YES
+       → SMILEE
+       =================================
+    */
+
+    if (
+        isMouseInsideRect(
+            mouseX,
+            mouseY,
+            yesRect
+        )
+    ) {
+
+        changeCharacter(
+            "smilee.png"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       =================================
+       CHUỘT NẰM TRONG / GẦN NO
+       → CRYY
+       =================================
+    */
+
+    const distanceToNo =
+        distanceToRectCenter(
+            mouseX,
+            mouseY,
+            noRect
+        );
+
+
+    if (
+        isMouseInsideRect(
+            mouseX,
+            mouseY,
+            noRect
+        )
+        ||
+        distanceToNo < 110
+    ) {
+
+        changeCharacter(
+            "cryy.png"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       =================================
+       CHUỘT GẦN YES
+       → Huhh
+       =================================
+    */
+
+    const distanceToYes =
+        distanceToRectCenter(
+            mouseX,
+            mouseY,
+            yesRect
+        );
+
+
+    if (
+        distanceToYes < 110
+    ) {
+
+        changeCharacter(
+            "huhh.png"
+        );
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================
+   🖱️ CHUỘT
+========================================= */
+
+document.addEventListener(
+    "mousemove",
+    function(event) {
+
+        mouseX =
+            event.clientX;
+
+        mouseY =
+            event.clientY;
+
 
         updateExpression();
 
@@ -532,139 +1069,24 @@ document.addEventListener(
 );
 
 
-/* =========================
-   TOUCH RIPPLE
-========================= */
+/* =========================================
+   🕐 SAU KHI CRYY 2 GIÂY
+========================================= */
 
-let rippleCount = 0;
+function checkAfterCryy() {
 
-document.addEventListener(
-    "touchstart",
-    function(event) {
-
-        if (rippleCount >= 10) {
-            return;
-        }
-
-        const touch =
-            event.touches[0];
-
-        const ripple =
-            document.createElement("div");
-
-        ripple.className =
-            "touch-ripple";
-
-        ripple.style.left =
-            touch.clientX + "px";
-
-        ripple.style.top =
-            touch.clientY + "px";
-
-        document.body.appendChild(ripple);
-
-        rippleCount++;
-
-        setTimeout(
-            function() {
-                ripple.remove();
-                rippleCount--;
-            },
-            600
-        );
-
-    },
-    { passive: true }
-);
-
-
-/* =========================
-   CHARACTER LOGIC
-========================= */
-
-let currentCharacter =
-    "smilee.png";
-
-let mouseX = 0;
-let mouseY = 0;
-
-let cryyLockUntil = 0;
-
-let noCount = 0;
-
-
-function changeCharacter(newImage) {
-
-    if (currentCharacter === newImage) {
-        return;
-    }
-
-    currentCharacter =
-        newImage;
-
-    character.src =
-        newImage;
-
-}
-
-
-function isMouseInsideRect(x, y, rect) {
-
-    return (
-        x >= rect.left &&
-        x <= rect.right &&
-        y >= rect.top &&
-        y <= rect.bottom
-    );
-
-}
-
-
-function distanceToRectCenter(x, y, rect) {
-
-    const centerX =
-        (rect.left + rect.right) / 2;
-
-    const centerY =
-        (rect.top + rect.bottom) / 2;
-
-    return Math.sqrt(
-        Math.pow(x - centerX, 2) +
-        Math.pow(y - centerY, 2)
-    );
-
-}
-
-
-function isCryyLocked() {
-
-    return Date.now() < cryyLockUntil;
-
-}
-
-
-function updateExpression() {
-
-    if (isCryyLocked()) {
-        return;
-    }
-
-    if (noCount >= 5) {
-        return;
-    }
-
-    const yesRect =
-        yesBtn.getBoundingClientRect();
+    /*
+       Nếu chuột vẫn ở gần / trong No
+       → giữ cryy
+    */
 
     const noRect =
-        noBtn.getBoundingClientRect();
+        no.getBoundingClientRect();
 
-    const insideYes =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        );
+
+    const yesRect =
+        yes.getBoundingClientRect();
+
 
     const insideNo =
         isMouseInsideRect(
@@ -673,37 +1095,68 @@ function updateExpression() {
             noRect
         );
 
-    const nearYes =
-        distanceToRectCenter(
-            mouseX,
-            mouseY,
-            yesRect
-        ) < 110;
 
-    const nearNo =
+    const distanceToNo =
         distanceToRectCenter(
             mouseX,
             mouseY,
             noRect
-        ) < 110;
-
-
-    if (insideYes) {
-
-        changeCharacter(
-            "smilee.png"
         );
 
-    } else if (
-        insideNo ||
-        nearNo
+
+    if (
+        insideNo
+        ||
+        distanceToNo < 110
     ) {
 
         changeCharacter(
             "cryy.png"
         );
 
-    } else if (nearYes) {
+        return;
+
+    }
+
+
+    /*
+       Nếu chuột nằm trong YES
+       → smilee
+    */
+
+    if (
+        isMouseInsideRect(
+            mouseX,
+            mouseY,
+            yesRect
+        )
+    ) {
+
+        changeCharacter(
+            "smilee.png"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Nếu chuột gần YES
+       → huhh
+    */
+
+    const distanceToYes =
+        distanceToRectCenter(
+            mouseX,
+            mouseY,
+            yesRect
+        );
+
+
+    if (
+        distanceToYes < 110
+    ) {
 
         changeCharacter(
             "huhh.png"
@@ -714,235 +1167,286 @@ function updateExpression() {
 }
 
 
-/* =========================
-   NO BUTTON MOVEMENT
-========================= */
-
-let lastX = null;
-let lastY = null;
-
-let noRunning = false;
-
+/* =========================================
+   🏃 DI CHUYỂN NO
+========================================= */
 
 function moveNo() {
 
+    /*
+       Chuyển No từ flex
+       sang fixed
+    */
+
+    no.classList.add(
+        "running"
+    );
+
+
+    const padding = 25;
+
+
     const buttonWidth =
-        noBtn.offsetWidth;
+        no.offsetWidth;
+
 
     const buttonHeight =
-        noBtn.offsetHeight;
+        no.offsetHeight;
 
-    const margin = 25;
+
+    const maxX =
+        window.innerWidth
+        -
+        buttonWidth
+        -
+        padding;
+
+
+    const maxY =
+        window.innerHeight
+        -
+        buttonHeight
+        -
+        padding;
+
 
     let newX;
+
     let newY;
 
     let attempts = 0;
 
-    let minimumDistance =
-        180 + noCount * 50;
+
+    /*
+       Càng bấm nhiều
+       càng phải chạy xa
+    */
+
+    const minimumDistance =
+        170
+        +
+        noCount * 40;
 
 
     do {
 
         newX =
-            Math.random() *
-            (
-                window.innerWidth -
-                buttonWidth -
-                margin * 2
-            ) +
-            margin;
+            padding
+            +
+            Math.random()
+            * maxX;
+
 
         newY =
-            Math.random() *
-            (
-                window.innerHeight -
-                buttonHeight -
-                margin * 2
-            ) +
-            margin;
+            padding
+            +
+            Math.random()
+            * maxY;
+
 
         attempts++;
 
-    } while (
-        lastX !== null &&
-        Math.sqrt(
-            Math.pow(newX - lastX, 2) +
-            Math.pow(newY - lastY, 2)
-        ) < minimumDistance &&
+
+        if (
+            previousNoX === null
+        ) {
+
+            break;
+
+        }
+
+
+        const distance =
+            Math.sqrt(
+
+                Math.pow(
+                    newX
+                    -
+                    previousNoX,
+                    2
+                )
+
+                +
+
+                Math.pow(
+                    newY
+                    -
+                    previousNoY,
+                    2
+                )
+
+            );
+
+
+        if (
+            distance >=
+            minimumDistance
+        ) {
+
+            break;
+
+        }
+
+    }
+
+    while (
         attempts < 100
     );
 
 
-    lastX = newX;
-    lastY = newY;
+    previousNoX =
+        newX;
 
-    noBtn.style.left =
+
+    previousNoY =
+        newY;
+
+
+    /*
+       Nhảy ngay lập tức
+    */
+
+    no.style.left =
         newX + "px";
 
-    noBtn.style.top =
+
+    no.style.top =
         newY + "px";
 
 }
 
 
-noBtn.addEventListener(
+/* =========================================
+   ❌ NHẤN NO
+========================================= */
+
+no.addEventListener(
     "click",
-    function() {
+    function(event) {
+
+        event.preventDefault();
+
+
+        if (
+            noCount >= 5
+        ) {
+
+            return;
+
+        }
+
 
         noCount++;
+
+
+        /*
+           CRYY NGAY
+        */
 
         changeCharacter(
             "cryy.png"
         );
 
+
+        /*
+           Khóa cryy 2 giây
+        */
+
         cryyLockUntil =
-            Date.now() + 2000;
+            Date.now()
+            +
+            2000;
 
 
-        if (!noRunning) {
-
-            noRunning = true;
-
-            noBtn.classList.add(
-                "running"
-            );
-
-        }
-
+        /*
+           No chạy
+        */
 
         moveNo();
 
 
-        if (noCount >= 5) {
-
-            setTimeout(
-                function() {
-
-                    gloom.classList.add(
-                        "show"
-                    );
-
-                    noBtn.disabled =
-                        true;
-
-                    yesBtn.disabled =
-                        true;
-
-                },
-                200
-            );
-
-            return;
-        }
-
+        /*
+           Sau đúng 2 giây
+           kiểm tra vị trí chuột
+        */
 
         setTimeout(
             function() {
 
-                checkAfterCryy();
+                if (
+                    noCount < 5
+                ) {
+
+                    checkAfterCryy();
+
+                }
 
             },
             2000
         );
 
+
+        /*
+           LẦN THỨ 5
+        */
+
+        if (
+            noCount >= 5
+        ) {
+
+            yes.disabled = true;
+
+            no.disabled = true;
+
+
+            darkOverlay.classList.add(
+                "show"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    reset.classList.add(
+                        "show"
+                    );
+
+                },
+                1250
+            );
+
+        }
+
     }
 );
 
 
-/* =========================
-   AFTER 2 SECONDS
-========================= */
+/* =========================================
+   💗 YES
+========================================= */
 
-function checkAfterCryy() {
-
-    if (noCount >= 5) {
-        return;
-    }
-
-    const yesRect =
-        yesBtn.getBoundingClientRect();
-
-    const noRect =
-        noBtn.getBoundingClientRect();
-
-
-    const insideYes =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        );
-
-    const insideNo =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            noRect
-        );
-
-    const nearYes =
-        distanceToRectCenter(
-            mouseX,
-            mouseY,
-            yesRect
-        ) < 110;
-
-    const nearNo =
-        distanceToRectCenter(
-            mouseX,
-            mouseY,
-            noRect
-        ) < 110;
-
-
-    if (insideYes) {
-
-        changeCharacter(
-            "smilee.png"
-        );
-
-    } else if (nearYes) {
-
-        changeCharacter(
-            "huhh.png"
-        );
-
-    } else if (
-        insideNo ||
-        nearNo
-    ) {
-
-        changeCharacter(
-            "cryy.png"
-        );
-
-    }
-
-}
-
-
-/* =========================
-   YES
-========================= */
-
-yesBtn.addEventListener(
+yes.addEventListener(
     "click",
     function() {
 
-        window.location.href =
-            "./page3.html";
+        if (
+            noCount < 5
+        ) {
+
+            window.location.href =
+                "page3.html";
+
+        }
 
     }
 );
 
 
-/* =========================
-   RESET
-========================= */
+/* =========================================
+   🔄 RESET
+========================================= */
 
-resetBtn.addEventListener(
+reset.addEventListener(
     "click",
     function() {
 
@@ -951,7 +1455,73 @@ resetBtn.addEventListener(
     }
 );
 
+
+/* =========================================
+   📐 RESIZE
+========================================= */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        if (
+            !no.classList.contains(
+                "running"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const rect =
+            no.getBoundingClientRect();
+
+
+        if (
+            rect.right >
+            window.innerWidth
+        ) {
+
+            no.style.left =
+                (
+                    window.innerWidth
+                    -
+                    no.offsetWidth
+                    -
+                    20
+                )
+                +
+                "px";
+
+        }
+
+
+        if (
+            rect.bottom >
+            window.innerHeight
+        ) {
+
+            no.style.top =
+                (
+                    window.innerHeight
+                    -
+                    no.offsetHeight
+                    -
+                    20
+                )
+                +
+                "px";
+
+        }
+
+    }
+);
+
 </script>
 
+
 </body>
+
 </html>
