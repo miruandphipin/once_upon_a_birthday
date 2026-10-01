@@ -28,13 +28,18 @@ body {
     margin: 0;
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     font-family: Arial, sans-serif;
+
+    cursor: none;
 }
 
 
 /* =========================================
-   BACKGROUND
+   🌸 BACKGROUND
+   KHỚP VỚI KHUNG TRÌNH DUYỆT
 ========================================= */
 
 body {
@@ -42,15 +47,19 @@ body {
     background-color: #000;
 
     background-size: cover;
-    background-position: center;
+
+    background-position: center center;
+
     background-repeat: no-repeat;
 
-    cursor: none;
+    width: 100vw;
+    height: 100vh;
 }
 
 
 /* =========================================
-   🎁 CON TRỎ QUÀ - GIỐNG PAGE 1
+   🎁 CON TRỎ QUÀ
+   GIỐNG PAGE 1
 ========================================= */
 
 .custom-cursor {
@@ -134,6 +143,7 @@ body {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     position: relative;
@@ -145,7 +155,7 @@ body {
 
 
 /* =========================================
-   KHUNG CHÍNH
+   💗 KHUNG CHÍNH
 ========================================= */
 
 .question-box {
@@ -191,7 +201,8 @@ body {
 
 
 /* =========================================
-   ẢNH NHÂN VẬT
+   🖼️ HÌNH NHÂN VẬT
+   CHỈ HÌNH NÀY FADE
 ========================================= */
 
 .character {
@@ -219,7 +230,7 @@ body {
 
 
 /* =========================================
-   CÂU HỎI
+   💬 CÂU HỎI
 ========================================= */
 
 .question {
@@ -286,8 +297,7 @@ body {
     cursor: none;
 
     transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+        transform 0.15s ease;
 }
 
 
@@ -300,6 +310,7 @@ body {
 
 /* =========================================
    YES
+   CÓ SHADOW
 ========================================= */
 
 .yes {
@@ -315,7 +326,8 @@ body {
 
 
 /* =========================================
-   NO BAN ĐẦU
+   NO
+   ❌ KHÔNG CÓ SHADOW
 ========================================= */
 
 .no {
@@ -324,9 +336,7 @@ body {
 
     color: #ff7fa3;
 
-    box-shadow:
-        0 6px 18px
-        rgba(0, 0, 0, 0.18);
+    box-shadow: none;
 }
 
 
@@ -340,16 +350,15 @@ body {
 
     z-index: 50;
 
-    cursor: none;
+    box-shadow: none;
 
     transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+        transform 0.15s ease;
 }
 
 
 /* =========================================
-   NỀN U ÁM
+   🌑 NỀN U ÁM
 ========================================= */
 
 .dark-overlay {
@@ -414,7 +423,7 @@ body {
 
 
 /* =========================================
-   RESET
+   🔄 RESET
 ========================================= */
 
 .reset {
@@ -609,7 +618,6 @@ body {
 
 <!-- =========================================
      🎁 CON TRỎ QUÀ
-     GIỐNG PAGE 1
 ========================================= -->
 
 <img
@@ -630,7 +638,7 @@ body {
     <div class="question-box">
 
 
-        <!-- ẢNH -->
+        <!-- 🖼️ HÌNH NHÂN VẬT -->
 
         <img
             src="smilee.png"
@@ -640,7 +648,7 @@ body {
         >
 
 
-        <!-- CÂU HỎI -->
+        <!-- 💬 CÂU HỎI -->
 
         <div class="question">
 
@@ -676,7 +684,7 @@ body {
 </div>
 
 
-<!-- NỀN U ÁM -->
+<!-- 🌑 NỀN U ÁM -->
 
 <div
     class="dark-overlay"
@@ -684,7 +692,7 @@ body {
 ></div>
 
 
-<!-- RESET -->
+<!-- 🔄 RESET -->
 
 <button
     class="reset"
@@ -723,14 +731,11 @@ const reset =
 
 /* =========================================
    🎁 CON TRỎ + BỤI SAO
-   GIỐNG PAGE 1
 ========================================= */
 
 document.addEventListener(
     "mousemove",
     function(event) {
-
-        /* Con trỏ quà */
 
         cursor.style.left =
             event.clientX + "px";
@@ -738,8 +743,6 @@ document.addEventListener(
         cursor.style.top =
             event.clientY + "px";
 
-
-        /* Bụi sao */
 
         const trail =
             document.createElement("div");
@@ -774,7 +777,9 @@ document.addEventListener(
 
 
 /* =========================================
-   BACKGROUND
+   🌸 BACKGROUND
+   bground → bground1 → bground2 → bground3
+   → LẶP LẠI
 ========================================= */
 
 const backgrounds = [
@@ -819,7 +824,8 @@ setInterval(
 
 
 /* =========================================
-   ĐỔI ẢNH
+   🖼️ ĐỔI HÌNH NHÂN VẬT
+   CHỈ FADE HÌNH
 ========================================= */
 
 let currentCharacter =
@@ -841,6 +847,10 @@ function changeCharacter(newImage) {
         newImage;
 
 
+    /*
+       Fade OUT riêng hình
+    */
+
     character.classList.add(
         "fade-out"
     );
@@ -852,6 +862,10 @@ function changeCharacter(newImage) {
             character.src =
                 newImage;
 
+
+            /*
+               Fade IN riêng hình
+            */
 
             character.classList.remove(
                 "fade-out"
@@ -872,7 +886,7 @@ let noCount = 0;
 
 
 /* =========================================
-   VỊ TRÍ CŨ
+   VỊ TRÍ NO TRƯỚC ĐÓ
 ========================================= */
 
 let previousNoX = null;
@@ -881,7 +895,7 @@ let previousNoY = null;
 
 
 /* =========================================
-   CHUỘT GẦN NO
+   🖱️ CHUỘT GẦN YES / NO
 ========================================= */
 
 document.addEventListener(
@@ -897,29 +911,37 @@ document.addEventListener(
         }
 
 
-        const rect =
+        const noRect =
             no.getBoundingClientRect();
 
 
-        const centerX =
-            rect.left
+        const yesRect =
+            yes.getBoundingClientRect();
+
+
+        /* =================================
+           KHOẢNG CÁCH TỚI NO
+        ================================= */
+
+        const noCenterX =
+            noRect.left
             +
-            rect.width / 2;
+            noRect.width / 2;
 
 
-        const centerY =
-            rect.top
+        const noCenterY =
+            noRect.top
             +
-            rect.height / 2;
+            noRect.height / 2;
 
 
-        const distance =
+        const distanceToNo =
             Math.sqrt(
 
                 Math.pow(
                     event.clientX
                     -
-                    centerX,
+                    noCenterX,
                     2
                 )
 
@@ -928,19 +950,76 @@ document.addEventListener(
                 Math.pow(
                     event.clientY
                     -
-                    centerY,
+                    noCenterY,
                     2
                 )
 
             );
 
 
+        /* =================================
+           KHOẢNG CÁCH TỚI YES
+        ================================= */
+
+        const yesCenterX =
+            yesRect.left
+            +
+            yesRect.width / 2;
+
+
+        const yesCenterY =
+            yesRect.top
+            +
+            yesRect.height / 2;
+
+
+        const distanceToYes =
+            Math.sqrt(
+
+                Math.pow(
+                    event.clientX
+                    -
+                    yesCenterX,
+                    2
+                )
+
+                +
+
+                Math.pow(
+                    event.clientY
+                    -
+                    yesCenterY,
+                    2
+                )
+
+            );
+
+
+        /* =================================
+           GẦN NO → Huhh
+        ================================= */
+
         if (
-            distance < 110
+            distanceToNo < 110
         ) {
 
             changeCharacter(
                 "huhh.png"
+            );
+
+        }
+
+
+        /* =================================
+           GẦN YES → Smilee
+        ================================= */
+
+        else if (
+            distanceToYes < 110
+        ) {
+
+            changeCharacter(
+                "smilee.png"
             );
 
         }
@@ -950,10 +1029,15 @@ document.addEventListener(
 
 
 /* =========================================
-   DI CHUYỂN NO
+   🏃 DI CHUYỂN NO
 ========================================= */
 
 function moveNo() {
+
+    /*
+       Chuyển No từ flex
+       sang fixed
+    */
 
     no.classList.add(
         "running"
@@ -993,6 +1077,11 @@ function moveNo() {
 
     let attempts = 0;
 
+
+    /*
+       Càng bấm nhiều
+       càng phải chạy xa
+    */
 
     const minimumDistance =
         170
@@ -1069,9 +1158,14 @@ function moveNo() {
     previousNoX =
         newX;
 
+
     previousNoY =
         newY;
 
+
+    /*
+       NHẢY NGAY
+    */
 
     no.style.left =
         newX + "px";
@@ -1084,7 +1178,7 @@ function moveNo() {
 
 
 /* =========================================
-   NHẤN NO
+   ❌ NHẤN NO
 ========================================= */
 
 no.addEventListener(
@@ -1106,19 +1200,25 @@ no.addEventListener(
         noCount++;
 
 
-        /* Đổi sang cryy */
+        /*
+           Bấm No → Cryy
+        */
 
         changeCharacter(
             "cryy.png"
         );
 
 
-        /* No chạy ngay */
+        /*
+           No chạy ngay
+        */
 
         moveNo();
 
 
-        /* LẦN THỨ 5 */
+        /*
+           LẦN THỨ 5
+        */
 
         if (
             noCount >= 5
@@ -1152,7 +1252,7 @@ no.addEventListener(
 
 
 /* =========================================
-   YES
+   💗 YES
 ========================================= */
 
 yes.addEventListener(
@@ -1173,7 +1273,7 @@ yes.addEventListener(
 
 
 /* =========================================
-   RESET
+   🔄 RESET
 ========================================= */
 
 reset.addEventListener(
@@ -1187,12 +1287,17 @@ reset.addEventListener(
 
 
 /* =========================================
-   RESIZE
+   📐 RESIZE
 ========================================= */
 
 window.addEventListener(
     "resize",
     function() {
+
+        /*
+           Nếu No chưa chạy
+           thì vẫn để nó trong flex.
+        */
 
         if (
             !no.classList.contains(
