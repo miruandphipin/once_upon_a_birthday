@@ -1,1 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>For Bibi ♡</title>
+
+
+<style>
+
+/* =========================================
+   CƠ BẢN
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+body {
+
+    background-color: #000;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: none;
+}
+
+
+/* =========================================
+   TRANG
+========================================= */
+
+.page {
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    /*
+       Cụm nội dung cao hơn
+    */
+
+    padding-bottom: 7vh;
+}
+
+
+/* =========================================
+   KHUNG BAO QUANH
+========================================= */
+
+.question-box {
+
+    width: min(88vw, 560px);
+
+    min-height: 500px;
+
+    padding: 35px 35px 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 10;
+
+
+    /*
+       Nền hồng nổi hơn nền ngoài
+    */
+
+    background:
+        rgba(255, 190, 208, 0.82);
+
+
+    /*
+       Khung
+    */
+
+    border: 2px solid
+        rgba(255, 255, 255, 0.75);
+
+
+    border-radius: 28px;
+
+
+    /*
+       Bóng nhẹ
+    */
+
+    box-shadow:
+
+        0 15px 45px
+        rgba(90, 30, 50, 0.18),
+
+        inset 0 0 30px
+        rgba(255, 255, 255, 0.18);
+}
+
+
+/* =========================================
+   ẢNH NHÂN VẬT
+========================================= */
+
+.character {
+
+    width: 180px;
+    height: 180px;
+
+    object-fit: contain;
+
+    margin-bottom: 15px;
+
+    user-select: none;
+
+    opacity: 1;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+.character.fade-out {
+
+    opacity: 0;
+}
+
+
+/* =========================================
+   CÂU HỎI
+========================================= */
+
+.question {
+
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    max-width: 460px;
+
+    margin-bottom: 28px;
+
+    text-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================
+   YES
+========================================= */
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 100%;
+}
+
+
+.choice {
+
+    width: 110px;
+    height: 48px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+.choice:hover {
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================
+   YES
+========================================= */
+
+.yes {
+
+    background: #ff7fa3;
+
+    color: white;
+
+    box-shadow:
+        0 6px 18px
+        rgba(255, 95, 140, 0.35);
+}
+
+
+/* =========================================
+   NO
+========================================= */
+
+.no {
+
+    background: white;
+
+    color: #ff7fa3;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0, 0, 0, 0.18);
+
+    position: fixed;
+
+    z-index: 50;
+
+    /*
+       Không transition vị trí
+       để teleport ngay lập tức
+    */
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+/* =========================================
+   LỚP TỐI SAU 5 LẦN NO
+========================================= */
+
+.dark-overlay {
+
+    position: fixed;
+
+    left: 0;
+    top: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(15, 10, 25, 0.94),
+            rgba(30, 20, 40, 0.90)
+        );
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+
+.dark-overlay.show {
+
+    animation:
+        darkFall
+        1.2s
+        ease-out
+        forwards;
+}
+
+
+@keyframes darkFall {
+
+    0% {
+
+        top: -100%;
+
+        opacity: 0;
+    }
+
+    30% {
+
+        opacity: 0.5;
+    }
+
+    100% {
+
+        top: 0;
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .page {
+
+        padding-bottom: 5vh;
+    }
+
+
+    .question-box {
+
+        width: 88vw;
+
+        min-height: 450px;
+
+        padding:
+            28px
+            20px
+            32px;
+
+        border-radius: 24px;
+    }
+
+
+    .character {
+
+        width: 145px;
+        height: 145px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .question {
+
+        font-size: 20px;
+
+        padding: 0 8px;
+
+        margin-bottom: 24px;
+    }
+
+
+    .choice {
+
+        width: 100px;
+
+        height: 45px;
+
+        font-size: 17px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =================================
+         KHUNG CHÍNH
+    ================================= -->
+
+    <div class="question-box">
+
+
+        <!-- ẢNH -->
+
+        <img
+            src="smilee.png"
+            id="character"
+            class="character"
+            alt=""
+        >
+
+
+        <!-- CÂU HỎI -->
+
+        <div class="question">
+
+            Do you want to go on a date with me bibi?
+
+        </div>
+
+
+        <!-- YES -->
+
+        <div class="buttons">
+
+            <button
+                class="choice yes"
+                id="yes"
+            >
+                Yes
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================
+         NO
+    ================================= -->
+
+    <button
+        class="choice no"
+        id="no"
+    >
+        No
+    </button>
+
+
+</div>
+
+
+<!-- NỀN TỐI -->
+
+<div
+    class="dark-overlay"
+    id="darkOverlay"
+></div>
+
+
+
+<script>
+
+
+/* =========================================
+   ELEMENT
+========================================= */
+
+const character =
+    document.getElementById("character");
+
+const yes =
+    document.getElementById("yes");
+
+const no =
+    document.getElementById("no");
+
+const darkOverlay =
+    document.getElementById("darkOverlay");
+
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+const backgrounds = [
+
+    "bground.png",
+
+    "bground1.png",
+
+    "bground2.png",
+
+    "bground3.png"
+
+];
+
+
+let backgroundIndex = 0;
+
+
+document.body.style.backgroundImage =
+    `url("${backgrounds[0]}")`;
+
+
+setInterval(function() {
+
+    backgroundIndex++;
+
+
+    if (
+        backgroundIndex >=
+        backgrounds.length
+    ) {
+
+        backgroundIndex = 0;
+
+    }
+
+
+    document.body.style.backgroundImage =
+        `url("${backgrounds[backgroundIndex]}")`;
+
+}, 500);
+
+
+
+/* =========================================
+   ĐỔI ẢNH NHÂN VẬT
+========================================= */
+
+let currentCharacter =
+    "smilee.png";
+
+
+function changeCharacter(newImage) {
+
+    if (
+        currentCharacter === newImage
+    ) {
+
+        return;
+
+    }
+
+
+    currentCharacter = newImage;
+
+
+    character.classList.add(
+        "fade-out"
+    );
+
+
+    setTimeout(function() {
+
+        character.src = newImage;
+
+
+        character.classList.remove(
+            "fade-out"
+        );
+
+    }, 250);
+
+}
+
+
+
+/* =========================================
+   SỐ LẦN NHẤN NO
+========================================= */
+
+let noCount = 0;
+
+
+
+/* =========================================
+   VỊ TRÍ NO BAN ĐẦU
+========================================= */
+
+function setInitialNoPosition() {
+
+    const yesRect =
+        yes.getBoundingClientRect();
+
+
+    no.style.left =
+        (
+            yesRect.right + 25
+        ) + "px";
+
+
+    no.style.top =
+        (
+            yesRect.top
+        ) + "px";
+
+}
+
+
+setInitialNoPosition();
+
+
+
+/* =========================================
+   LƯU VỊ TRÍ NO
+========================================= */
+
+let previousNoX = null;
+let previousNoY = null;
+
+
+
+/* =========================================
+   DI CHUYỂN NO
+========================================= */
+
+function moveNo() {
+
+    const padding = 25;
+
+    const buttonWidth =
+        no.offsetWidth;
+
+    const buttonHeight =
+        no.offsetHeight;
+
+
+    const maxX =
+        window.innerWidth
+        - buttonWidth
+        - padding;
+
+
+    const maxY =
+        window.innerHeight
+        - buttonHeight
+        - padding;
+
+
+    let newX;
+    let newY;
+
+    let attempts = 0;
+
+
+    /*
+       Khoảng cách tối thiểu
+       giữa vị trí cũ và mới
+
+       Mỗi lần càng lớn
+    */
+
+    const minimumDistance =
+        150 + noCount * 35;
+
+
+    do {
+
+        newX =
+            padding
+            +
+            Math.random()
+            * maxX;
+
+
+        newY =
+            padding
+            +
+            Math.random()
+            * maxY;
+
+
+        attempts++;
+
+
+        /*
+           Nếu chưa có vị trí cũ
+           thì dùng luôn vị trí mới
+        */
+
+        if (
+            previousNoX === null
+        ) {
+
+            break;
+
+        }
+
+
+        const distance =
+            Math.sqrt(
+
+                Math.pow(
+                    newX - previousNoX,
+                    2
+                )
+
+                +
+
+                Math.pow(
+                    newY - previousNoY,
+                    2
+                )
+
+            );
+
+
+        /*
+           Chỉ chấp nhận nếu
+           đủ xa vị trí cũ
+        */
+
+        if (
+            distance >=
+            minimumDistance
+        ) {
+
+            break;
+
+        }
+
+    }
+    while (
+        attempts < 100
+    );
+
+
+    /*
+       Lưu vị trí mới
+    */
+
+    previousNoX = newX;
+
+    previousNoY = newY;
+
+
+    /*
+       TELEPORT NGAY
+    */
+
+    no.style.left =
+        newX + "px";
+
+    no.style.top =
+        newY + "px";
+
+}
+
+
+
+/* =========================================
+   CHUỘT GẦN NO
+========================================= */
+
+document.addEventListener(
+    "mousemove",
+    function(event) {
+
+        const rect =
+            no.getBoundingClientRect();
+
+
+        const centerX =
+            rect.left
+            +
+            rect.width / 2;
+
+
+        const centerY =
+            rect.top
+            +
+            rect.height / 2;
+
+
+        const distance =
+            Math.sqrt(
+
+                Math.pow(
+                    event.clientX
+                    - centerX,
+                    2
+                )
+
+                +
+
+                Math.pow(
+                    event.clientY
+                    - centerY,
+                    2
+                )
+
+            );
+
+
+        if (
+            distance < 110
+        ) {
+
+            changeCharacter(
+                "huhh.png"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   NHẤN NO
+========================================= */
+
+no.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+
+        noCount++;
+
+
+        /*
+           ĐỔI SANG CRY
+        */
+
+        changeCharacter(
+            "cryy.png"
+        );
+
+
+        /*
+           NO CHẠY XA HƠN
+        */
+
+        moveNo();
+
+
+        /*
+           SAU 5 LẦN
+        */
+
+        if (
+            noCount >= 5
+        ) {
+
+            darkOverlay.classList.add(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   YES
+========================================= */
+
+yes.addEventListener(
+    "click",
+    function() {
+
+        window.location.href =
+            "page3.html";
+
+    }
+);
+
+
+
+/* =========================================
+   RESIZE
+========================================= */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        const rect =
+            no.getBoundingClientRect();
+
+
+        if (
+            rect.right >
+            window.innerWidth
+        ) {
+
+            no.style.left =
+                (
+                    window.innerWidth
+                    -
+                    no.offsetWidth
+                    -
+                    20
+                ) + "px";
+
+        }
+
+
+        if (
+            rect.bottom >
+            window.innerHeight
+        ) {
+
+            no.style.top =
+                (
+                    window.innerHeight
+                    -
+                    no.offsetHeight
+                    -
+                    20
+                ) + "px";
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
