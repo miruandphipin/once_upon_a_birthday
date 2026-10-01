@@ -634,8 +634,8 @@ function distanceToRectEdge(x, y, rect) {
 /*
 UPDATE EXPRESSION
 
-CHỈ KHI CHUỘT THỰC SỰ
-NẰM TRONG KHUNG
+CHỈ KHI CHUỘT
+THỰC SỰ TRONG KHUNG
 */
 
 function updateExpression() {
@@ -699,20 +699,12 @@ document.addEventListener(
         updateExpression();
 
 
-        /*
-        CURSOR
-        */
-
         cursor.style.left =
             event.clientX + "px";
 
         cursor.style.top =
             event.clientY + "px";
 
-
-        /*
-        CURSOR TRAIL
-        */
 
         const trail =
             document.createElement("div");
@@ -798,6 +790,9 @@ function checkAfterCryy() {
 
 /*
 MOVE NO BUTTON
+
+ĐÃ SỬA ĐỂ KHÔNG THỂ
+CHẠY RA KHỎI MÀN HÌNH
 */
 
 function moveNo() {
@@ -806,48 +801,74 @@ function moveNo() {
 
 
     /*
+    ĐỢI TRÌNH DUYỆT TÍNH LẠI
+    KÍCH THƯỚC/VỊ TRÍ NÚT
+    */
+
+    const rect =
+        no.getBoundingClientRect();
+
+
+    const buttonWidth =
+        rect.width;
+
+    const buttonHeight =
+        rect.height;
+
+
+    /*
+    LẤY VIEWPORT THỰC TẾ
+    */
+
+    let viewportWidth =
+        window.innerWidth;
+
+    let viewportHeight =
+        window.innerHeight;
+
+
+    if (window.visualViewport) {
+
+        viewportWidth =
+            window.visualViewport.width;
+
+        viewportHeight =
+            window.visualViewport.height;
+
+    }
+
+
+    /*
     KHOẢNG CÁCH AN TOÀN
-    VỚI MÉP MÀN HÌNH
     */
 
     const padding = 25;
 
 
     /*
-    LẤY KÍCH THƯỚC THỰC TẾ
-    CỦA NÚT NO
+    GIỚI HẠN TUYỆT ĐỐI
     */
 
-    const buttonWidth =
-        no.offsetWidth;
+    const minX =
+        padding;
 
-    const buttonHeight =
-        no.offsetHeight;
+    const minY =
+        padding;
 
-
-    /*
-    GIỚI HẠN X/Y
-
-    NÚT LUÔN NẰM HOÀN TOÀN
-    TRONG MÀN HÌNH
-    */
-
-    const minX = padding;
-
-    const minY = padding;
 
     const maxX =
         Math.max(
             minX,
-            window.innerWidth -
+            viewportWidth -
             buttonWidth -
             padding
         );
 
+
     const maxY =
         Math.max(
             minY,
-            window.innerHeight -
+            viewportHeight -
             buttonHeight -
             padding
         );
@@ -863,6 +884,10 @@ function moveNo() {
     const minimumDistance =
         170 + noCount * 40;
 
+
+    /*
+    TÌM VỊ TRÍ MỚI
+    */
 
     do {
 
@@ -918,8 +943,7 @@ function moveNo() {
 
 
     /*
-    ĐẢM BẢO LẦN CUỐI
-    KHÔNG VƯỢT KHỎI MÀN HÌNH
+    KHÓA LẠI TRONG MÀN HÌNH
     */
 
     newX =
@@ -931,6 +955,7 @@ function moveNo() {
             )
         );
 
+
     newY =
         Math.max(
             minY,
@@ -941,16 +966,111 @@ function moveNo() {
         );
 
 
-    previousNoX = newX;
-
-    previousNoY = newY;
-
+    /*
+    ĐẶT VỊ TRÍ
+    */
 
     no.style.left =
         newX + "px";
 
     no.style.top =
         newY + "px";
+
+
+    /*
+    KIỂM TRA LẠI SAU KHI ĐẶT
+
+    Nếu trình duyệt vẫn tính lệch,
+    tự động kéo nút vào lại màn hình.
+    */
+
+    const finalRect =
+        no.getBoundingClientRect();
+
+
+    let correctedX =
+        newX;
+
+    let correctedY =
+        newY;
+
+
+    if (finalRect.left < padding) {
+
+        correctedX +=
+            padding - finalRect.left;
+
+    }
+
+
+    if (finalRect.top < padding) {
+
+        correctedY +=
+            padding - finalRect.top;
+
+    }
+
+
+    if (
+        finalRect.right >
+        viewportWidth - padding
+    ) {
+
+        correctedX -=
+            finalRect.right -
+            (viewportWidth - padding);
+
+    }
+
+
+    if (
+        finalRect.bottom >
+        viewportHeight - padding
+    ) {
+
+        correctedY -=
+            finalRect.bottom -
+            (viewportHeight - padding);
+
+    }
+
+
+    /*
+    KHÓA LẦN CUỐI
+    */
+
+    correctedX =
+        Math.max(
+            minX,
+            Math.min(
+                correctedX,
+                maxX
+            )
+        );
+
+
+    correctedY =
+        Math.max(
+            minY,
+            Math.min(
+                correctedY,
+                maxY
+            )
+        );
+
+
+    no.style.left =
+        correctedX + "px";
+
+    no.style.top =
+        correctedY + "px";
+
+
+    previousNoX =
+        correctedX;
+
+    previousNoY =
+        correctedY;
 
 }
 
