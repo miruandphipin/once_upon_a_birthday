@@ -38,11 +38,87 @@ body {
 ========================================= */
 
 body {
+
     background-color: #000;
 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    cursor: none;
+}
+
+
+/* =========================================
+   🎁 CON TRỎ QUÀ - GIỐNG PAGE 1
+========================================= */
+
+.custom-cursor {
+
+    position: fixed;
+
+    width: 45px;
+    height: 45px;
+
+    object-fit: contain;
+
+    left: 0;
+    top: 0;
+
+    pointer-events: none;
+
+    z-index: 99999;
+
+    transform:
+        translate(-8px, -8px);
+}
+
+
+/* =========================================
+   ✨ BỤI SAO SAU CHUỘT
+========================================= */
+
+.cursor-trail {
+
+    position: fixed;
+
+    width: 7px;
+    height: 7px;
+
+    background: #ff8fab;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 99998;
+
+    animation:
+        trailFade
+        0.6s
+        ease-out
+        forwards;
+}
+
+
+@keyframes trailFade {
+
+    0% {
+
+        opacity: 0.8;
+
+        transform:
+            scale(1);
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            scale(0);
+    }
+
 }
 
 
@@ -56,6 +132,7 @@ body {
     height: 100vh;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
@@ -73,16 +150,19 @@ body {
 
 .question-box {
 
-    width: min(88vw, 560px);
+    width:
+        min(88vw, 560px);
 
     min-height: 500px;
 
     padding: 35px;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     text-align: center;
@@ -131,7 +211,9 @@ body {
         opacity 0.25s ease;
 }
 
+
 .character.fade-out {
+
     opacity: 0;
 }
 
@@ -161,7 +243,7 @@ body {
 
 
 /* =========================================
-   KHU VỰC YES + NO
+   YES + NO
 ========================================= */
 
 .buttons {
@@ -201,7 +283,7 @@ body {
 
     font-weight: 600;
 
-    cursor: pointer;
+    cursor: none;
 
     transition:
         transform 0.15s ease,
@@ -210,7 +292,9 @@ body {
 
 
 .choice:hover {
-    transform: scale(1.05);
+
+    transform:
+        scale(1.05);
 }
 
 
@@ -231,14 +315,8 @@ body {
 
 
 /* =========================================
-   NO
+   NO BAN ĐẦU
 ========================================= */
-
-/*
-   QUAN TRỌNG:
-   Ban đầu No vẫn nằm trong flex,
-   nên KHÔNG THỂ ĐÈ LÊN YES.
-*/
 
 .no {
 
@@ -252,16 +330,17 @@ body {
 }
 
 
-/*
-   Sau khi No chạy,
-   JS mới thêm class này.
-*/
+/* =========================================
+   NO SAU KHI BẮT ĐẦU CHẠY
+========================================= */
 
 .no.running {
 
     position: fixed;
 
     z-index: 50;
+
+    cursor: none;
 
     transition:
         transform 0.15s ease,
@@ -278,7 +357,6 @@ body {
     position: fixed;
 
     left: 0;
-
     top: -100%;
 
     width: 100%;
@@ -314,18 +392,24 @@ body {
 @keyframes darkFall {
 
     0% {
+
         top: -100%;
+
         opacity: 0;
     }
 
     30% {
+
         opacity: 0.55;
     }
 
     100% {
+
         top: 0;
+
         opacity: 1;
     }
+
 }
 
 
@@ -361,7 +445,7 @@ body {
 
     font-weight: 600;
 
-    cursor: pointer;
+    cursor: none;
 
     z-index: 101;
 
@@ -406,6 +490,7 @@ body {
             translate(-50%, -50%)
             scale(1);
     }
+
 }
 
 
@@ -418,12 +503,47 @@ body {
 
 
 /* =========================================
-   MOBILE
+   📱 ĐIỆN THOẠI
+========================================= */
+
+@media (hover: none) {
+
+    html,
+    body {
+
+        cursor: auto;
+    }
+
+
+    .custom-cursor {
+
+        display: none;
+    }
+
+
+    .cursor-trail {
+
+        display: none;
+    }
+
+
+    .choice,
+    .reset {
+
+        cursor: pointer;
+    }
+
+}
+
+
+/* =========================================
+   📱 MOBILE
 ========================================= */
 
 @media (max-width: 600px) {
 
     .page {
+
         padding-bottom: 5vh;
     }
 
@@ -485,6 +605,19 @@ body {
 
 
 <body>
+
+
+<!-- =========================================
+     🎁 CON TRỎ QUÀ
+     GIỐNG PAGE 1
+========================================= -->
+
+<img
+    src="Qu%C3%A0%20Veloria%20.png"
+    class="custom-cursor"
+    id="customCursor"
+    alt=""
+>
 
 
 <div class="page">
@@ -569,6 +702,9 @@ body {
    ELEMENT
 ========================================= */
 
+const cursor =
+    document.getElementById("customCursor");
+
 const character =
     document.getElementById("character");
 
@@ -584,6 +720,57 @@ const darkOverlay =
 const reset =
     document.getElementById("reset");
 
+
+/* =========================================
+   🎁 CON TRỎ + BỤI SAO
+   GIỐNG PAGE 1
+========================================= */
+
+document.addEventListener(
+    "mousemove",
+    function(event) {
+
+        /* Con trỏ quà */
+
+        cursor.style.left =
+            event.clientX + "px";
+
+        cursor.style.top =
+            event.clientY + "px";
+
+
+        /* Bụi sao */
+
+        const trail =
+            document.createElement("div");
+
+        trail.className =
+            "cursor-trail";
+
+
+        trail.style.left =
+            event.clientX + "px";
+
+        trail.style.top =
+            event.clientY + "px";
+
+
+        document.body.appendChild(
+            trail
+        );
+
+
+        setTimeout(
+            function() {
+
+                trail.remove();
+
+            },
+            600
+        );
+
+    }
+);
 
 
 /* =========================================
@@ -607,25 +794,28 @@ document.body.style.backgroundImage =
     `url("${backgrounds[0]}")`;
 
 
-setInterval(function() {
+setInterval(
+    function() {
 
-    backgroundIndex++;
-
-    if (
-        backgroundIndex >=
-        backgrounds.length
-    ) {
-
-        backgroundIndex = 0;
-
-    }
+        backgroundIndex++;
 
 
-    document.body.style.backgroundImage =
-        `url("${backgrounds[backgroundIndex]}")`;
+        if (
+            backgroundIndex >=
+            backgrounds.length
+        ) {
 
-}, 500);
+            backgroundIndex = 0;
 
+        }
+
+
+        document.body.style.backgroundImage =
+            `url("${backgrounds[backgroundIndex]}")`;
+
+    },
+    500
+);
 
 
 /* =========================================
@@ -641,11 +831,14 @@ function changeCharacter(newImage) {
     if (
         currentCharacter === newImage
     ) {
+
         return;
+
     }
 
 
-    currentCharacter = newImage;
+    currentCharacter =
+        newImage;
 
 
     character.classList.add(
@@ -653,18 +846,22 @@ function changeCharacter(newImage) {
     );
 
 
-    setTimeout(function() {
+    setTimeout(
+        function() {
 
-        character.src = newImage;
+            character.src =
+                newImage;
 
-        character.classList.remove(
-            "fade-out"
-        );
 
-    }, 250);
+            character.classList.remove(
+                "fade-out"
+            );
+
+        },
+        250
+    );
 
 }
-
 
 
 /* =========================================
@@ -675,12 +872,12 @@ let noCount = 0;
 
 
 /* =========================================
-   VỊ TRÍ CŨ CỦA NO
+   VỊ TRÍ CŨ
 ========================================= */
 
 let previousNoX = null;
-let previousNoY = null;
 
+let previousNoY = null;
 
 
 /* =========================================
@@ -694,7 +891,9 @@ document.addEventListener(
         if (
             noCount >= 5
         ) {
+
             return;
+
         }
 
 
@@ -719,7 +918,8 @@ document.addEventListener(
 
                 Math.pow(
                     event.clientX
-                    - centerX,
+                    -
+                    centerX,
                     2
                 )
 
@@ -727,7 +927,8 @@ document.addEventListener(
 
                 Math.pow(
                     event.clientY
-                    - centerY,
+                    -
+                    centerY,
                     2
                 )
 
@@ -748,17 +949,11 @@ document.addEventListener(
 );
 
 
-
 /* =========================================
    DI CHUYỂN NO
 ========================================= */
 
 function moveNo() {
-
-    /*
-       Chuyển No từ flex
-       sang fixed
-    */
 
     no.classList.add(
         "running"
@@ -770,6 +965,7 @@ function moveNo() {
 
     const buttonWidth =
         no.offsetWidth;
+
 
     const buttonHeight =
         no.offsetHeight;
@@ -792,15 +988,11 @@ function moveNo() {
 
 
     let newX;
+
     let newY;
 
     let attempts = 0;
 
-
-    /*
-       Càng bấm nhiều
-       càng chạy xa
-    */
 
     const minimumDistance =
         170
@@ -868,27 +1060,27 @@ function moveNo() {
         }
 
     }
+
     while (
         attempts < 100
     );
 
 
-    previousNoX = newX;
-    previousNoY = newY;
+    previousNoX =
+        newX;
 
+    previousNoY =
+        newY;
 
-    /*
-       NHẢY NGAY LẬP TỨC
-    */
 
     no.style.left =
         newX + "px";
+
 
     no.style.top =
         newY + "px";
 
 }
-
 
 
 /* =========================================
@@ -905,38 +1097,35 @@ no.addEventListener(
         if (
             noCount >= 5
         ) {
+
             return;
+
         }
 
 
         noCount++;
 
 
-        /*
-           Đổi sang cryy
-        */
+        /* Đổi sang cryy */
 
         changeCharacter(
             "cryy.png"
         );
 
 
-        /*
-           No chạy ngay
-        */
+        /* No chạy ngay */
 
         moveNo();
 
 
-        /*
-           LẦN THỨ 5
-        */
+        /* LẦN THỨ 5 */
 
         if (
             noCount >= 5
         ) {
 
             yes.disabled = true;
+
             no.disabled = true;
 
 
@@ -962,7 +1151,6 @@ no.addEventListener(
 );
 
 
-
 /* =========================================
    YES
 ========================================= */
@@ -984,7 +1172,6 @@ yes.addEventListener(
 );
 
 
-
 /* =========================================
    RESET
 ========================================= */
@@ -999,7 +1186,6 @@ reset.addEventListener(
 );
 
 
-
 /* =========================================
    RESIZE
 ========================================= */
@@ -1008,18 +1194,14 @@ window.addEventListener(
     "resize",
     function() {
 
-        /*
-           Nếu No chưa chạy,
-           flex tự căn nên không cần
-           chỉnh vị trí.
-        */
-
         if (
             !no.classList.contains(
                 "running"
             )
         ) {
+
             return;
+
         }
 
 
@@ -1039,7 +1221,9 @@ window.addEventListener(
                     no.offsetWidth
                     -
                     20
-                ) + "px";
+                )
+                +
+                "px";
 
         }
 
@@ -1056,7 +1240,9 @@ window.addEventListener(
                     no.offsetHeight
                     -
                     20
-                ) + "px";
+                )
+                +
+                "px";
 
         }
 
