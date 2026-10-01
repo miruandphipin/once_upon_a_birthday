@@ -15,10 +15,6 @@
 
 <style>
 
-/* =========================================
-   CƠ BẢN
-========================================= */
-
 * {
     box-sizing: border-box;
 }
@@ -26,14 +22,10 @@
 html,
 body {
     margin: 0;
-
     width: 100%;
     height: 100%;
-
     overflow: hidden;
-
     font-family: Arial, sans-serif;
-
     cursor: none;
 }
 
@@ -73,6 +65,7 @@ body {
     }
 
 }
+
 
 /* =========================================
    🎁 CON TRỎ QUÀ - GIỐNG PAGE 1
@@ -930,7 +923,8 @@ function updateExpression() {
 
     /*
        Nếu đang trong 2 giây
-       của cryy → KHÔNG ĐỔI
+       sau khi bấm No
+       → GIỮ CRYY
     */
 
     if (
@@ -959,19 +953,48 @@ function updateExpression() {
         no.getBoundingClientRect();
 
 
+    const insideYes =
+        isMouseInsideRect(
+            mouseX,
+            mouseY,
+            yesRect
+        );
+
+
+    const insideNo =
+        isMouseInsideRect(
+            mouseX,
+            mouseY,
+            noRect
+        );
+
+
+    const distanceToYes =
+        distanceToRectCenter(
+            mouseX,
+            mouseY,
+            yesRect
+        );
+
+
+    const distanceToNo =
+        distanceToRectCenter(
+            mouseX,
+            mouseY,
+            noRect
+        );
+
+
     /*
        =================================
-       CHUỘT NẰM TRONG YES
+       GẦN / TRONG YES
        → SMILEE
        =================================
     */
 
     if (
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        )
+        insideYes ||
+        distanceToYes < 110
     ) {
 
         changeCharacter(
@@ -985,55 +1008,14 @@ function updateExpression() {
 
     /*
        =================================
-       CHUỘT NẰM TRONG / GẦN NO
-       → CRYY
+       GẦN / TRONG NO
+       → HUHH
        =================================
     */
 
-    const distanceToNo =
-        distanceToRectCenter(
-            mouseX,
-            mouseY,
-            noRect
-        );
-
-
     if (
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            noRect
-        )
-        ||
+        insideNo ||
         distanceToNo < 110
-    ) {
-
-        changeCharacter(
-            "cryy.png"
-        );
-
-        return;
-
-    }
-
-
-    /*
-       =================================
-       CHUỘT GẦN YES
-       → Huhh
-       =================================
-    */
-
-    const distanceToYes =
-        distanceToRectCenter(
-            mouseX,
-            mouseY,
-            yesRect
-        );
-
-
-    if (
-        distanceToYes < 110
     ) {
 
         changeCharacter(
@@ -1043,6 +1025,14 @@ function updateExpression() {
         return;
 
     }
+
+
+    /*
+       =================================
+       XA CẢ YES VÀ NO
+       → GIỮ BIỂU CẢM HIỆN TẠI
+       =================================
+    */
 
 }
 
@@ -1074,11 +1064,6 @@ document.addEventListener(
 
 function checkAfterCryy() {
 
-    /*
-       Nếu chuột vẫn ở gần / trong No
-       → giữ cryy
-    */
-
     const noRect =
         no.getBoundingClientRect();
 
@@ -1095,6 +1080,14 @@ function checkAfterCryy() {
         );
 
 
+    const insideYes =
+        isMouseInsideRect(
+            mouseX,
+            mouseY,
+            yesRect
+        );
+
+
     const distanceToNo =
         distanceToRectCenter(
             mouseX,
@@ -1103,9 +1096,24 @@ function checkAfterCryy() {
         );
 
 
+    const distanceToYes =
+        distanceToRectCenter(
+            mouseX,
+            mouseY,
+            yesRect
+        );
+
+
+    /*
+       =================================
+       SAU 2 GIÂY
+       GẦN / TRONG NO
+       → GIỮ CRYY
+       =================================
+    */
+
     if (
-        insideNo
-        ||
+        insideNo ||
         distanceToNo < 110
     ) {
 
@@ -1119,16 +1127,16 @@ function checkAfterCryy() {
 
 
     /*
-       Nếu chuột nằm trong YES
-       → smilee
+       =================================
+       SAU 2 GIÂY
+       GẦN / TRONG YES
+       → SMILEE
+       =================================
     */
 
     if (
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        )
+        insideYes ||
+        distanceToYes < 110
     ) {
 
         changeCharacter(
@@ -1141,27 +1149,16 @@ function checkAfterCryy() {
 
 
     /*
-       Nếu chuột gần YES
-       → huhh
+       =================================
+       SAU 2 GIÂY
+       XA CẢ HAI
+       → HUHH
+       =================================
     */
 
-    const distanceToYes =
-        distanceToRectCenter(
-            mouseX,
-            mouseY,
-            yesRect
-        );
-
-
-    if (
-        distanceToYes < 110
-    ) {
-
-        changeCharacter(
-            "huhh.png"
-        );
-
-    }
+    changeCharacter(
+        "huhh.png"
+    );
 
 }
 
@@ -1339,7 +1336,8 @@ no.addEventListener(
 
 
         /*
-           CRYY NGAY
+           TỪ HUHH
+           → CRYY NGAY
         */
 
         changeCharacter(
