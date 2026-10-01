@@ -22,6 +22,7 @@ body {
     cursor: none;
 }
 
+
 /* BACKGROUND */
 
 body {
@@ -196,9 +197,7 @@ body {
 }
 
 
-/*
-NO BUTTON AFTER FIRST CLICK
-*/
+/* NO BUTTON AFTER FIRST CLICK */
 
 .no.running {
 
@@ -235,7 +234,6 @@ NO BUTTON AFTER FIRST CLICK
 .dark-overlay.show {
 
     transform: translateY(0);
-
 }
 
 
@@ -574,9 +572,6 @@ let mouseY = 0;
 
 /*
 CHECK MOUSE INSIDE RECTANGLE
-
-CHỈ KHI CHUỘT THỰC SỰ
-NẰM TRONG KHUNG NÚT
 */
 
 function isMouseInsideRect(x, y, rect) {
@@ -594,8 +589,7 @@ function isMouseInsideRect(x, y, rect) {
 /*
 DISTANCE TO RECT EDGE
 
-GIỮ NGUYÊN PHẦN NÀY
-VÌ CHECK SAU CRYY VẪN DÙNG
+GIỮ NGUYÊN
 */
 
 function distanceToRectEdge(x, y, rect) {
@@ -640,12 +634,8 @@ function distanceToRectEdge(x, y, rect) {
 /*
 UPDATE EXPRESSION
 
-ĐÃ SỬA:
-
-KHÔNG CÒN 110PX.
-
-CHỈ ĐỔI HÌNH KHI CHUỘT
-THỰC SỰ VÀO TRONG KHUNG.
+CHỈ KHI CHUỘT THỰC SỰ
+NẰM TRONG KHUNG
 */
 
 function updateExpression() {
@@ -662,10 +652,6 @@ function updateExpression() {
         no.getBoundingClientRect();
 
 
-    /*
-    MOUSE TRONG YES
-    */
-
     if (
         isMouseInsideRect(
             mouseX,
@@ -681,10 +667,6 @@ function updateExpression() {
     }
 
 
-    /*
-    MOUSE TRONG NO
-    */
-
     if (
         isMouseInsideRect(
             mouseX,
@@ -698,12 +680,6 @@ function updateExpression() {
         return;
 
     }
-
-
-    /*
-    NGOÀI CẢ HAI NÚT
-    GIỮ NGUYÊN HÌNH HIỆN TẠI
-    */
 
 }
 
@@ -721,6 +697,7 @@ document.addEventListener(
         mouseY = event.clientY;
 
         updateExpression();
+
 
         /*
         CURSOR
@@ -768,7 +745,7 @@ document.addEventListener(
 /*
 CHECK AFTER CRYY
 
-GIỮ NGUYÊN CƠ CHẾ CŨ
+GIỮ NGUYÊN
 */
 
 function checkAfterCryy() {
@@ -828,7 +805,18 @@ function moveNo() {
     no.classList.add("running");
 
 
+    /*
+    KHOẢNG CÁCH AN TOÀN
+    VỚI MÉP MÀN HÌNH
+    */
+
     const padding = 25;
+
+
+    /*
+    LẤY KÍCH THƯỚC THỰC TẾ
+    CỦA NÚT NO
+    */
 
     const buttonWidth =
         no.offsetWidth;
@@ -837,15 +825,32 @@ function moveNo() {
         no.offsetHeight;
 
 
+    /*
+    GIỚI HẠN X/Y
+
+    NÚT LUÔN NẰM HOÀN TOÀN
+    TRONG MÀN HÌNH
+    */
+
+    const minX = padding;
+
+    const minY = padding;
+
     const maxX =
-        window.innerWidth -
-        buttonWidth -
-        padding;
+        Math.max(
+            minX,
+            window.innerWidth -
+            buttonWidth -
+            padding
+        );
 
     const maxY =
-        window.innerHeight -
-        buttonHeight -
-        padding;
+        Math.max(
+            minY,
+            window.innerHeight -
+            buttonHeight -
+            padding
+        );
 
 
     let newX;
@@ -862,12 +867,14 @@ function moveNo() {
     do {
 
         newX =
-            padding +
-            Math.random() * maxX;
+            minX +
+            Math.random() *
+            (maxX - minX);
 
         newY =
-            padding +
-            Math.random() * maxY;
+            minY +
+            Math.random() *
+            (maxY - minY);
 
         attempts++;
 
@@ -908,6 +915,30 @@ function moveNo() {
     }
 
     while (attempts < 100);
+
+
+    /*
+    ĐẢM BẢO LẦN CUỐI
+    KHÔNG VƯỢT KHỎI MÀN HÌNH
+    */
+
+    newX =
+        Math.max(
+            minX,
+            Math.min(
+                newX,
+                maxX
+            )
+        );
+
+    newY =
+        Math.max(
+            minY,
+            Math.min(
+                newY,
+                maxY
+            )
+        );
 
 
     previousNoX = newX;
@@ -952,10 +983,6 @@ no.addEventListener(
         }
 
 
-        /*
-        CRYY NGAY LẬP TỨC
-        */
-
         changeCharacter("cryy.png");
 
 
@@ -975,7 +1002,7 @@ no.addEventListener(
 
 
         /*
-        TIMER MỚI 2 GIÂY
+        TIMER MỚI
         */
 
         cryyTimer =
