@@ -29,7 +29,6 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-
     font-family: Arial, sans-serif;
 }
 
@@ -39,14 +38,11 @@ body {
 ========================================= */
 
 body {
-
     background-color: #000;
 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
-    transition: none;
 }
 
 
@@ -60,24 +56,19 @@ body {
     height: 100vh;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
     position: relative;
 
-    overflow: hidden;
-
-    /*
-       Cụm nội dung cao hơn
-    */
-
     padding-bottom: 7vh;
+
+    overflow: hidden;
 }
 
 
 /* =========================================
-   KHUNG BAO QUANH
+   KHUNG CHÍNH
 ========================================= */
 
 .question-box {
@@ -86,14 +77,12 @@ body {
 
     min-height: 500px;
 
-    padding: 35px 35px 40px;
+    padding: 35px;
 
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -102,29 +91,14 @@ body {
 
     z-index: 10;
 
-
-    /*
-       Nền hồng nổi hơn nền ngoài
-    */
-
     background:
-        rgba(255, 190, 208, 0.82);
+        rgba(255, 190, 208, 0.84);
 
-
-    /*
-       Khung
-    */
-
-    border: 2px solid
-        rgba(255, 255, 255, 0.75);
-
+    border:
+        2px solid
+        rgba(255, 255, 255, 0.78);
 
     border-radius: 28px;
-
-
-    /*
-       Bóng nhẹ
-    */
 
     box-shadow:
 
@@ -158,7 +132,6 @@ body {
 }
 
 .character.fade-out {
-
     opacity: 0;
 }
 
@@ -188,7 +161,7 @@ body {
 
 
 /* =========================================
-   YES
+   KHU VỰC YES + NO
 ========================================= */
 
 .buttons {
@@ -199,9 +172,19 @@ body {
 
     align-items: center;
 
-    width: 100%;
+    gap: 30px;
+
+    width: 250px;
+
+    height: 50px;
+
+    position: relative;
 }
 
+
+/* =========================================
+   NÚT CHUNG
+========================================= */
 
 .choice {
 
@@ -227,7 +210,6 @@ body {
 
 
 .choice:hover {
-
     transform: scale(1.05);
 }
 
@@ -252,6 +234,12 @@ body {
    NO
 ========================================= */
 
+/*
+   QUAN TRỌNG:
+   Ban đầu No vẫn nằm trong flex,
+   nên KHÔNG THỂ ĐÈ LÊN YES.
+*/
+
 .no {
 
     background: white;
@@ -261,15 +249,19 @@ body {
     box-shadow:
         0 6px 18px
         rgba(0, 0, 0, 0.18);
+}
+
+
+/*
+   Sau khi No chạy,
+   JS mới thêm class này.
+*/
+
+.no.running {
 
     position: fixed;
 
     z-index: 50;
-
-    /*
-       Không transition vị trí
-       để teleport ngay lập tức
-    */
 
     transition:
         transform 0.15s ease,
@@ -278,7 +270,7 @@ body {
 
 
 /* =========================================
-   LỚP TỐI SAU 5 LẦN NO
+   NỀN U ÁM
 ========================================= */
 
 .dark-overlay {
@@ -286,6 +278,7 @@ body {
     position: fixed;
 
     left: 0;
+
     top: -100%;
 
     width: 100%;
@@ -294,8 +287,8 @@ body {
     background:
         linear-gradient(
             to bottom,
-            rgba(15, 10, 25, 0.94),
-            rgba(30, 20, 40, 0.90)
+            rgba(15, 10, 25, 0.96),
+            rgba(30, 20, 40, 0.93)
         );
 
     z-index: 100;
@@ -308,6 +301,8 @@ body {
 
 .dark-overlay.show {
 
+    pointer-events: auto;
+
     animation:
         darkFall
         1.2s
@@ -319,23 +314,106 @@ body {
 @keyframes darkFall {
 
     0% {
-
         top: -100%;
-
         opacity: 0;
     }
 
     30% {
+        opacity: 0.55;
+    }
 
-        opacity: 0.5;
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+
+/* =========================================
+   RESET
+========================================= */
+
+.reset {
+
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.8);
+
+    width: 120px;
+    height: 48px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #ff8fab;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    z-index: 101;
+
+    display: none;
+
+    opacity: 0;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+.reset.show {
+
+    display: block;
+
+    animation:
+        resetAppear
+        0.5s
+        ease-out
+        forwards;
+}
+
+
+@keyframes resetAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.8);
     }
 
     100% {
 
-        top: 0;
-
         opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
     }
+}
+
+
+.reset:hover {
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.05);
 }
 
 
@@ -346,7 +424,6 @@ body {
 @media (max-width: 600px) {
 
     .page {
-
         padding-bottom: 5vh;
     }
 
@@ -358,9 +435,7 @@ body {
         min-height: 450px;
 
         padding:
-            28px
-            20px
-            32px;
+            28px 20px 32px;
 
         border-radius: 24px;
     }
@@ -382,6 +457,14 @@ body {
         padding: 0 8px;
 
         margin-bottom: 24px;
+    }
+
+
+    .buttons {
+
+        width: 230px;
+
+        gap: 25px;
     }
 
 
@@ -433,7 +516,7 @@ body {
         </div>
 
 
-        <!-- YES -->
+        <!-- YES + NO -->
 
         <div class="buttons">
 
@@ -444,33 +527,38 @@ body {
                 Yes
             </button>
 
+
+            <button
+                class="choice no"
+                id="no"
+            >
+                No
+            </button>
+
         </div>
 
 
     </div>
 
-
-    <!-- =================================
-         NO
-    ================================= -->
-
-    <button
-        class="choice no"
-        id="no"
-    >
-        No
-    </button>
-
-
 </div>
 
 
-<!-- NỀN TỐI -->
+<!-- NỀN U ÁM -->
 
 <div
     class="dark-overlay"
     id="darkOverlay"
 ></div>
+
+
+<!-- RESET -->
+
+<button
+    class="reset"
+    id="reset"
+>
+    Reset
+</button>
 
 
 
@@ -493,6 +581,9 @@ const no =
 const darkOverlay =
     document.getElementById("darkOverlay");
 
+const reset =
+    document.getElementById("reset");
+
 
 
 /* =========================================
@@ -502,11 +593,8 @@ const darkOverlay =
 const backgrounds = [
 
     "bground.png",
-
     "bground1.png",
-
     "bground2.png",
-
     "bground3.png"
 
 ];
@@ -522,7 +610,6 @@ document.body.style.backgroundImage =
 setInterval(function() {
 
     backgroundIndex++;
-
 
     if (
         backgroundIndex >=
@@ -542,7 +629,7 @@ setInterval(function() {
 
 
 /* =========================================
-   ĐỔI ẢNH NHÂN VẬT
+   ĐỔI ẢNH
 ========================================= */
 
 let currentCharacter =
@@ -554,9 +641,7 @@ function changeCharacter(newImage) {
     if (
         currentCharacter === newImage
     ) {
-
         return;
-
     }
 
 
@@ -572,7 +657,6 @@ function changeCharacter(newImage) {
 
         character.src = newImage;
 
-
         character.classList.remove(
             "fade-out"
         );
@@ -584,185 +668,18 @@ function changeCharacter(newImage) {
 
 
 /* =========================================
-   SỐ LẦN NHẤN NO
+   ĐẾM NO
 ========================================= */
 
 let noCount = 0;
 
 
-
 /* =========================================
-   VỊ TRÍ NO BAN ĐẦU
-========================================= */
-
-function setInitialNoPosition() {
-
-    const yesRect =
-        yes.getBoundingClientRect();
-
-
-    no.style.left =
-        (
-            yesRect.right + 25
-        ) + "px";
-
-
-    no.style.top =
-        (
-            yesRect.top
-        ) + "px";
-
-}
-
-
-setInitialNoPosition();
-
-
-
-/* =========================================
-   LƯU VỊ TRÍ NO
+   VỊ TRÍ CŨ CỦA NO
 ========================================= */
 
 let previousNoX = null;
 let previousNoY = null;
-
-
-
-/* =========================================
-   DI CHUYỂN NO
-========================================= */
-
-function moveNo() {
-
-    const padding = 25;
-
-    const buttonWidth =
-        no.offsetWidth;
-
-    const buttonHeight =
-        no.offsetHeight;
-
-
-    const maxX =
-        window.innerWidth
-        - buttonWidth
-        - padding;
-
-
-    const maxY =
-        window.innerHeight
-        - buttonHeight
-        - padding;
-
-
-    let newX;
-    let newY;
-
-    let attempts = 0;
-
-
-    /*
-       Khoảng cách tối thiểu
-       giữa vị trí cũ và mới
-
-       Mỗi lần càng lớn
-    */
-
-    const minimumDistance =
-        150 + noCount * 35;
-
-
-    do {
-
-        newX =
-            padding
-            +
-            Math.random()
-            * maxX;
-
-
-        newY =
-            padding
-            +
-            Math.random()
-            * maxY;
-
-
-        attempts++;
-
-
-        /*
-           Nếu chưa có vị trí cũ
-           thì dùng luôn vị trí mới
-        */
-
-        if (
-            previousNoX === null
-        ) {
-
-            break;
-
-        }
-
-
-        const distance =
-            Math.sqrt(
-
-                Math.pow(
-                    newX - previousNoX,
-                    2
-                )
-
-                +
-
-                Math.pow(
-                    newY - previousNoY,
-                    2
-                )
-
-            );
-
-
-        /*
-           Chỉ chấp nhận nếu
-           đủ xa vị trí cũ
-        */
-
-        if (
-            distance >=
-            minimumDistance
-        ) {
-
-            break;
-
-        }
-
-    }
-    while (
-        attempts < 100
-    );
-
-
-    /*
-       Lưu vị trí mới
-    */
-
-    previousNoX = newX;
-
-    previousNoY = newY;
-
-
-    /*
-       TELEPORT NGAY
-    */
-
-    no.style.left =
-        newX + "px";
-
-    no.style.top =
-        newY + "px";
-
-}
 
 
 
@@ -773,6 +690,13 @@ function moveNo() {
 document.addEventListener(
     "mousemove",
     function(event) {
+
+        if (
+            noCount >= 5
+        ) {
+            return;
+        }
+
 
         const rect =
             no.getBoundingClientRect();
@@ -826,6 +750,148 @@ document.addEventListener(
 
 
 /* =========================================
+   DI CHUYỂN NO
+========================================= */
+
+function moveNo() {
+
+    /*
+       Chuyển No từ flex
+       sang fixed
+    */
+
+    no.classList.add(
+        "running"
+    );
+
+
+    const padding = 25;
+
+
+    const buttonWidth =
+        no.offsetWidth;
+
+    const buttonHeight =
+        no.offsetHeight;
+
+
+    const maxX =
+        window.innerWidth
+        -
+        buttonWidth
+        -
+        padding;
+
+
+    const maxY =
+        window.innerHeight
+        -
+        buttonHeight
+        -
+        padding;
+
+
+    let newX;
+    let newY;
+
+    let attempts = 0;
+
+
+    /*
+       Càng bấm nhiều
+       càng chạy xa
+    */
+
+    const minimumDistance =
+        170
+        +
+        noCount * 40;
+
+
+    do {
+
+        newX =
+            padding
+            +
+            Math.random()
+            * maxX;
+
+
+        newY =
+            padding
+            +
+            Math.random()
+            * maxY;
+
+
+        attempts++;
+
+
+        if (
+            previousNoX === null
+        ) {
+
+            break;
+
+        }
+
+
+        const distance =
+            Math.sqrt(
+
+                Math.pow(
+                    newX
+                    -
+                    previousNoX,
+                    2
+                )
+
+                +
+
+                Math.pow(
+                    newY
+                    -
+                    previousNoY,
+                    2
+                )
+
+            );
+
+
+        if (
+            distance >=
+            minimumDistance
+        ) {
+
+            break;
+
+        }
+
+    }
+    while (
+        attempts < 100
+    );
+
+
+    previousNoX = newX;
+    previousNoY = newY;
+
+
+    /*
+       NHẢY NGAY LẬP TỨC
+    */
+
+    no.style.left =
+        newX + "px";
+
+    no.style.top =
+        newY + "px";
+
+}
+
+
+
+/* =========================================
    NHẤN NO
 ========================================= */
 
@@ -836,11 +902,18 @@ no.addEventListener(
         event.preventDefault();
 
 
+        if (
+            noCount >= 5
+        ) {
+            return;
+        }
+
+
         noCount++;
 
 
         /*
-           ĐỔI SANG CRY
+           Đổi sang cryy
         */
 
         changeCharacter(
@@ -849,22 +922,38 @@ no.addEventListener(
 
 
         /*
-           NO CHẠY XA HƠN
+           No chạy ngay
         */
 
         moveNo();
 
 
         /*
-           SAU 5 LẦN
+           LẦN THỨ 5
         */
 
         if (
             noCount >= 5
         ) {
 
+            yes.disabled = true;
+            no.disabled = true;
+
+
             darkOverlay.classList.add(
                 "show"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    reset.classList.add(
+                        "show"
+                    );
+
+                },
+                1250
             );
 
         }
@@ -882,8 +971,29 @@ yes.addEventListener(
     "click",
     function() {
 
-        window.location.href =
-            "page3.html";
+        if (
+            noCount < 5
+        ) {
+
+            window.location.href =
+                "page3.html";
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   RESET
+========================================= */
+
+reset.addEventListener(
+    "click",
+    function() {
+
+        window.location.reload();
 
     }
 );
@@ -897,6 +1007,21 @@ yes.addEventListener(
 window.addEventListener(
     "resize",
     function() {
+
+        /*
+           Nếu No chưa chạy,
+           flex tự căn nên không cần
+           chỉnh vị trí.
+        */
+
+        if (
+            !no.classList.contains(
+                "running"
+            )
+        ) {
+            return;
+        }
+
 
         const rect =
             no.getBoundingClientRect();
@@ -937,7 +1062,6 @@ window.addEventListener(
 
     }
 );
-
 
 </script>
 
