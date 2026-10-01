@@ -828,6 +828,15 @@ let cryyLockUntil = 0;
 
 
 /*
+   Timer của lần nhấn No hiện tại.
+   Mỗi lần nhấn No mới sẽ hủy timer cũ
+   và tạo lại timer 2 giây.
+*/
+
+let cryyTimer = null;
+
+
+/*
    Sau khi bấm No,
    cryy được giữ ít nhất 2 giây.
 */
@@ -875,38 +884,70 @@ function isMouseInsideRect(
 
 
 /* =========================================
-   KHOẢNG CÁCH TỚI TÂM
+   KHOẢNG CÁCH TỪ CHUỘT ĐẾN RÌA KHUNG
 ========================================= */
 
-function distanceToRectCenter(
+function distanceToRectEdge(
     x,
     y,
     rect
 ) {
 
-    const centerX =
-        rect.left
-        +
-        rect.width / 2;
+    /*
+       Nếu chuột đang ở trong khung
+       thì khoảng cách tới rìa được tính
+       là 0.
+    */
+
+    if (
+        isMouseInsideRect(
+            x,
+            y,
+            rect
+        )
+    ) {
+
+        return 0;
+
+    }
 
 
-    const centerY =
-        rect.top
-        +
-        rect.height / 2;
+    /*
+       Tìm điểm gần nhất trên rìa
+       của khung chữ nhật.
+    */
+
+    const closestX =
+        Math.max(
+            rect.left,
+            Math.min(
+                x,
+                rect.right
+            )
+        );
+
+
+    const closestY =
+        Math.max(
+            rect.top,
+            Math.min(
+                y,
+                rect.bottom
+            )
+        );
 
 
     return Math.sqrt(
 
         Math.pow(
-            x - centerX,
+            x - closestX,
             2
         )
 
         +
 
         Math.pow(
-            y - centerY,
+            y - closestY,
             2
         )
 
@@ -922,9 +963,8 @@ function distanceToRectCenter(
 function updateExpression() {
 
     /*
-       Nếu đang trong 2 giây
-       sau khi bấm No
-       → GIỮ CRYY
+       Trong 2 giây sau khi bấm No
+       → KHÔNG ĐỔI CRYY
     */
 
     if (
@@ -953,24 +993,8 @@ function updateExpression() {
         no.getBoundingClientRect();
 
 
-    const insideYes =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        );
-
-
-    const insideNo =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            noRect
-        );
-
-
     const distanceToYes =
-        distanceToRectCenter(
+        distanceToRectEdge(
             mouseX,
             mouseY,
             yesRect
@@ -978,7 +1002,7 @@ function updateExpression() {
 
 
     const distanceToNo =
-        distanceToRectCenter(
+        distanceToRectEdge(
             mouseX,
             mouseY,
             noRect
@@ -987,14 +1011,15 @@ function updateExpression() {
 
     /*
        =================================
-       GẦN / TRONG YES
+       YES
+       Nằm trong hoặc cách RÌA YES
+       không quá 110px
        → SMILEE
        =================================
     */
 
     if (
-        insideYes ||
-        distanceToYes < 110
+        distanceToYes <= 110
     ) {
 
         changeCharacter(
@@ -1008,14 +1033,15 @@ function updateExpression() {
 
     /*
        =================================
-       GẦN / TRONG NO
+       NO
+       Nằm trong hoặc cách RÌA NO
+       không quá 110px
        → HUHH
        =================================
     */
 
     if (
-        insideNo ||
-        distanceToNo < 110
+        distanceToNo <= 110
     ) {
 
         changeCharacter(
@@ -1029,7 +1055,7 @@ function updateExpression() {
 
     /*
        =================================
-       XA CẢ YES VÀ NO
+       XA CẢ HAI
        → GIỮ BIỂU CẢM HIỆN TẠI
        =================================
     */
@@ -1072,24 +1098,8 @@ function checkAfterCryy() {
         yes.getBoundingClientRect();
 
 
-    const insideNo =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            noRect
-        );
-
-
-    const insideYes =
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        );
-
-
     const distanceToNo =
-        distanceToRectCenter(
+        distanceToRectEdge(
             mouseX,
             mouseY,
             noRect
@@ -1097,7 +1107,7 @@ function checkAfterCryy() {
 
 
     const distanceToYes =
-        distanceToRectCenter(
+        distanceToRectEdge(
             mouseX,
             mouseY,
             yesRect
@@ -1107,14 +1117,13 @@ function checkAfterCryy() {
     /*
        =================================
        SAU 2 GIÂY
-       GẦN / TRONG NO
+       TRONG / GẦN RÌA NO
        → GIỮ CRYY
        =================================
     */
 
     if (
-        insideNo ||
-        distanceToNo < 110
+        distanceToNo <= 110
     ) {
 
         changeCharacter(
@@ -1129,14 +1138,13 @@ function checkAfterCryy() {
     /*
        =================================
        SAU 2 GIÂY
-       GẦN / TRONG YES
+       TRONG / GẦN RÌA YES
        → SMILEE
        =================================
     */
 
     if (
-        insideYes ||
-        distanceToYes < 110
+        distanceToYes <= 110
     ) {
 
         changeCharacter(
@@ -1336,8 +1344,26 @@ no.addEventListener(
 
 
         /*
-           TỪ HUHH
-           → CRYY NGAY
+           =================================
+           HỦY TIMER CŨ
+           =================================
+        */
+
+        if (
+            cryyTimer !== null
+        ) {
+
+            clearTimeout(
+                cryyTimer
+            );
+
+        }
+
+
+        /*
+           =================================
+           CRYY NGAY LẬP TỨC
+           =================================
         */
 
         changeCharacter(
@@ -1346,7 +1372,9 @@ no.addEventListener(
 
 
         /*
-           Khóa cryy 2 giây
+           =================================
+           RESET LẠI 2 GIÂY
+           =================================
         */
 
         cryyLockUntil =
@@ -1356,35 +1384,49 @@ no.addEventListener(
 
 
         /*
-           No chạy
+           =================================
+           NO CHẠY
+           =================================
         */
 
         moveNo();
 
 
         /*
-           Sau đúng 2 giây
-           kiểm tra vị trí chuột
+           =================================
+           TẠO TIMER 2 GIÂY MỚI
+           =================================
         */
 
-        setTimeout(
-            function() {
+        cryyTimer =
+            setTimeout(
+                function() {
 
-                if (
-                    noCount < 5
-                ) {
+                    /*
+                       Chỉ xử lý nếu đây
+                       vẫn là trạng thái
+                       hiện tại.
+                    */
 
-                    checkAfterCryy();
+                    if (
+                        noCount < 5
+                    ) {
 
-                }
+                        checkAfterCryy();
 
-            },
-            2000
-        );
+                    }
+
+                    cryyTimer = null;
+
+                },
+                2000
+            );
 
 
         /*
+           =================================
            LẦN THỨ 5
+           =================================
         */
 
         if (
