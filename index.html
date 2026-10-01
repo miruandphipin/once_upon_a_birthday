@@ -25,6 +25,11 @@ body {
     overflow: hidden;
 }
 
+
+/* =========================================
+   CONTAINER
+========================================= */
+
 .container {
     width: 100%;
     display: flex;
@@ -41,14 +46,17 @@ body {
 
 .custom-cursor {
     position: fixed;
+
     width: 45px;
     height: 45px;
+
     object-fit: contain;
 
     left: 0;
     top: 0;
 
     pointer-events: none;
+
     z-index: 99999;
 
     transform: translate(-8px, -8px);
@@ -66,13 +74,20 @@ body {
     height: 7px;
 
     background: #ff8fab;
+
     border-radius: 50%;
 
     pointer-events: none;
+
     z-index: 99998;
 
-    animation: trailFade 0.6s ease-out forwards;
+    animation:
+        trailFade
+        0.6s
+        ease-out
+        forwards;
 }
+
 
 @keyframes trailFade {
 
@@ -98,11 +113,13 @@ body {
     height: 180px;
 
     object-fit: contain;
+
     user-select: none;
 
     --heart-scale: 1;
 
-    transform: scale(var(--heart-scale));
+    transform:
+        scale(var(--heart-scale));
 
     animation:
         gentleWiggle
@@ -110,6 +127,7 @@ body {
         ease-in-out
         infinite;
 }
+
 
 .heart.pop {
     animation:
@@ -129,6 +147,7 @@ body {
     color: #ff8fab;
 
     font-size: 20px;
+
     font-weight: 600;
 
     letter-spacing: 1px;
@@ -144,6 +163,7 @@ body {
 ========================================= */
 
 .next {
+
     display: none;
 
     width: 130px;
@@ -152,20 +172,33 @@ body {
     border: 3px solid #ff8fab;
 
     background: white;
+
     color: #ff8fab;
 
     font-size: 18px;
+
     font-weight: bold;
 
     align-items: center;
     justify-content: center;
 
     text-align: center;
+
+    cursor: pointer;
+
+    user-select: none;
 }
 
+
 .next.show {
+
     display: flex;
-    animation: appear 0.5s ease-out forwards;
+
+    animation:
+        appear
+        0.5s
+        ease-out
+        forwards;
 }
 
 
@@ -174,6 +207,7 @@ body {
 ========================================= */
 
 .star {
+
     position: fixed;
 
     width: 7px;
@@ -192,9 +226,11 @@ body {
         forwards;
 }
 
+
 @keyframes starFly {
 
     0% {
+
         opacity: 1;
 
         transform:
@@ -204,6 +240,7 @@ body {
     }
 
     100% {
+
         opacity: 0;
 
         transform:
@@ -222,24 +259,28 @@ body {
 @keyframes gentleWiggle {
 
     0%, 100% {
+
         transform:
             scale(var(--heart-scale))
             rotate(0deg);
     }
 
     25% {
+
         transform:
             scale(var(--heart-scale))
             rotate(-3deg);
     }
 
     50% {
+
         transform:
             scale(var(--heart-scale))
             rotate(3deg);
     }
 
     75% {
+
         transform:
             scale(var(--heart-scale))
             rotate(-2deg);
@@ -255,16 +296,23 @@ body {
 @keyframes heartPop {
 
     0% {
+
         transform:
-            scale(calc(var(--heart-scale) * 0.82));
+            scale(
+                calc(var(--heart-scale) * 0.82)
+            );
     }
 
     55% {
+
         transform:
-            scale(calc(var(--heart-scale) * 1.12));
+            scale(
+                calc(var(--heart-scale) * 1.12)
+            );
     }
 
     100% {
+
         transform:
             scale(var(--heart-scale));
     }
@@ -279,6 +327,7 @@ body {
 @keyframes disappear {
 
     0% {
+
         opacity: 1;
 
         transform:
@@ -286,6 +335,7 @@ body {
     }
 
     100% {
+
         opacity: 0;
 
         transform:
@@ -302,12 +352,16 @@ body {
 @keyframes appear {
 
     0% {
+
         opacity: 0;
+
         transform: scale(0);
     }
 
     100% {
+
         opacity: 1;
+
         transform: scale(1);
     }
 
@@ -316,16 +370,18 @@ body {
 
 /* =========================================
    📱 VÒNG NƯỚC
-   MỎNG - NHẸ - TỐI ĐA 10 VÒNG
 ========================================= */
 
 .touch-ripple {
+
     position: fixed;
 
     width: 22px;
     height: 22px;
 
-    border: 1px solid rgba(255, 143, 171, 0.6);
+    border:
+        1px solid
+        rgba(255, 143, 171, 0.6);
 
     border-radius: 50%;
 
@@ -345,11 +401,10 @@ body {
 }
 
 
-/* 💧 LAN RA → NHỎ DẦN → BIẾN MẤT */
-
 @keyframes rippleWater {
 
     0% {
+
         opacity: 0.65;
 
         transform:
@@ -358,6 +413,7 @@ body {
     }
 
     35% {
+
         opacity: 0.5;
 
         transform:
@@ -366,6 +422,7 @@ body {
     }
 
     70% {
+
         opacity: 0.2;
 
         transform:
@@ -374,6 +431,7 @@ body {
     }
 
     100% {
+
         opacity: 0;
 
         transform:
@@ -413,11 +471,13 @@ body {
 @media (max-width: 600px) {
 
     .heart {
+
         width: 140px;
         height: 140px;
     }
 
     .press {
+
         font-size: 18px;
     }
 
@@ -429,7 +489,7 @@ body {
 <body>
 
 
-<!-- 🎁 CON TRỎ QUÀ TRÊN MÁY TÍNH -->
+<!-- 🎁 CON TRỎ QUÀ -->
 
 <img
     src="Qu%C3%A0%20Veloria%20.png"
@@ -440,6 +500,7 @@ body {
 
 
 <div class="container">
+
 
     <!-- 💗 TRÁI TIM -->
 
@@ -470,10 +531,16 @@ body {
         next ♡
     </div>
 
+
 </div>
 
 
 <script>
+
+
+/* =========================================
+   ELEMENT
+========================================= */
 
 const cursor =
     document.getElementById("customCursor");
@@ -518,6 +585,7 @@ document.addEventListener(
         trail.style.top =
             event.clientY + "px";
 
+
         document.body.appendChild(trail);
 
 
@@ -533,7 +601,6 @@ document.addEventListener(
 
 /* =========================================
    📱 QUẢN LÝ VÒNG NƯỚC
-   CHỈ GIỮ TỐI ĐA 10 VÒNG
 ========================================= */
 
 const touchRipples = [];
@@ -541,27 +608,28 @@ const touchRipples = [];
 
 function createTouchEffect(x, y) {
 
-    /* Nếu đã có 10 vòng thì xóa vòng cũ nhất */
-
-    if (touchRipples.length >= 10) {
+    if (
+        touchRipples.length >= 10
+    ) {
 
         const oldRipple =
             touchRipples.shift();
 
         if (oldRipple) {
+
             oldRipple.remove();
+
         }
 
     }
 
-
-    /* 💧 TẠO VÒNG MỚI */
 
     const ripple =
         document.createElement("div");
 
     ripple.className =
         "touch-ripple";
+
 
     ripple.style.left =
         x + "px";
@@ -575,15 +643,18 @@ function createTouchEffect(x, y) {
     touchRipples.push(ripple);
 
 
-    /* Khi animation kết thúc thì xóa */
-
     setTimeout(function() {
 
         const index =
             touchRipples.indexOf(ripple);
 
         if (index !== -1) {
-            touchRipples.splice(index, 1);
+
+            touchRipples.splice(
+                index,
+                1
+            );
+
         }
 
         ripple.remove();
@@ -591,9 +662,7 @@ function createTouchEffect(x, y) {
     }, 1100);
 
 
-    /* =================================
-       ✨ BỤI SAO
-    ================================= */
+    /* ✨ BỤI SAO */
 
     for (
         let i = 0;
@@ -623,7 +692,8 @@ function createTouchEffect(x, y) {
 
         const distance =
             20
-            + Math.random() * 45;
+            +
+            Math.random() * 45;
 
 
         star.style.setProperty(
@@ -667,6 +737,7 @@ document.addEventListener(
         const touch =
             event.touches[0];
 
+
         createTouchEffect(
             touch.clientX,
             touch.clientY
@@ -685,6 +756,7 @@ document.addEventListener(
 
 let lastTouchTime = 0;
 
+
 document.addEventListener(
     "touchmove",
     function(event) {
@@ -693,13 +765,12 @@ document.addEventListener(
             Date.now();
 
 
-        /* Giới hạn tạo vòng
-           để không bị quá dày */
-
         if (
             now - lastTouchTime < 120
         ) {
+
             return;
+
         }
 
 
@@ -753,9 +824,11 @@ heart.addEventListener(
         createStars();
 
 
-        /* 💗 LẦN 3 */
+        /* LẦN 3 */
 
-        if (clicks === 3) {
+        if (
+            clicks === 3
+        ) {
 
             heart.style.pointerEvents =
                 "none";
@@ -767,8 +840,10 @@ heart.addEventListener(
                     heart.style.animation =
                         "disappear 0.45s ease forwards";
 
+
                     press.style.transition =
                         "opacity 0.3s";
+
 
                     press.style.opacity =
                         "0";
@@ -784,8 +859,10 @@ heart.addEventListener(
                     heart.style.display =
                         "none";
 
+
                     press.style.display =
                         "none";
+
 
                     next.classList.add(
                         "show"
@@ -813,12 +890,14 @@ function createStars() {
 
     const centerX =
         rect.left
-        + rect.width / 2;
+        +
+        rect.width / 2;
 
 
     const centerY =
         rect.top
-        + rect.height / 2;
+        +
+        rect.height / 2;
 
 
     for (
@@ -850,7 +929,8 @@ function createStars() {
 
         const distance =
             60
-            + Math.random() * 100;
+            +
+            Math.random() * 100;
 
 
         star.style.setProperty(
@@ -887,7 +967,7 @@ function createStars() {
 
 
 /* =========================================
-   ➡️ NEXT
+   ➡️ NEXT → PAGE 2
 ========================================= */
 
 next.addEventListener(
@@ -895,7 +975,7 @@ next.addEventListener(
     function() {
 
         window.location.href =
-            "page2.html";
+            "./page2.html";
 
     }
 );
