@@ -1,1209 +1,1153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>♡</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            cursor: none;
+        }
 
-<title>♡</title>
+        body {
+            background-color: #ffc0cb;
 
-<style>
+            background-image:
+                repeating-linear-gradient(
+                    90deg,
+                    #fff8fa 0px,
+                    #fff8fa 50px,
+                    #ffc0cb 50px,
+                    #ffc0cb 80px
+                );
 
-* {
-    box-sizing: border-box;
-}
+            background-size: 130px 100%;
+            animation: stripeMove 4s linear infinite;
+        }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    cursor: none;
-}
+        @keyframes stripeMove {
+            0% {
+                background-position: 0 0;
+            }
 
+            100% {
+                background-position: 130px 0;
+            }
+        }
 
-/* BACKGROUND */
+        /* =========================
+           CUSTOM CURSOR
+        ========================= */
 
-body {
-    width: 100vw;
-    height: 100vh;
+        .custom-cursor {
+            position: fixed;
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
 
-    background-color: #ffc0cb;
+            left: 0;
+            top: 0;
 
-    background-image:
-        repeating-linear-gradient(
-            90deg,
-            #fff8fa 0px,
-            #fff8fa 50px,
-            #ffc0cb 50px,
-            #ffc0cb 80px
-        );
+            pointer-events: none;
+            z-index: 99999;
 
-    background-size: 130px 100%;
+            transform: translate(-8px, -8px);
+        }
 
-    animation: stripeMove 4s linear infinite;
-}
+        .cursor-trail {
+            position: fixed;
 
-@keyframes stripeMove {
+            width: 7px;
+            height: 7px;
 
-    0% {
-        background-position: 0 0;
-    }
+            background: #ff8fab;
+            border-radius: 50%;
 
-    100% {
-        background-position: 130px 0;
-    }
+            pointer-events: none;
+            z-index: 99998;
 
-}
+            animation: trailFade 0.6s ease-out forwards;
+        }
 
+        @keyframes trailFade {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
 
-/* MAIN FRAME */
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
 
-.question-box {
+        /* =========================
+           MAIN BOX
+        ========================= */
 
-    position: absolute;
+        .question-box {
+            position: absolute;
 
-    left: 50%;
-    top: 47%;
+            left: 50%;
+            top: 47%;
 
-    transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 
-    width: min(88vw, 560px);
+            width: min(88vw, 560px);
+            min-height: 500px;
 
-    min-height: 500px;
+            padding: 40px 30px;
 
-    padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-    display: flex;
+            gap: 25px;
 
-    flex-direction: column;
+            background: rgba(255, 190, 208, 0.88);
 
-    align-items: center;
+            border: 3px solid white;
+            border-radius: 28px;
 
-    justify-content: center;
+            box-shadow:
+                0 15px 40px rgba(255, 90, 130, 0.25);
+        }
 
-    gap: 25px;
+        /* =========================
+           CHARACTER
+        ========================= */
 
-    background: rgba(255, 190, 208, 0.88);
+        .character {
+            width: 480px;
+            height: 480px;
 
-    border: 3px solid white;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
 
-    border-radius: 28px;
+        /* =========================
+           QUESTION
+        ========================= */
 
-    box-shadow:
-        0 15px 40px rgba(255, 100, 150, 0.25);
+        .question {
+            color: white;
 
-}
+            font-family: Arial, sans-serif;
 
+            font-size: 22px;
+            font-weight: 600;
 
-/* CHARACTER */
+            text-align: center;
 
-.character {
+            line-height: 1.4;
 
-    width: 180px;
-    height: 180px;
+            text-shadow:
+                0 2px 4px rgba(255, 100, 140, 0.35);
+        }
 
-    object-fit: contain;
+        /* =========================
+           BUTTONS
+        ========================= */
 
-    flex-shrink: 0;
-}
+        .buttons {
+            width: 250px;
+            height: 50px;
 
+            display: flex;
+            flex-direction: row;
 
-/* QUESTION */
+            align-items: center;
+            justify-content: center;
 
-.question {
+            gap: 30px;
+        }
 
-    color: white;
+        .choice {
+            width: 110px;
+            height: 48px;
 
-    font-size: 24px;
+            border: none;
+            border-radius: 12px;
 
-    font-weight: 500;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
 
-    text-align: center;
+            cursor: none;
 
-    line-height: 1.4;
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
 
-    max-width: 460px;
+        .choice:hover {
+            transform: scale(1.05);
+        }
 
-    text-shadow:
-        0 2px 8px rgba(255, 80, 130, 0.25);
-}
+        .yes {
+            background: #ff7fa3;
+            color: white;
 
+            box-shadow:
+                0 5px 12px rgba(255, 80, 120, 0.25);
+        }
 
-/* BUTTON AREA */
+        .no {
+            background: white;
+            color: #ff7fa3;
 
-.buttons {
+            box-shadow:
+                0 5px 12px rgba(255, 255, 255, 0.35);
+        }
 
-    display: flex;
+        /*
+            Ban đầu No nằm trong flex.
+            Sau lần click đầu tiên mới chuyển sang fixed.
+        */
 
-    flex-direction: row;
+        .no.running {
+            position: fixed;
 
-    align-items: center;
+            z-index: 50;
 
-    justify-content: center;
+            margin: 0;
 
-    width: 250px;
+            box-shadow: none;
+        }
 
-    height: 50px;
+        /* =========================
+           DARK OVERLAY
+        ========================= */
 
-    gap: 30px;
-}
+        .dark-overlay {
+            position: fixed;
 
+            inset: 0;
 
-/* BUTTON */
+            background: rgba(35, 20, 30, 0.82);
 
-.choice {
+            z-index: 100;
 
-    width: 110px;
-    height: 48px;
+            transform: translateY(-100%);
 
-    border-radius: 12px;
+            transition:
+                transform 1.25s ease;
+        }
 
-    border: none;
+        .dark-overlay.show {
+            transform: translateY(0);
+        }
 
-    font-size: 18px;
+        /* =========================
+           RESET
+        ========================= */
 
-    font-weight: 600;
+        .reset {
+            position: fixed;
 
-    font-family: Arial, sans-serif;
+            left: 50%;
+            top: 50%;
 
-    cursor: none;
-}
+            transform: translate(-50%, -50%);
 
+            z-index: 200;
 
-/* YES */
+            width: 120px;
+            height: 48px;
 
-.yes {
+            border: none;
+            border-radius: 12px;
 
-    background: #ff7fa3;
+            background: white;
+            color: #ff7fa3;
 
-    color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
 
-    box-shadow:
-        0 6px 15px rgba(255, 80, 130, 0.25);
-}
+            cursor: none;
 
+            opacity: 0;
+            pointer-events: none;
 
-/* NO */
+            transition:
+                opacity 0.5s ease;
+        }
 
-.no {
+        .reset.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    background: white;
+        /* =========================
+           MOBILE
+        ========================= */
 
-    color: #ff7fa3;
+        @media (max-width: 600px) {
 
-    box-shadow: none;
-}
+            .question-box {
+                width: 88vw;
+                min-height: 470px;
 
+                padding: 30px 20px;
+            }
 
-/* NO BUTTON AFTER FIRST CLICK */
+            .character {
+                width: 240px;
+                height: 240px;
+            }
 
-.no.running {
+            .question {
+                font-size: 20px;
+            }
 
-    position: fixed;
+            .buttons {
+                width: 230px;
+                gap: 20px;
+            }
 
-    z-index: 50;
+            .choice {
+                width: 105px;
+            }
+        }
 
-    margin: 0;
+        /* =========================
+           TOUCH DEVICES
+        ========================= */
 
-    box-shadow: none;
-}
+        @media (hover: none) {
 
+            html,
+            body {
+                cursor: auto;
+            }
 
-/* DARK OVERLAY */
+            .custom-cursor,
+            .cursor-trail {
+                display: none;
+            }
 
-.dark-overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(35, 20, 30, 0.82);
-
-    z-index: 100;
-
-    transform: translateY(-100%);
-
-    transition: transform 1.25s ease;
-
-    pointer-events: none;
-}
-
-
-.dark-overlay.show {
-
-    transform: translateY(0);
-}
-
-
-/* RESET */
-
-.reset {
-
-    position: fixed;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform:
-        translate(-50%, -50%)
-        translateY(30px);
-
-    z-index: 200;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    padding: 13px 30px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: white;
-
-    color: #ff7fa3;
-
-    font-size: 18px;
-
-    font-weight: 600;
-
-    font-family: Arial, sans-serif;
-
-    cursor: none;
-
-    transition:
-        opacity 0.4s ease,
-        transform 0.4s ease;
-}
-
-
-.reset.show {
-
-    opacity: 1;
-
-    pointer-events: auto;
-
-    transform:
-        translate(-50%, -50%)
-        translateY(0);
-}
-
-
-/* CUSTOM CURSOR */
-
-.custom-cursor {
-
-    position: fixed;
-
-    width: 45px;
-    height: 45px;
-
-    object-fit: contain;
-
-    left: 0;
-    top: 0;
-
-    pointer-events: none;
-
-    z-index: 99999;
-
-    transform:
-        translate(-8px, -8px);
-}
-
-
-/* CURSOR TRAIL */
-
-.cursor-trail {
-
-    position: fixed;
-
-    width: 7px;
-    height: 7px;
-
-    background: #ff8fab;
-
-    border-radius: 50%;
-
-    pointer-events: none;
-
-    z-index: 99998;
-
-    animation:
-        trailFade 0.6s ease-out forwards;
-}
-
-
-@keyframes trailFade {
-
-    0% {
-        opacity: 0.8;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0);
-    }
-
-}
-
-
-/* MOBILE */
-
-@media (hover: none) {
-
-    html,
-    body {
-        cursor: auto;
-    }
-
-    .custom-cursor {
-        display: none;
-    }
-
-    .cursor-trail {
-        display: none;
-    }
-
-    .choice {
-        cursor: pointer;
-    }
-
-    .reset {
-        cursor: pointer;
-    }
-
-}
-
-
-/* SMALL SCREEN */
-
-@media (max-width: 600px) {
-
-    .question-box {
-
-        width: 88vw;
-
-        min-height: 470px;
-
-        padding: 30px 20px;
-
-    }
-
-    .character {
-
-        width: 480px;
-        height: 480px;
-
-    }
-
-    .question {
-
-        font-size: 20px;
-
-    }
-
-    .buttons {
-
-        width: 230px;
-
-        gap: 20px;
-
-    }
-
-    .choice {
-
-        width: 105px;
-
-    }
-
-}
-
-</style>
+            .choice,
+            .reset {
+                cursor: pointer;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-
-<!-- MAIN -->
-
-<div class="question-box">
-
+    <!-- CUSTOM CURSOR -->
     <img
-        src="smilee.png"
-        id="character"
-        class="character"
+        src="Qu%C3%A0%20Veloria%20.png"
+        class="custom-cursor"
+        id="customCursor"
         alt=""
     >
 
-    <div class="question">
-        Do you want to go on a date with me bibi?
+    <!-- MAIN -->
+    <div class="question-box">
+
+        <img
+            src="smilee.png"
+            class="character"
+            id="character"
+            alt=""
+        >
+
+        <div class="question">
+            Do you want to go on a date with me bibi?
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="choice yes"
+                id="yes"
+            >
+                Yes
+            </button>
+
+            <button
+                class="choice no"
+                id="no"
+            >
+                No
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="buttons">
+    <!-- DARK SCREEN AFTER 5 NO CLICKS -->
+    <div
+        class="dark-overlay"
+        id="darkOverlay"
+    ></div>
 
-        <button
-            class="choice yes"
-            id="yes"
-        >
-            Yes
-        </button>
-
-        <button
-            class="choice no"
-            id="no"
-        >
-            No
-        </button>
-
-    </div>
-
-</div>
+    <!-- RESET -->
+    <button
+        class="reset"
+        id="reset"
+    >
+        Reset
+    </button>
 
 
-<!-- DARK OVERLAY -->
+    <script>
 
-<div
-    class="dark-overlay"
-    id="darkOverlay"
-></div>
+        const character =
+            document.getElementById("character");
 
+        const yes =
+            document.getElementById("yes");
 
-<!-- RESET -->
+        const no =
+            document.getElementById("no");
 
-<button
-    class="reset"
-    id="reset"
->
-    Reset
-</button>
+        const darkOverlay =
+            document.getElementById("darkOverlay");
 
+        const reset =
+            document.getElementById("reset");
 
-<!-- CUSTOM CURSOR -->
-
-<img
-    src="Qu%C3%A0%20Veloria%20.png"
-    class="custom-cursor"
-    id="customCursor"
-    alt=""
->
+        const cursor =
+            document.getElementById("customCursor");
 
 
-<script>
+        /* =========================
+           CHARACTER
+        ========================= */
+
+        let currentCharacter = "smilee.png";
+
+        function changeCharacter(newImage) {
+
+            if (currentCharacter === newImage) {
+                return;
+            }
+
+            currentCharacter = newImage;
+
+            character.src = newImage;
+        }
 
 
-const character =
-    document.getElementById("character");
+        /* =========================
+           NO COUNT
+        ========================= */
 
-const yes =
-    document.getElementById("yes");
+        let noCount = 0;
 
-const no =
-    document.getElementById("no");
-
-const darkOverlay =
-    document.getElementById("darkOverlay");
-
-const reset =
-    document.getElementById("reset");
-
-const cursor =
-    document.getElementById("customCursor");
+        let previousNoX = null;
+        let previousNoY = null;
 
 
-/*
-CHARACTER
-*/
+        /* =========================
+           CRYY TIMER
+        ========================= */
 
-let currentCharacter = "smilee.png";
+        let cryyLockUntil = 0;
 
+        let cryyTimer = null;
 
-function changeCharacter(newImage) {
-
-    if (currentCharacter === newImage) return;
-
-    currentCharacter = newImage;
-
-    character.src = newImage;
-}
+        function isCryyLocked() {
+            return Date.now() < cryyLockUntil;
+        }
 
 
-/*
-NO COUNT
-*/
+        /* =========================
+           MOUSE POSITION
+        ========================= */
 
-let noCount = 0;
-
-let previousNoX = null;
-
-let previousNoY = null;
+        let mouseX = 0;
+        let mouseY = 0;
 
 
-/*
-CRYY LOCK
-*/
+        /* =========================
+           RECTANGLE CHECK
+        ========================= */
 
-let cryyLockUntil = 0;
+        function isMouseInsideRect(x, y, rect) {
 
-let cryyTimer = null;
-
-
-function isCryyLocked() {
-
-    return Date.now() < cryyLockUntil;
-
-}
-
-
-/*
-MOUSE POSITION
-*/
-
-let mouseX = 0;
-
-let mouseY = 0;
+            return (
+                x >= rect.left &&
+                x <= rect.right &&
+                y >= rect.top &&
+                y <= rect.bottom
+            );
+        }
 
 
-/*
-CHECK MOUSE INSIDE RECTANGLE
-*/
+        function distanceToRectEdge(x, y, rect) {
 
-function isMouseInsideRect(x, y, rect) {
+            if (
+                isMouseInsideRect(
+                    x,
+                    y,
+                    rect
+                )
+            ) {
+                return 0;
+            }
 
-    return (
-        x >= rect.left &&
-        x <= rect.right &&
-        y >= rect.top &&
-        y <= rect.bottom
-    );
+            const closestX =
+                Math.max(
+                    rect.left,
+                    Math.min(
+                        x,
+                        rect.right
+                    )
+                );
 
-}
+            const closestY =
+                Math.max(
+                    rect.top,
+                    Math.min(
+                        y,
+                        rect.bottom
+                    )
+                );
+
+            return Math.sqrt(
+                Math.pow(
+                    x - closestX,
+                    2
+                ) +
+                Math.pow(
+                    y - closestY,
+                    2
+                )
+            );
+        }
 
 
-/*
-DISTANCE TO RECT EDGE
+        /* =========================
+           EXPRESSION
+        ========================= */
 
-GIỮ NGUYÊN
-*/
+        function updateExpression() {
 
-function distanceToRectEdge(x, y, rect) {
+            if (isCryyLocked()) {
+                return;
+            }
 
-    if (isMouseInsideRect(x, y, rect)) {
+            if (noCount >= 5) {
+                return;
+            }
 
-        return 0;
+            const yesRect =
+                yes.getBoundingClientRect();
 
-    }
+            const noRect =
+                no.getBoundingClientRect();
 
-    const closestX =
-        Math.max(
-            rect.left,
-            Math.min(x, rect.right)
+
+            /*
+                CHỈ đổi mặt khi chuột
+                thật sự nằm trong nút.
+            */
+
+            if (
+                isMouseInsideRect(
+                    mouseX,
+                    mouseY,
+                    yesRect
+                )
+            ) {
+
+                changeCharacter(
+                    "smilee.png"
+                );
+
+                return;
+            }
+
+
+            if (
+                isMouseInsideRect(
+                    mouseX,
+                    mouseY,
+                    noRect
+                )
+            ) {
+
+                changeCharacter(
+                    "huhh.png"
+                );
+
+                return;
+            }
+
+            /*
+                Nếu chuột nằm ngoài cả
+                hai nút thì giữ nguyên.
+            */
+        }
+
+
+        /* =========================
+           MOUSE MOVE
+        ========================= */
+
+        document.addEventListener(
+            "mousemove",
+            function(event) {
+
+                mouseX =
+                    event.clientX;
+
+                mouseY =
+                    event.clientY;
+
+
+                updateExpression();
+
+
+                /* Cursor */
+
+                cursor.style.left =
+                    event.clientX + "px";
+
+                cursor.style.top =
+                    event.clientY + "px";
+
+
+                /* Pink trail */
+
+                const trail =
+                    document.createElement("div");
+
+                trail.className =
+                    "cursor-trail";
+
+                trail.style.left =
+                    event.clientX + "px";
+
+                trail.style.top =
+                    event.clientY + "px";
+
+                document.body.appendChild(
+                    trail
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        trail.remove();
+
+                    },
+                    600
+                );
+            }
         );
 
-    const closestY =
-        Math.max(
-            rect.top,
-            Math.min(y, rect.bottom)
+
+        /* =========================
+           AFTER CRYY
+        ========================= */
+
+        function checkAfterCryy() {
+
+            const noRect =
+                no.getBoundingClientRect();
+
+            const yesRect =
+                yes.getBoundingClientRect();
+
+
+            const distanceToNo =
+                distanceToRectEdge(
+                    mouseX,
+                    mouseY,
+                    noRect
+                );
+
+
+            const distanceToYes =
+                distanceToRectEdge(
+                    mouseX,
+                    mouseY,
+                    yesRect
+                );
+
+
+            if (distanceToNo <= 110) {
+
+                changeCharacter(
+                    "cryy.png"
+                );
+
+                return;
+            }
+
+
+            if (distanceToYes <= 110) {
+
+                changeCharacter(
+                    "smilee.png"
+                );
+
+                return;
+            }
+
+
+            changeCharacter(
+                "huhh.png"
+            );
+        }
+
+
+        /* =========================
+           MOVE NO BUTTON
+        ========================= */
+
+        function moveNo() {
+
+            no.classList.add(
+                "running"
+            );
+
+
+            const rect =
+                no.getBoundingClientRect();
+
+
+            const buttonWidth =
+                rect.width;
+
+            const buttonHeight =
+                rect.height;
+
+
+            const viewportWidth =
+                window.visualViewport
+                    ? window.visualViewport.width
+                    : window.innerWidth;
+
+
+            const viewportHeight =
+                window.visualViewport
+                    ? window.visualViewport.height
+                    : window.innerHeight;
+
+
+            const padding = 25;
+
+
+            const minX =
+                padding;
+
+            const minY =
+                padding;
+
+
+            const maxX =
+                Math.max(
+                    minX,
+                    viewportWidth -
+                    buttonWidth -
+                    padding
+                );
+
+
+            const maxY =
+                Math.max(
+                    minY,
+                    viewportHeight -
+                    buttonHeight -
+                    padding
+                );
+
+
+            /*
+                Khoảng cách tối thiểu
+                tăng dần sau mỗi lần click.
+            */
+
+            const minimumDistance =
+                170 +
+                noCount * 40;
+
+
+            let newX =
+                minX;
+
+            let newY =
+                minY;
+
+
+            let foundPosition =
+                false;
+
+
+            for (
+                let i = 0;
+                i < 100;
+                i++
+            ) {
+
+                const candidateX =
+                    minX +
+                    Math.random() *
+                    (maxX - minX);
+
+
+                const candidateY =
+                    minY +
+                    Math.random() *
+                    (maxY - minY);
+
+
+                if (
+                    previousNoX === null ||
+                    previousNoY === null
+                ) {
+
+                    newX =
+                        candidateX;
+
+                    newY =
+                        candidateY;
+
+                    foundPosition =
+                        true;
+
+                    break;
+                }
+
+
+                const distance =
+                    Math.sqrt(
+                        Math.pow(
+                            candidateX -
+                            previousNoX,
+                            2
+                        ) +
+                        Math.pow(
+                            candidateY -
+                            previousNoY,
+                            2
+                        )
+                    );
+
+
+                if (
+                    distance >=
+                    minimumDistance
+                ) {
+
+                    newX =
+                        candidateX;
+
+                    newY =
+                        candidateY;
+
+                    foundPosition =
+                        true;
+
+                    break;
+                }
+            }
+
+
+            if (!foundPosition) {
+
+                newX =
+                    minX +
+                    Math.random() *
+                    (maxX - minX);
+
+                newY =
+                    minY +
+                    Math.random() *
+                    (maxY - minY);
+            }
+
+
+            /* Clamp */
+
+            newX =
+                Math.max(
+                    minX,
+                    Math.min(
+                        newX,
+                        maxX
+                    )
+                );
+
+
+            newY =
+                Math.max(
+                    minY,
+                    Math.min(
+                        newY,
+                        maxY
+                    )
+                );
+
+
+            no.style.left =
+                newX + "px";
+
+            no.style.top =
+                newY + "px";
+
+
+            /*
+                Kiểm tra lần cuối
+                để nút không ra ngoài màn hình.
+            */
+
+            const finalRect =
+                no.getBoundingClientRect();
+
+
+            let correctedX =
+                newX;
+
+            let correctedY =
+                newY;
+
+
+            if (
+                finalRect.left <
+                padding
+            ) {
+
+                correctedX =
+                    padding;
+            }
+
+
+            if (
+                finalRect.top <
+                padding
+            ) {
+
+                correctedY =
+                    padding;
+            }
+
+
+            if (
+                finalRect.right >
+                viewportWidth -
+                padding
+            ) {
+
+                correctedX =
+                    viewportWidth -
+                    buttonWidth -
+                    padding;
+            }
+
+
+            if (
+                finalRect.bottom >
+                viewportHeight -
+                padding
+            ) {
+
+                correctedY =
+                    viewportHeight -
+                    buttonHeight -
+                    padding;
+            }
+
+
+            correctedX =
+                Math.max(
+                    minX,
+                    Math.min(
+                        correctedX,
+                        maxX
+                    )
+                );
+
+
+            correctedY =
+                Math.max(
+                    minY,
+                    Math.min(
+                        correctedY,
+                        maxY
+                    )
+                );
+
+
+            no.style.left =
+                correctedX + "px";
+
+            no.style.top =
+                correctedY + "px";
+
+
+            previousNoX =
+                correctedX;
+
+            previousNoY =
+                correctedY;
+        }
+
+
+        /* =========================
+           NO BUTTON
+        ========================= */
+
+        no.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                if (noCount >= 5) {
+                    return;
+                }
+
+
+                noCount++;
+
+
+                /*
+                    Xóa timer cũ
+                    để mỗi click bắt đầu
+                    lại 2 giây.
+                */
+
+                if (cryyTimer) {
+
+                    clearTimeout(
+                        cryyTimer
+                    );
+                }
+
+
+                /*
+                    Đổi sang cryy
+                    ngay lập tức.
+                */
+
+                changeCharacter(
+                    "cryy.png"
+                );
+
+
+                /*
+                    Khóa cryy 2 giây.
+                */
+
+                cryyLockUntil =
+                    Date.now() + 2000;
+
+
+                /*
+                    Di chuyển nút No.
+                */
+
+                moveNo();
+
+
+                /*
+                    Sau 2 giây.
+                */
+
+                cryyTimer =
+                    setTimeout(
+                        function() {
+
+                            if (
+                                noCount < 5
+                            ) {
+
+                                checkAfterCryy();
+                            }
+
+                        },
+                        2000
+                    );
+
+
+                /*
+                    Sau 5 lần No.
+                */
+
+                if (noCount >= 5) {
+
+                    yes.disabled =
+                        true;
+
+                    no.disabled =
+                        true;
+
+
+                    darkOverlay.classList.add(
+                        "show"
+                    );
+
+
+                    setTimeout(
+                        function() {
+
+                            reset.classList.add(
+                                "show"
+                            );
+
+                        },
+                        1250
+                    );
+                }
+            }
         );
 
-    return Math.sqrt(
 
-        Math.pow(
-            x - closestX,
-            2
-        )
+        /* =========================
+           YES BUTTON
+        ========================= */
 
-        +
-
-        Math.pow(
-            y - closestY,
-            2
-        )
-
-    );
-
-}
-
-
-/*
-UPDATE EXPRESSION
-
-CHỈ KHI CHUỘT
-THỰC SỰ TRONG KHUNG
-*/
-
-function updateExpression() {
-
-    if (isCryyLocked()) return;
-
-    if (noCount >= 5) return;
-
-
-    const yesRect =
-        yes.getBoundingClientRect();
-
-    const noRect =
-        no.getBoundingClientRect();
-
-
-    if (
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            yesRect
-        )
-    ) {
-
-        changeCharacter("smilee.png");
-
-        return;
-
-    }
-
-
-    if (
-        isMouseInsideRect(
-            mouseX,
-            mouseY,
-            noRect
-        )
-    ) {
-
-        changeCharacter("huhh.png");
-
-        return;
-
-    }
-
-}
-
-
-/*
-MOUSE MOVE
-*/
-
-document.addEventListener(
-    "mousemove",
-    function(event) {
-
-        mouseX = event.clientX;
-
-        mouseY = event.clientY;
-
-        updateExpression();
-
-
-        cursor.style.left =
-            event.clientX + "px";
-
-        cursor.style.top =
-            event.clientY + "px";
-
-
-        const trail =
-            document.createElement("div");
-
-        trail.className =
-            "cursor-trail";
-
-        trail.style.left =
-            event.clientX + "px";
-
-        trail.style.top =
-            event.clientY + "px";
-
-        document.body.appendChild(trail);
-
-
-        setTimeout(
+        yes.addEventListener(
+            "click",
             function() {
 
-                trail.remove();
-
-            },
-            600
-        );
-
-    }
-);
+                if (noCount >= 5) {
+                    return;
+                }
 
 
-/*
-CHECK AFTER CRYY
-
-GIỮ NGUYÊN
-*/
-
-function checkAfterCryy() {
-
-    const noRect =
-        no.getBoundingClientRect();
-
-    const yesRect =
-        yes.getBoundingClientRect();
-
-
-    const distanceToNo =
-        distanceToRectEdge(
-            mouseX,
-            mouseY,
-            noRect
+                window.location.href =
+                    "./page3.html";
+            }
         );
 
 
-    const distanceToYes =
-        distanceToRectEdge(
-            mouseX,
-            mouseY,
-            yesRect
+        /* =========================
+           RESET
+        ========================= */
+
+        reset.addEventListener(
+            "click",
+            function() {
+
+                window.location.reload();
+            }
         );
 
-
-    if (distanceToNo <= 110) {
-
-        changeCharacter("cryy.png");
-
-        return;
-
-    }
-
-
-    if (distanceToYes <= 110) {
-
-        changeCharacter("smilee.png");
-
-        return;
-
-    }
-
-
-    changeCharacter("huhh.png");
-
-}
-
-
-/*
-MOVE NO BUTTON
-
-ĐÃ SỬA ĐỂ KHÔNG THỂ
-CHẠY RA KHỎI MÀN HÌNH
-*/
-
-function moveNo() {
-
-    no.classList.add("running");
-
-
-    /*
-    ĐỢI TRÌNH DUYỆT TÍNH LẠI
-    KÍCH THƯỚC/VỊ TRÍ NÚT
-    */
-
-    const rect =
-        no.getBoundingClientRect();
-
-
-    const buttonWidth =
-        rect.width;
-
-    const buttonHeight =
-        rect.height;
-
-
-    /*
-    LẤY VIEWPORT THỰC TẾ
-    */
-
-    let viewportWidth =
-        window.innerWidth;
-
-    let viewportHeight =
-        window.innerHeight;
-
-
-    if (window.visualViewport) {
-
-        viewportWidth =
-            window.visualViewport.width;
-
-        viewportHeight =
-            window.visualViewport.height;
-
-    }
-
-
-    /*
-    KHOẢNG CÁCH AN TOÀN
-    */
-
-    const padding = 25;
-
-
-    /*
-    GIỚI HẠN TUYỆT ĐỐI
-    */
-
-    const minX =
-        padding;
-
-    const minY =
-        padding;
-
-
-    const maxX =
-        Math.max(
-            minX,
-            viewportWidth -
-            buttonWidth -
-            padding
-        );
-
-
-    const maxY =
-        Math.max(
-            minY,
-            viewportHeight -
-            buttonHeight -
-            padding
-        );
-
-
-    let newX;
-
-    let newY;
-
-    let attempts = 0;
-
-
-    const minimumDistance =
-        170 + noCount * 40;
-
-
-    /*
-    TÌM VỊ TRÍ MỚI
-    */
-
-    do {
-
-        newX =
-            minX +
-            Math.random() *
-            (maxX - minX);
-
-        newY =
-            minY +
-            Math.random() *
-            (maxY - minY);
-
-        attempts++;
-
-
-        if (previousNoX === null) {
-
-            break;
-
-        }
-
-
-        const distance =
-            Math.sqrt(
-
-                Math.pow(
-                    newX - previousNoX,
-                    2
-                )
-
-                +
-
-                Math.pow(
-                    newY - previousNoY,
-                    2
-                )
-
-            );
-
-
-        if (
-            distance >= minimumDistance
-        ) {
-
-            break;
-
-        }
-
-    }
-
-    while (attempts < 100);
-
-
-    /*
-    KHÓA LẠI TRONG MÀN HÌNH
-    */
-
-    newX =
-        Math.max(
-            minX,
-            Math.min(
-                newX,
-                maxX
-            )
-        );
-
-
-    newY =
-        Math.max(
-            minY,
-            Math.min(
-                newY,
-                maxY
-            )
-        );
-
-
-    /*
-    ĐẶT VỊ TRÍ
-    */
-
-    no.style.left =
-        newX + "px";
-
-    no.style.top =
-        newY + "px";
-
-
-    /*
-    KIỂM TRA LẠI SAU KHI ĐẶT
-
-    Nếu trình duyệt vẫn tính lệch,
-    tự động kéo nút vào lại màn hình.
-    */
-
-    const finalRect =
-        no.getBoundingClientRect();
-
-
-    let correctedX =
-        newX;
-
-    let correctedY =
-        newY;
-
-
-    if (finalRect.left < padding) {
-
-        correctedX +=
-            padding - finalRect.left;
-
-    }
-
-
-    if (finalRect.top < padding) {
-
-        correctedY +=
-            padding - finalRect.top;
-
-    }
-
-
-    if (
-        finalRect.right >
-        viewportWidth - padding
-    ) {
-
-        correctedX -=
-            finalRect.right -
-            (viewportWidth - padding);
-
-    }
-
-
-    if (
-        finalRect.bottom >
-        viewportHeight - padding
-    ) {
-
-        correctedY -=
-            finalRect.bottom -
-            (viewportHeight - padding);
-
-    }
-
-
-    /*
-    KHÓA LẦN CUỐI
-    */
-
-    correctedX =
-        Math.max(
-            minX,
-            Math.min(
-                correctedX,
-                maxX
-            )
-        );
-
-
-    correctedY =
-        Math.max(
-            minY,
-            Math.min(
-                correctedY,
-                maxY
-            )
-        );
-
-
-    no.style.left =
-        correctedX + "px";
-
-    no.style.top =
-        correctedY + "px";
-
-
-    previousNoX =
-        correctedX;
-
-    previousNoY =
-        correctedY;
-
-}
-
-
-/*
-NO CLICK
-*/
-
-no.addEventListener(
-    "click",
-    function(event) {
-
-        event.preventDefault();
-
-
-        if (noCount >= 5) return;
-
-
-        noCount++;
-
-
-        /*
-        RESET TIMER CŨ
-        */
-
-        if (cryyTimer !== null) {
-
-            clearTimeout(cryyTimer);
-
-        }
-
-
-        changeCharacter("cryy.png");
-
-
-        /*
-        RESET 2 GIÂY
-        */
-
-        cryyLockUntil =
-            Date.now() + 2000;
-
-
-        /*
-        MOVE NO
-        */
-
-        moveNo();
-
-
-        /*
-        TIMER MỚI
-        */
-
-        cryyTimer =
-            setTimeout(
-                function() {
-
-                    if (noCount < 5) {
-
-                        checkAfterCryy();
-
-                    }
-
-                    cryyTimer = null;
-
-                },
-                2000
-            );
-
-
-        /*
-        5 LẦN NO
-        */
-
-        if (noCount >= 5) {
-
-            yes.disabled = true;
-
-            no.disabled = true;
-
-
-            darkOverlay.classList.add("show");
-
-
-            setTimeout(
-                function() {
-
-                    reset.classList.add("show");
-
-                },
-                1250
-            );
-
-        }
-
-    }
-);
-
-
-/*
-YES CLICK
-*/
-
-yes.addEventListener(
-    "click",
-    function() {
-
-        if (noCount < 5) {
-
-            window.location.href =
-                "page3.html";
-
-        }
-
-    }
-);
-
-
-/*
-RESET
-*/
-
-reset.addEventListener(
-    "click",
-    function() {
-
-        window.location.reload();
-
-    }
-);
-
-</script>
+    </script>
 
 </body>
 </html>
