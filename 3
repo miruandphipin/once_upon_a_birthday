@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading ♡</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #fff0f4;
+        }
+
+        /* KHUNG NGOÀI */
+
+        .loading-frame {
+            width: min(100%, 520px);
+            min-height: 480px;
+            padding: 40px 28px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid #ff9fbd;
+            border-radius: 30px;
+
+            box-shadow:
+                0 8px 30px rgba(255, 143, 171, 0.12);
+        }
+
+        /* KHU VỰC ẢNH */
+
+        .couple-area {
+            width: min(280px, 75vw);
+            height: auto;
+
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+
+            flex-shrink: 0;
+        }
+
+        .couple-track {
+            width: 100%;
+            height: 140px;
+
+            position: relative;
+        }
+
+        .couple {
+            position: absolute;
+
+            width: 196px;
+            height: 140px;
+
+            left: 0;
+            bottom: 0;
+
+            object-fit: contain;
+            object-position: center bottom;
+
+            transform-origin: center bottom;
+
+            animation:
+                coupleMove 3s ease-in-out infinite,
+                jiggle 1.2s ease-in-out infinite;
+        }
+
+        @keyframes coupleMove {
+            0% {
+                left: 0;
+            }
+
+            75% {
+                left: calc(100% - 196px);
+            }
+
+            100% {
+                left: calc(100% - 196px);
+            }
+        }
+
+        @keyframes jiggle {
+            0% {
+                transform: rotate(-5deg);
+            }
+
+            50% {
+                transform: rotate(5deg);
+            }
+
+            100% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        /* ĐƯỜNG ĐẤT GỒ GHỀ - 2PX */
+
+        .ground {
+            display: block;
+            width: 100%;
+            height: 16px;
+            margin-top: 1px;
+            overflow: visible;
+        }
+
+        .ground path {
+            fill: none;
+            stroke: #c5a17e;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* THANH TIẾN ĐỘ */
+
+        .progress-container {
+            position: relative;
+
+            width: min(280px, 75vw);
+            height: 24px;
+
+            margin-top: 30px;
+
+            /* Khoảng cách 2px giữa sọc và viền */
+            padding: 2px;
+
+            border: 2px solid #ff8fab;
+            border-radius: 999px;
+
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        /* SỌC CHÉO TRẮNG - HỒNG */
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+
+            border-radius: 999px;
+
+            background: repeating-linear-gradient(
+                120deg,
+                #ffffff 0px,
+                #ffffff 12px,
+                #f7b6ca 12px,
+                #f7b6ca 24px
+            );
+
+            transition: width 0.05s linear;
+        }
+
+        /* PHẦN TRĂM */
+
+        .progress-percent {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #c96f91;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            text-shadow: 0 0 2px #ffffff;
+
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* CHỮ LOADING */
+
+        .loading-text {
+            margin-top: 14px;
+
+            color: #e982a3;
+
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+
+            text-align: center;
+            min-height: 22px;
+            letter-spacing: 1px;
+        }
+
+        /* ĐIỆN THOẠI */
+
+        @media (max-width: 600px) {
+            .loading-frame {
+                min-height: 420px;
+                padding: 30px 20px;
+                border-radius: 25px;
+            }
+
+            .couple-area,
+            .progress-container {
+                width: min(240px, 75vw);
+            }
+
+            .couple-track {
+                height: 110px;
+            }
+
+            .couple {
+                width: 168px;
+                height: 110px;
+            }
+
+            @keyframes coupleMove {
+                0% {
+                    left: 0;
+                }
+
+                75% {
+                    left: calc(100% - 168px);
+                }
+
+                100% {
+                    left: calc(100% - 168px);
+                }
+            }
+
+            .progress-container {
+                margin-top: 25px;
+            }
+
+            .loading-text {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="loading-frame">
+
+        <!-- ẢNH COUPLE -->
+
+        <div class="couple-area">
+
+            <div class="couple-track">
+
+                <img
+                    src="couple.png"
+                    alt="Couple"
+                    class="couple"
+                >
+
+            </div>
+
+            <!-- ĐƯỜNG ĐẤT GỒ GHỀ -->
+
+            <svg
+                class="ground"
+                viewBox="0 0 280 16"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+            >
+                <path
+                    d="M 1,7
+                       L 12,6
+                       L 22,8
+                       L 35,5
+                       L 47,7
+                       L 59,6
+                       L 71,9
+                       L 84,6
+                       L 96,7
+                       L 108,4
+                       L 121,7
+                       L 134,6
+                       L 146,8
+                       L 159,5
+                       L 171,7
+                       L 184,6
+                       L 197,9
+                       L 210,5
+                       L 223,7
+                       L 236,6
+                       L 249,8
+                       L 262,5
+                       L 279,7"
+                />
+            </svg>
+
+        </div>
+
+        <!-- THANH LOADING -->
+
+        <div
+            class="progress-container"
+            role="progressbar"
+            aria-label="Loading"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            id="progressContainer"
+        >
+
+            <div
+                class="progress-fill"
+                id="progressFill"
+            ></div>
+
+            <div
+                class="progress-percent"
+                id="progressPercent"
+            >
+                0%
+            </div>
+
+        </div>
+
+        <!-- CHỮ LOADING -->
+
+        <div
+            class="loading-text"
+            id="loadingText"
+        >
+            loading.
+        </div>
+
+    </main>
+
+    <script>
+        /* CHỮ LOADING THAY ĐỔI */
+
+        const loadingText =
+            document.getElementById("loadingText");
+
+        const loadingMessages = [
+            "loading.",
+            "loading. .",
+            "loading. . ."
+        ];
+
+        let messageIndex = 0;
+
+        setInterval(function () {
+            messageIndex =
+                (messageIndex + 1) %
+                loadingMessages.length;
+
+            loadingText.textContent =
+                loadingMessages[messageIndex];
+
+        }, 500);
+
+
+        /* THANH TIẾN ĐỘ VÀ PHẦN TRĂM */
+
+        const progressFill =
+            document.getElementById("progressFill");
+
+        const progressPercent =
+            document.getElementById("progressPercent");
+
+        const progressContainer =
+            document.getElementById("progressContainer");
+
+        let progress = 0;
+
+        function updateProgress() {
+            progress += 1;
+
+            if (progress > 100) {
+                progress = 0;
+            }
+
+            progressFill.style.width =
+                progress + "%";
+
+            progressPercent.textContent =
+                progress + "%";
+
+            progressContainer.setAttribute(
+                "aria-valuenow",
+                progress
+            );
+        }
+
+        setInterval(updateProgress, 30);
+    </script>
+
+</body>
+</html>
