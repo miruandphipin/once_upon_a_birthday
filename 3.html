@@ -31,15 +31,19 @@
 
     /* Trang loading luôn tồn tại bên dưới cửa sổ */
 
-    .loading-screen {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+ 
+.loading-screen {
+  width: 560px;
+  min-height: 420px;
+  max-width: 94vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
 
     .loading-title {
       margin: 0 0 12px;
@@ -143,26 +147,27 @@
 
     /* Cửa sổ nổi */
 
-    .dessert-window {
-      position: fixed;
-      z-index: 10;
-      top: 50%;
-      left: 50%;
-      width: min(430px, calc(100vw - 30px));
-      overflow: hidden;
-      border: 2px solid #e8a1bd;
-      border-radius: 11px;
-      background: #fff;
-      box-shadow:
-        0 12px 35px rgba(155, 80, 112, 0.23),
-        0 0 0 4px rgba(255, 255, 255, 0.7);
-      transform: translate(-50%, -50%);
-      animation: windowAppear 0.35s ease-out;
-    }
+  
+.dessert-window {
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  width: min(400px, calc(100vw - 30px));
+  overflow: hidden;
+  border: 2px solid #e8a1bd;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow:
+    0 12px 35px rgba(155, 80, 112, 0.23),
+    0 0 0 4px rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, -50%);
+  animation: windowAppear 0.35s ease-out;
+}
 
-    .dessert-window.hidden {
-      display: none;
-    }
+.dessert-window.hidden {
+  display: none;
+}
 
     @keyframes windowAppear {
       from {
