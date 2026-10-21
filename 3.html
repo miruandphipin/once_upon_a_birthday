@@ -51,7 +51,7 @@
 
         /* KHU VỰC ẢNH */
 
-        .couple-area {
+        .couple(1)-area {
             width: min(280px, 75vw);
             height: auto;
 
@@ -62,14 +62,14 @@
             flex-shrink: 0;
         }
 
-        .couple-track {
+        .couple(1)-track {
             width: 100%;
             height: 140px;
 
             position: relative;
         }
 
-        .couple {
+        .couple(1) {
             position: absolute;
 
             width: 196px;
@@ -84,11 +84,11 @@
             transform-origin: center bottom;
 
             animation:
-                coupleMove 3s ease-in-out infinite,
+                couple(1)Move 3s ease-in-out infinite,
                 jiggle 1.2s ease-in-out infinite;
         }
 
-        @keyframes coupleMove {
+        @keyframes couple(1)Move {
             0% {
                 left: 0;
             }
@@ -219,21 +219,21 @@
                 border-radius: 25px;
             }
 
-            .couple-area,
+            .couple(1)-area,
             .progress-container {
                 width: min(240px, 75vw);
             }
 
-            .couple-track {
+            .couple(1)-track {
                 height: 110px;
             }
 
-            .couple {
+            .couple(1) {
                 width: 168px;
                 height: 110px;
             }
 
-            @keyframes coupleMove {
+            @keyframes couple(1)Move {
                 0% {
                     left: 0;
                 }
@@ -262,16 +262,16 @@
 
     <main class="loading-frame">
 
-        <!-- ẢNH COUPLE -->
+        <!-- ẢNH couple(1) -->
 
-        <div class="couple-area">
+        <div class="couple(1)-area">
 
-            <div class="couple-track">
+            <div class="couple(1)-track">
 
                 <img
-                    src="couple.png"
-                    alt="Couple"
-                    class="couple"
+                    src="couple(1).png"
+                    alt="couple(1)"
+                    class="couple(1)"
                 >
 
             </div>
