@@ -2,399 +2,782 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading ♡</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miru's Loading...</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        html,
-        body {
-            margin: 0;
-            width: 100%;
-            min-height: 100%;
-            font-family: Arial, sans-serif;
-        }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background: repeating-linear-gradient(
+        135deg,
+        #ffeaf2 0px,
+        #ffeaf2 18px,
+        #fff7fa 18px,
+        #fff7fa 36px
+      );
+      color: #7c435a;
+    }
 
-        body {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: #fff0f4;
-        }
+    .loading-screen {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        /* KHUNG NGOÀI */
+    .loading-title {
+      margin: 0 0 12px;
+      color: #d76d98;
+      font-size: clamp(23px, 5vw, 32px);
+      font-weight: 900;
+      text-align: center;
+      text-shadow: 2px 2px 0 white;
+    }
 
-        .loading-frame {
-            width: min(100%, 520px);
-            min-height: 480px;
-            padding: 40px 28px;
+    /* Khu vực nhân vật và đường di chuyển */
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+    .couple-one-area {
+      width: min(280px, 75vw);
+      margin: 0 auto;
+    }
 
-            background: rgba(255, 255, 255, 0.5);
-            border: 2px solid #ff9fbd;
-            border-radius: 30px;
+    .couple-one-track {
+      position: relative;
+      width: 100%;
+      height: 140px;
+    }
 
-            box-shadow: 0 8px 30px rgba(255, 143, 171, 0.12);
-        }
+    .couple-one {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 196px;
+      height: 140px;
+      object-fit: contain;
+      object-position: center bottom;
+      transform-origin: center bottom;
 
-        /* KHU VỰC ẢNH */
+      /* Giữ hiệu ứng jiggle */
+      animation: jiggle 1.2s ease-in-out infinite;
+      will-change: left, transform;
+    }
 
-        .couple-one-area {
-            width: min(280px, 75vw);
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            flex-shrink: 0;
-        }
+    @keyframes jiggle {
+      0%, 100% {
+        transform: rotate(0deg) translateY(0);
+      }
+      25% {
+        transform: rotate(-2deg) translateY(-2px);
+      }
+      50% {
+        transform: rotate(0deg) translateY(0);
+      }
+      75% {
+        transform: rotate(2deg) translateY(-2px);
+      }
+    }
 
-        .couple-one-track {
-            width: 100%;
-            height: 140px;
-            position: relative;
-        }
+    .ground {
+      width: 100%;
+      height: 5px;
+      margin-top: -2px;
+      border-radius: 50%;
+      background: #c78b9e;
+      opacity: 0.75;
+    }
 
-        .couple-one {
-            position: absolute;
-            width: 196px;
-            height: 140px;
-            left: 0;
-            bottom: 0;
+    /* Thanh loading */
 
-            object-fit: contain;
-            object-position: center bottom;
-            transform-origin: center bottom;
-        }
+    .progress-container {
+      width: min(280px, 75vw);
+      height: 24px;
+      margin-top: 30px;
+      padding: 2px;
+      border: 2px solid #e99ab8;
+      border-radius: 20px;
+      background: white;
+      overflow: hidden;
+      box-shadow: 0 3px 0 #f8d2e0;
+    }
 
-        /* ĐUNG ĐƯA NHẸ */
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 12px;
+      background: repeating-linear-gradient(
+        120deg,
+        #f6a8c5 0px,
+        #f6a8c5 10px,
+        #ffe0ec 10px,
+        #ffe0ec 20px
+      );
+    }
 
-        @keyframes jiggle {
-            0%, 100% {
-                transform: rotate(-5deg);
-            }
+    .percentage {
+      margin: 9px 0 0;
+      color: #bd6288;
+      font-size: 15px;
+      font-weight: bold;
+    }
 
-            50% {
-                transform: rotate(5deg);
-            }
-        }
+    .loading-text {
+      min-height: 24px;
+      margin-top: 7px;
+      color: #a96b83;
+      font-size: 14px;
+    }
 
-        .couple-one {
-            animation: jiggle 1.2s ease-in-out infinite;
-        }
+    /* Cửa sổ kiểu Windows */
 
-        /* ĐƯỜNG ĐẤT GỒ GHỀ */
+    .dessert-window {
+      position: fixed;
+      z-index: 10;
+      top: 50%;
+      left: 50%;
+      width: min(430px, calc(100vw - 30px));
+      overflow: hidden;
+      border: 2px solid #e8a1bd;
+      border-radius: 11px;
+      background: #fff;
+      box-shadow:
+        0 12px 35px rgba(155, 80, 112, 0.23),
+        0 0 0 4px rgba(255, 255, 255, 0.7);
+      transform: translate(-50%, -50%);
+      animation: windowAppear 0.35s ease-out;
+    }
 
-        .ground {
-            display: block;
-            width: 100%;
-            height: 16px;
-            margin-top: 1px;
-            overflow: visible;
-        }
+    .dessert-window.hidden {
+      display: none;
+    }
 
-        .ground path {
-            fill: none;
-            stroke: #c5a17e;
-            stroke-width: 2px;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+    @keyframes windowAppear {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -47%) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
 
-        /* THANH LOADING */
+    .window-titlebar {
+      height: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 10px 0 13px;
+      background: linear-gradient(90deg, #ffc5dc, #f6a9cb);
+      border-bottom: 1px solid #e99bbb;
+      user-select: none;
+    }
 
-        .progress-container {
-            position: relative;
-            width: min(280px, 75vw);
-            height: 24px;
-            margin-top: 30px;
-            padding: 2px;
+    .window-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      color: #86445f;
+      font-size: 13px;
+      font-weight: bold;
+    }
 
-            border: 2px solid #ff8fab;
-            border-radius: 999px;
-            background: #ffffff;
-            overflow: hidden;
-        }
+    .window-title-icon {
+      font-size: 17px;
+    }
 
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            border-radius: 999px;
+    .window-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
 
-            background: repeating-linear-gradient(
-                120deg,
-                #ffffff 0px,
-                #ffffff 12px,
-                #f7b6ca 12px,
-                #f7b6ca 24px
-            );
-        }
+    .window-control {
+      width: 23px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(150, 65, 100, 0.15);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.5);
+      color: #87445e;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      pointer-events: none;
+    }
 
-        /* PHẦN TRĂM */
+    .window-control.close {
+      background: #ffdeeb;
+      font-size: 16px;
+    }
 
-        .progress-percent {
-            position: absolute;
-            inset: 0;
+    .window-content {
+      position: relative;
+      padding: 20px 20px 22px;
+      text-align: center;
+      background: #fffdfE;
+    }
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .question-heading {
+      position: relative;
+      margin: 0 0 13px;
+      padding-right: 25px;
+      color: #c65e8a;
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
 
-            color: #c96f91;
-            font-size: 12px;
-            font-weight: bold;
-            text-shadow: 0 0 2px #ffffff;
+    /* Biểu tượng giận dữ ở góc trên bên phải */
 
-            pointer-events: none;
-            z-index: 2;
-        }
+    .anger-icon {
+      position: absolute;
+      top: -2px;
+      right: -3px;
+      width: 25px;
+      height: 25px;
+      color: #f04467;
+      font-family: Arial, sans-serif;
+      font-size: 25px;
+      line-height: 25px;
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+    }
 
-        /* CHỮ LOADING */
+    .anger-icon.show {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-        .loading-text {
-            margin-top: 14px;
-            color: #e982a3;
+    .dessert-image-wrap {
+      width: 100%;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      border: 2px dashed #f5c2d7;
+      border-radius: 14px;
+      background: repeating-linear-gradient(
+        135deg,
+        #fff5f9 0px,
+        #fff5f9 12px,
+        #ffedf4 12px,
+        #ffedf4 24px
+      );
+    }
 
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            text-align: center;
-            min-height: 22px;
-            letter-spacing: 1px;
-        }
+    .dessert-image {
+      max-width: 90%;
+      max-height: 145px;
+      object-fit: contain;
+      animation: dessertFloat 2s ease-in-out infinite;
+    }
 
-        /* ĐIỆN THOẠI */
+    @keyframes dessertFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+      }
+      50% {
+        transform: translateY(-4px) rotate(2deg);
+      }
+    }
 
-        @media (max-width: 600px) {
-            .loading-frame {
-                min-height: 420px;
-                padding: 30px 20px;
-                border-radius: 25px;
-            }
+    .question-text {
+      margin: 0 auto 18px;
+      max-width: 330px;
+      color: #80536a;
+      font-size: 15px;
+      line-height: 1.55;
+    }
 
-            .couple-one-area,
-            .progress-container {
-                width: min(240px, 75vw);
-            }
+    .button-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
 
-            .couple-one-track {
-                height: 110px;
-            }
+    .answer-button {
+      min-width: 105px;
+      padding: 10px 23px;
+      border: 2px solid #e7a0bb;
+      border-radius: 13px;
+      background: #fff0f6;
+      color: #b85b83;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #f1c5d7;
+      transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+    }
 
-            .couple-one {
-                width: 168px;
-                height: 110px;
-            }
+    .answer-button:hover {
+      transform: translateY(-2px);
+      background: #ffe1ed;
+      box-shadow: 0 6px 0 #f1c5d7;
+    }
 
-            .progress-container {
-                margin-top: 25px;
-            }
+    .answer-button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #f1c5d7;
+    }
 
-            .loading-text {
-                font-size: 15px;
-            }
-        }
-    </style>
+    .answer-button.yes {
+      border-color: #ed91b5;
+      background: #f7a9c9;
+      color: white;
+      box-shadow: 0 4px 0 #dd7ca3;
+    }
+
+    .answer-button.yes:hover {
+      background: #ee91b7;
+      box-shadow: 0 6px 0 #dd7ca3;
+    }
+
+    .answer-button.no {
+      border-color: #e9b4c8;
+      background: #fff7fa;
+      color: #b26d89;
+    }
+
+    .window-footnote {
+      margin: 17px 0 0;
+      color: #c08ca2;
+      font-size: 11px;
+    }
+
+    /* Điện thoại */
+
+    @media (max-width: 480px) {
+      .couple-one-track {
+        height: 110px;
+      }
+
+      .couple-one {
+        width: 168px;
+        height: 110px;
+      }
+
+      .couple-one-area,
+      .progress-container {
+        width: min(240px, 75vw);
+      }
+
+      .window-content {
+        padding: 17px 15px 19px;
+      }
+
+      .dessert-image-wrap {
+        height: 140px;
+      }
+
+      .dessert-image {
+        max-height: 125px;
+      }
+
+      .question-heading {
+        font-size: 17px;
+      }
+
+      .answer-button {
+        min-width: 95px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <main class="loading-screen">
+    <h1 class="loading-title">Miru is loading... ♡</h1>
 
-    <main class="loading-frame">
-
-        <!-- ẢNH COUPLE -->
-
-        <div class="couple-one-area">
-            <div class="couple-one-track">
-
-                <img
-                    src="couple(1).png"
-                    alt="Couple"
-                    class="couple-one"
-                    id="couple"
-                >
-
-            </div>
-
-            <!-- ĐƯỜNG ĐẤT GỒ GHỀ -->
-
-            <svg
-                class="ground"
-                viewBox="0 0 280 16"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-            >
-                <path
-                    d="M 1,7
-                       L 12,6
-                       L 22,8
-                       L 35,5
-                       L 47,7
-                       L 59,6
-                       L 71,9
-                       L 84,6
-                       L 96,7
-                       L 108,4
-                       L 121,7
-                       L 134,6
-                       L 146,8
-                       L 159,5
-                       L 171,7
-                       L 184,6
-                       L 197,9
-                       L 210,5
-                       L 223,7
-                       L 236,6
-                       L 249,8
-                       L 262,5
-                       L 279,7"
-                />
-            </svg>
-        </div>
-
-        <!-- THANH LOADING -->
-
-        <div
-            class="progress-container"
-            role="progressbar"
-            aria-label="Loading"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="0"
-            id="progressContainer"
+    <div class="couple-one-area">
+      <div class="couple-one-track" id="coupleTrack">
+        <img
+          class="couple-one"
+          id="couple"
+          src="couple(1).png"
+          alt="Miru"
         >
-            <div
-                class="progress-fill"
-                id="progressFill"
-            ></div>
+      </div>
+      <div class="ground"></div>
+    </div>
 
-            <div
-                class="progress-percent"
-                id="progressPercent"
-            >0%</div>
-        </div>
+    <div class="progress-container">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
 
-        <!-- CHỮ LOADING -->
+    <p class="percentage" id="percentage">0%</p>
+    <div class="loading-text" id="loadingText">loading.</div>
+  </main>
 
-        <div class="loading-text" id="loadingText">
-            loading.
-        </div>
+  <!-- Cửa sổ chọn món tráng miệng -->
 
-    </main>
+  <section
+    class="dessert-window hidden"
+    id="dessertWindow"
+    role="dialog"
+    aria-label="Miru's dessert"
+  >
+    <div class="window-titlebar">
+      <div class="window-title">
+        <span class="window-title-icon">🍰</span>
+        <span>Miru's Dessert Shop</span>
+      </div>
 
-    <script>
-        /* CHỮ LOADING THAY ĐỔI */
+      <!-- Các nút này chỉ để trang trí -->
+      <div class="window-controls" aria-hidden="true">
+        <span class="window-control">−</span>
+        <span class="window-control">□</span>
+        <span class="window-control close">×</span>
+      </div>
+    </div>
 
-        const loadingText =
-            document.getElementById("loadingText");
+    <div class="window-content">
+      <h2 class="question-heading">
+        Miru spotted a dessert.
+        <br>
+        Do you wanna buy it for her?
 
-        const loadingMessages = [
-            "loading.",
-            "loading. .",
-            "loading. . ."
+        <span class="anger-icon" id="angerIcon" aria-label="Angry">
+          💢
+        </span>
+      </h2>
+
+      <div class="dessert-image-wrap">
+        <img
+          class="dessert-image"
+          id="dessertImage"
+          src="cake.png"
+          alt="A dessert for Miru"
+        >
+      </div>
+
+      <p class="question-text" id="questionText">
+        Miru spotted a dessert. Do you wanna buy it for her?
+      </p>
+
+      <div class="button-row">
+        <button class="answer-button yes" id="yesButton" type="button">
+          Yes ♡
+        </button>
+
+        <button class="answer-button no" id="noButton" type="button">
+          No
+        </button>
+      </div>
+
+      <p class="window-footnote">
+        ♡ A little dessert makes Miru happy ♡
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const couple = document.getElementById("couple");
+    const coupleTrack = document.getElementById("coupleTrack");
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentage");
+    const loadingText = document.getElementById("loadingText");
+
+    const dessertWindow = document.getElementById("dessertWindow");
+    const dessertImage = document.getElementById("dessertImage");
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const angerIcon = document.getElementById("angerIcon");
+
+    /*
+      Đổi tên ảnh tại đây nếu tên file của bạn khác.
+      Tất cả ảnh đặt cùng thư mục với file HTML.
+    */
+
+    const desserts = [
+      "bánh cuộn.png",
+      "bông gòn.png",
+      "cake.png",
+      "croissant.png",
+      "kem.png",
+      "macaron.png",
+      "tart trứng.png"
+    ];
+
+    let progress = 0;
+    let yesCount = 0;
+    let isMoving = false;
+    let isWaitingForNo = false;
+
+    const INITIAL_PROGRESS = 10;
+    const TOTAL_YES_CLICKS = 7;
+    const INITIAL_LOADING_DURATION = 1800;
+    const MOVE_DURATION = 850;
+
+    let loadingTimer = null;
+    let animationFrame = null;
+    let lastDessert = "";
+
+    /* Cập nhật thanh tiến độ và vị trí nhân vật */
+
+    function updateProgress(value) {
+      progress = Math.max(0, Math.min(100, value));
+
+      progressFill.style.width = progress + "%";
+      percentageText.textContent = Math.round(progress) + "%";
+
+      const trackWidth = coupleTrack.clientWidth;
+      const characterWidth = couple.offsetWidth;
+      const maxLeft = Math.max(0, trackWidth - characterWidth);
+
+      couple.style.left = (maxLeft * progress / 100) + "px";
+    }
+
+    /*
+      Chọn món ngẫu nhiên.
+      Cố gắng tránh chọn trùng món ở hai lần liên tiếp.
+    */
+
+    function chooseRandomDessert() {
+      let availableDesserts = desserts.filter(
+        dessert => dessert !== lastDessert
+      );
+
+      if (availableDesserts.length === 0) {
+        availableDesserts = desserts;
+      }
+
+      const chosen =
+        availableDesserts[
+          Math.floor(Math.random() * availableDesserts.length)
         ];
 
-        let messageIndex = 0;
+      lastDessert = chosen;
+      dessertImage.src = chosen;
+      dessertImage.alt = chosen.replace(".png", "");
+    }
 
-        setInterval(function () {
-            messageIndex =
-                (messageIndex + 1) %
-                loadingMessages.length;
+    function showDessertWindow() {
+      chooseRandomDessert();
+      angerIcon.classList.remove("show");
+      dessertWindow.classList.remove("hidden");
+    }
 
-            loadingText.textContent =
-                loadingMessages[messageIndex];
-        }, 500);
+    function hideDessertWindow() {
+      dessertWindow.classList.add("hidden");
+    }
 
+    /* Chạy loading ban đầu đến đúng 10% */
 
-        /* THANH TIẾN ĐỘ VÀ NHÂN VẬT DI CHUYỂN ĐỒNG BỘ */
+    function startInitialLoading() {
+      const startTime = performance.now();
 
-        const progressFill =
-            document.getElementById("progressFill");
+      function step(now) {
+        const elapsed = now - startTime;
+        const fraction = Math.min(
+          1,
+          elapsed / INITIAL_LOADING_DURATION
+        );
 
-        const progressPercent =
-            document.getElementById("progressPercent");
+        updateProgress(INITIAL_PROGRESS * fraction);
 
-        const progressContainer =
-            document.getElementById("progressContainer");
+        if (fraction < 1) {
+          animationFrame = requestAnimationFrame(step);
+        } else {
+          updateProgress(INITIAL_PROGRESS);
+          loadingText.textContent = "loading...";
 
-        const couple =
-            document.getElementById("couple");
+          // Dừng ở 10% và mở cửa sổ.
+          setTimeout(() => {
+            showDessertWindow();
+          }, 250);
+        }
+      }
 
-        const coupleTrack =
-            document.querySelector(".couple-one-track");
+      animationFrame = requestAnimationFrame(step);
+    }
 
-        let progress = 0;
+    /* Hiệu ứng chữ loading */
 
-        const duration = 3000;
-        const interval = 30;
-        const step = 100 / (duration / interval);
+    let dots = 1;
 
-        function updateProgress() {
-            progress += step;
+    loadingTimer = setInterval(() => {
+      dots = dots % 3 + 1;
+      loadingText.textContent = "loading" + ".".repeat(dots);
+    }, 500);
 
-            if (progress >= 100) {
-                progress = 100;
-            }
+    /*
+      Di chuyển thanh tiến độ và nhân vật đến mốc mới.
+      CSS animation jiggle vẫn chạy trong lúc nhân vật di chuyển.
+    */
 
-            progressFill.style.width =
-                progress + "%";
+    function moveToProgress(targetProgress) {
+      return new Promise(resolve => {
+        const startProgress = progress;
+        const distance = targetProgress - startProgress;
+        const startTime = performance.now();
 
-            progressPercent.textContent =
-                Math.floor(progress) + "%";
+        isMoving = true;
+        yesButton.disabled = true;
+        noButton.disabled = true;
 
-            progressContainer.setAttribute(
-                "aria-valuenow",
-                Math.floor(progress)
-            );
+        yesButton.style.opacity = "0.65";
+        noButton.style.opacity = "0.65";
 
-            /* Nhân vật đi từ trái sang phải theo phần trăm */
+        function step(now) {
+          const elapsed = now - startTime;
+          const t = Math.min(1, elapsed / MOVE_DURATION);
 
-            const trackWidth =
-                coupleTrack.clientWidth;
+          // Ease-out: di chuyển nhanh lúc đầu, chậm dần khi dừng.
+          const eased = 1 - Math.pow(1 - t, 3);
 
-            const coupleWidth =
-                couple.offsetWidth;
+          updateProgress(startProgress + distance * eased);
 
-            const maxLeft =
-                Math.max(0, trackWidth - coupleWidth);
+          if (t < 1) {
+            animationFrame = requestAnimationFrame(step);
+          } else {
+            updateProgress(targetProgress);
 
-            couple.style.left =
-                (maxLeft * progress / 100) + "px";
+            isMoving = false;
+            yesButton.disabled = false;
+            noButton.disabled = false;
 
-            if (progress >= 100) {
-                clearInterval(progressTimer);
+            yesButton.style.opacity = "1";
+            noButton.style.opacity = "1";
 
-                /* Đợi một chút rồi đưa cả hai về đầu cùng lúc */
-                setTimeout(function () {
-                    progress = 0;
-
-                    progressFill.style.width = "0%";
-                    progressPercent.textContent = "0%";
-
-                    progressContainer.setAttribute(
-                        "aria-valuenow",
-                        "0"
-                    );
-
-                    couple.style.left = "0px";
-
-                    progressTimer =
-                        setInterval(updateProgress, interval);
-                }, 200);
-            }
+            resolve();
+          }
         }
 
-        let progressTimer =
-            setInterval(updateProgress, interval);
-    </script>
+        animationFrame = requestAnimationFrame(step);
+      });
+    }
 
+    /*
+      Mỗi lần Yes sẽ tạo một mốc tiến độ ngẫu nhiên.
+      Có tổng cộng 7 lần Yes:
+      - Lần đầu bắt đầu từ 10%.
+      - 6 lần đầu không thể dùng hết tiến độ.
+      - Lần Yes thứ 7 luôn đạt chính xác 100%.
+    */
+
+    async function handleYes() {
+      if (isMoving || isWaitingForNo) return;
+      if (yesCount >= TOTAL_YES_CLICKS) return;
+
+      yesCount++;
+      hideDessertWindow();
+
+      let targetProgress;
+
+      if (yesCount === TOTAL_YES_CLICKS) {
+        // Lần thứ 7 đảm bảo hoàn thành.
+        targetProgress = 100;
+      } else {
+        const clicksRemaining = TOTAL_YES_CLICKS - yesCount;
+
+        // Chừa tối thiểu 5% cho mỗi lần Yes còn lại.
+        const minTarget = Math.ceil(progress + 5);
+        const maxTarget = Math.floor(
+          100 - clicksRemaining * 5
+        );
+
+        targetProgress =
+          Math.floor(
+            Math.random() * (maxTarget - minTarget + 1)
+          ) + minTarget;
+      }
+
+      await moveToProgress(targetProgress);
+
+      if (yesCount < TOTAL_YES_CLICKS) {
+        // Mở cửa sổ món tiếp theo sau khi đã dừng hẳn.
+        setTimeout(() => {
+          showDessertWindow();
+        }, 350);
+      } else {
+        finishLoading();
+      }
+    }
+
+    /* Nếu chọn No: giữ nguyên tiến độ và mở lại sau 2 giây */
+
+    function handleNo() {
+      if (isMoving || isWaitingForNo) return;
+
+      isWaitingForNo = true;
+      angerIcon.classList.add("show");
+      hideDessertWindow();
+
+      setTimeout(() => {
+        isWaitingForNo = false;
+        showDessertWindow();
+      }, 2000);
+    }
+
+    /* Hoàn thành loading */
+
+    function finishLoading() {
+      updateProgress(100);
+      loadingText.textContent = "Done! ♡";
+      percentageText.textContent = "100%";
+
+      clearInterval(loadingTimer);
+
+      setTimeout(() => {
+        /*
+          Nếu muốn chuyển sang trang tiếp theo,
+          hãy bỏ dấu // ở dòng dưới và đổi tên file nếu cần.
+        */
+
+        // window.location.href = "page4.html";
+      }, 700);
+    }
+
+    yesButton.addEventListener("click", handleYes);
+    noButton.addEventListener("click", handleNo);
+
+    /*
+      Đợi ảnh nhân vật được tải để tính vị trí chính xác,
+      sau đó mới bắt đầu loading.
+    */
+
+    function initialize() {
+      updateProgress(0);
+      startInitialLoading();
+    }
+
+    if (couple.complete) {
+      initialize();
+    } else {
+      couple.addEventListener("load", initialize, { once: true });
+      couple.addEventListener("error", initialize, { once: true });
+    }
+
+    window.addEventListener("resize", () => {
+      updateProgress(progress);
+    });
+  </script>
 </body>
 </html>
