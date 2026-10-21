@@ -29,6 +29,8 @@
       color: #7c435a;
     }
 
+    /* Trang loading luôn tồn tại bên dưới cửa sổ */
+
     .loading-screen {
       width: 100%;
       min-height: 100vh;
@@ -48,7 +50,7 @@
       text-shadow: 2px 2px 0 white;
     }
 
-    /* Khu vực nhân vật và đường di chuyển */
+    /* Nhân vật */
 
     .couple-one-area {
       width: min(280px, 75vw);
@@ -70,8 +72,6 @@
       object-fit: contain;
       object-position: center bottom;
       transform-origin: center bottom;
-
-      /* Giữ hiệu ứng jiggle */
       animation: jiggle 1.2s ease-in-out infinite;
       will-change: left, transform;
     }
@@ -141,7 +141,7 @@
       font-size: 14px;
     }
 
-    /* Cửa sổ kiểu Windows */
+    /* Cửa sổ nổi */
 
     .dessert-window {
       position: fixed;
@@ -237,15 +237,15 @@
 
     .question-heading {
       position: relative;
-      margin: 0 0 13px;
-      padding-right: 25px;
+      margin: 0 0 17px;
+      padding-right: 27px;
       color: #c65e8a;
       font-size: 19px;
       font-weight: 900;
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
-    /* Biểu tượng giận dữ ở góc trên bên phải */
+    /* Icon tức giận với hiệu ứng boing */
 
     .anger-icon {
       position: absolute;
@@ -258,15 +258,34 @@
       font-size: 25px;
       line-height: 25px;
       opacity: 0;
-      transform: scale(0.4);
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform: scale(0);
       pointer-events: none;
     }
 
     .anger-icon.show {
       opacity: 1;
-      transform: scale(1);
+      animation: angerBoing 0.55s ease-out both;
     }
+
+    @keyframes angerBoing {
+      0% {
+        transform: scale(0);
+      }
+      45% {
+        transform: scale(1.45);
+      }
+      65% {
+        transform: scale(0.8);
+      }
+      82% {
+        transform: scale(1.15);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Ảnh món tráng miệng */
 
     .dessert-image-wrap {
       width: 100%;
@@ -274,7 +293,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 14px;
+      margin: 0 auto 19px;
       border: 2px dashed #f5c2d7;
       border-radius: 14px;
       background: repeating-linear-gradient(
@@ -300,14 +319,6 @@
       50% {
         transform: translateY(-4px) rotate(2deg);
       }
-    }
-
-    .question-text {
-      margin: 0 auto 18px;
-      max-width: 330px;
-      color: #80536a;
-      font-size: 15px;
-      line-height: 1.55;
     }
 
     .button-row {
@@ -336,13 +347,13 @@
         box-shadow 0.15s ease;
     }
 
-    .answer-button:hover {
+    .answer-button:hover:not(:disabled) {
       transform: translateY(-2px);
       background: #ffe1ed;
       box-shadow: 0 6px 0 #f1c5d7;
     }
 
-    .answer-button:active {
+    .answer-button:active:not(:disabled) {
       transform: translateY(2px);
       box-shadow: 0 2px 0 #f1c5d7;
     }
@@ -354,7 +365,7 @@
       box-shadow: 0 4px 0 #dd7ca3;
     }
 
-    .answer-button.yes:hover {
+    .answer-button.yes:hover:not(:disabled) {
       background: #ee91b7;
       box-shadow: 0 6px 0 #dd7ca3;
     }
@@ -370,8 +381,6 @@
       color: #c08ca2;
       font-size: 11px;
     }
-
-    /* Điện thoại */
 
     @media (max-width: 480px) {
       .couple-one-track {
@@ -412,6 +421,8 @@
 </head>
 
 <body>
+  <!-- Trang loading gốc: không bị cửa sổ thay thế -->
+
   <main class="loading-screen">
     <h1 class="loading-title">Miru is loading... ♡</h1>
 
@@ -435,13 +446,13 @@
     <div class="loading-text" id="loadingText">loading.</div>
   </main>
 
-  <!-- Cửa sổ chọn món tráng miệng -->
+  <!-- Cửa sổ tráng miệng -->
 
   <section
     class="dessert-window hidden"
     id="dessertWindow"
     role="dialog"
-    aria-label="Miru's dessert"
+    aria-label="Miru's Dessert Shop"
   >
     <div class="window-titlebar">
       <div class="window-title">
@@ -449,7 +460,6 @@
         <span>Miru's Dessert Shop</span>
       </div>
 
-      <!-- Các nút này chỉ để trang trí -->
       <div class="window-controls" aria-hidden="true">
         <span class="window-control">−</span>
         <span class="window-control">□</span>
@@ -477,9 +487,7 @@
         >
       </div>
 
-      <p class="question-text" id="questionText">
-        Miru spotted a dessert. Do you wanna buy it for her?
-      </p>
+      <!-- Không lặp lại câu hỏi bên dưới ảnh -->
 
       <div class="button-row">
         <button class="answer-button yes" id="yesButton" type="button">
@@ -510,11 +518,6 @@
     const noButton = document.getElementById("noButton");
     const angerIcon = document.getElementById("angerIcon");
 
-    /*
-      Đổi tên ảnh tại đây nếu tên file của bạn khác.
-      Tất cả ảnh đặt cùng thư mục với file HTML.
-    */
-
     const desserts = [
       "bánh cuộn.png",
       "bông gòn.png",
@@ -525,19 +528,25 @@
       "tart trứng.png"
     ];
 
+    // Các món đã được bấm Yes sẽ không xuất hiện lại.
+    const acceptedDesserts = new Set();
+
     let progress = 0;
     let yesCount = 0;
     let isMoving = false;
     let isWaitingForNo = false;
+    let lastDessert = "";
 
-    const INITIAL_PROGRESS = 10;
     const TOTAL_YES_CLICKS = 7;
     const INITIAL_LOADING_DURATION = 1800;
     const MOVE_DURATION = 850;
 
+    // Khoảng nghỉ giữa các lượt giống nhau: 2 giây.
+    const WINDOW_DELAY_AFTER_YES = 2000;
+    const WINDOW_DELAY_AFTER_NO = 2000;
+
     let loadingTimer = null;
     let animationFrame = null;
-    let lastDessert = "";
 
     /* Cập nhật thanh tiến độ và vị trí nhân vật */
 
@@ -551,36 +560,40 @@
       const characterWidth = couple.offsetWidth;
       const maxLeft = Math.max(0, trackWidth - characterWidth);
 
-      couple.style.left = (maxLeft * progress / 100) + "px";
+      couple.style.left =
+        (maxLeft * progress / 100) + "px";
     }
 
-    /*
-      Chọn món ngẫu nhiên.
-      Cố gắng tránh chọn trùng món ở hai lần liên tiếp.
-    */
+    /* Chọn ngẫu nhiên trong những món chưa được Yes */
 
     function chooseRandomDessert() {
-      let availableDesserts = desserts.filter(
-        dessert => dessert !== lastDessert
+      const availableDesserts = desserts.filter(
+        dessert => !acceptedDesserts.has(dessert)
       );
 
       if (availableDesserts.length === 0) {
-        availableDesserts = desserts;
+        return false;
       }
 
-      const chosen =
-        availableDesserts[
-          Math.floor(Math.random() * availableDesserts.length)
-        ];
+      const chosen = availableDesserts[
+        Math.floor(Math.random() * availableDesserts.length)
+      ];
 
       lastDessert = chosen;
       dessertImage.src = chosen;
       dessertImage.alt = chosen.replace(".png", "");
+
+      return true;
     }
 
     function showDessertWindow() {
-      chooseRandomDessert();
       angerIcon.classList.remove("show");
+
+      if (!chooseRandomDessert()) {
+        finishLoading();
+        return;
+      }
+
       dessertWindow.classList.remove("hidden");
     }
 
@@ -588,7 +601,7 @@
       dessertWindow.classList.add("hidden");
     }
 
-    /* Chạy loading ban đầu đến đúng 10% */
+    /* Loading ban đầu chạy đến 10% */
 
     function startInitialLoading() {
       const startTime = performance.now();
@@ -600,25 +613,23 @@
           elapsed / INITIAL_LOADING_DURATION
         );
 
-        updateProgress(INITIAL_PROGRESS * fraction);
+        updateProgress(10 * fraction);
 
         if (fraction < 1) {
           animationFrame = requestAnimationFrame(step);
         } else {
-          updateProgress(INITIAL_PROGRESS);
-          loadingText.textContent = "loading...";
+          updateProgress(10);
 
-          // Dừng ở 10% và mở cửa sổ.
           setTimeout(() => {
             showDessertWindow();
-          }, 250);
+          }, 500);
         }
       }
 
       animationFrame = requestAnimationFrame(step);
     }
 
-    /* Hiệu ứng chữ loading */
+    /* Chữ loading tiếp tục hoạt động bên dưới cửa sổ */
 
     let dots = 1;
 
@@ -627,10 +638,7 @@
       loadingText.textContent = "loading" + ".".repeat(dots);
     }, 500);
 
-    /*
-      Di chuyển thanh tiến độ và nhân vật đến mốc mới.
-      CSS animation jiggle vẫn chạy trong lúc nhân vật di chuyển.
-    */
+    /* Di chuyển nhân vật, vẫn giữ animation jiggle */
 
     function moveToProgress(targetProgress) {
       return new Promise(resolve => {
@@ -642,14 +650,9 @@
         yesButton.disabled = true;
         noButton.disabled = true;
 
-        yesButton.style.opacity = "0.65";
-        noButton.style.opacity = "0.65";
-
         function step(now) {
           const elapsed = now - startTime;
           const t = Math.min(1, elapsed / MOVE_DURATION);
-
-          // Ease-out: di chuyển nhanh lúc đầu, chậm dần khi dừng.
           const eased = 1 - Math.pow(1 - t, 3);
 
           updateProgress(startProgress + distance * eased);
@@ -663,9 +666,6 @@
             yesButton.disabled = false;
             noButton.disabled = false;
 
-            yesButton.style.opacity = "1";
-            noButton.style.opacity = "1";
-
             resolve();
           }
         }
@@ -674,17 +674,15 @@
       });
     }
 
-    /*
-      Mỗi lần Yes sẽ tạo một mốc tiến độ ngẫu nhiên.
-      Có tổng cộng 7 lần Yes:
-      - Lần đầu bắt đầu từ 10%.
-      - 6 lần đầu không thể dùng hết tiến độ.
-      - Lần Yes thứ 7 luôn đạt chính xác 100%.
-    */
+    /* Bấm Yes: ghi nhớ món và loại khỏi các lượt sau */
 
     async function handleYes() {
       if (isMoving || isWaitingForNo) return;
       if (yesCount >= TOTAL_YES_CLICKS) return;
+
+      if (lastDessert) {
+        acceptedDesserts.add(lastDessert);
+      }
 
       yesCount++;
       hideDessertWindow();
@@ -692,12 +690,9 @@
       let targetProgress;
 
       if (yesCount === TOTAL_YES_CLICKS) {
-        // Lần thứ 7 đảm bảo hoàn thành.
         targetProgress = 100;
       } else {
         const clicksRemaining = TOTAL_YES_CLICKS - yesCount;
-
-        // Chừa tối thiểu 5% cho mỗi lần Yes còn lại.
         const minTarget = Math.ceil(progress + 5);
         const maxTarget = Math.floor(
           100 - clicksRemaining * 5
@@ -712,31 +707,44 @@
       await moveToProgress(targetProgress);
 
       if (yesCount < TOTAL_YES_CLICKS) {
-        // Mở cửa sổ món tiếp theo sau khi đã dừng hẳn.
+        // Cửa sổ quay lại sau 2 giây.
         setTimeout(() => {
           showDessertWindow();
-        }, 350);
+        }, WINDOW_DELAY_AFTER_YES);
       } else {
         finishLoading();
       }
     }
 
-    /* Nếu chọn No: giữ nguyên tiến độ và mở lại sau 2 giây */
+    /*
+      Bấm No:
+      1. Icon boing xuất hiện trên cửa sổ.
+      2. Cửa sổ vẫn hiện trong 2 giây để người xem thấy icon.
+      3. Cửa sổ ẩn đi 2 giây.
+      4. Cửa sổ hiện lại, tiến độ giữ nguyên.
+    */
 
     function handleNo() {
       if (isMoving || isWaitingForNo) return;
 
       isWaitingForNo = true;
+
+      angerIcon.classList.remove("show");
+      void angerIcon.offsetWidth;
       angerIcon.classList.add("show");
-      hideDessertWindow();
 
       setTimeout(() => {
-        isWaitingForNo = false;
-        showDessertWindow();
+        hideDessertWindow();
+
+        setTimeout(() => {
+          isWaitingForNo = false;
+          showDessertWindow();
+        }, WINDOW_DELAY_AFTER_NO);
+
       }, 2000);
     }
 
-    /* Hoàn thành loading */
+    /* Kết thúc loading */
 
     function finishLoading() {
       updateProgress(100);
@@ -745,23 +753,14 @@
 
       clearInterval(loadingTimer);
 
-      setTimeout(() => {
-        /*
-          Nếu muốn chuyển sang trang tiếp theo,
-          hãy bỏ dấu // ở dòng dưới và đổi tên file nếu cần.
-        */
-
-        // window.location.href = "page4.html";
-      }, 700);
+      // Muốn chuyển sang trang khác thì bỏ dấu //:
+      // window.location.href = "page4.html";
     }
 
     yesButton.addEventListener("click", handleYes);
     noButton.addEventListener("click", handleNo);
 
-    /*
-      Đợi ảnh nhân vật được tải để tính vị trí chính xác,
-      sau đó mới bắt đầu loading.
-    */
+    /* Khởi tạo sau khi ảnh nhân vật tải xong */
 
     function initialize() {
       updateProgress(0);
