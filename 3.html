@@ -45,78 +45,54 @@
             border: 2px solid #ff9fbd;
             border-radius: 30px;
 
-            box-shadow:
-                0 8px 30px rgba(255, 143, 171, 0.12);
+            box-shadow: 0 8px 30px rgba(255, 143, 171, 0.12);
         }
 
         /* KHU VỰC ẢNH */
 
-        .couple(1)-area {
+        .couple-one-area {
             width: min(280px, 75vw);
-            height: auto;
-
             display: flex;
             flex-direction: column;
             align-items: stretch;
-
             flex-shrink: 0;
         }
 
-        .couple(1)-track {
+        .couple-one-track {
             width: 100%;
             height: 140px;
-
             position: relative;
         }
 
-        .couple(1) {
+        .couple-one {
             position: absolute;
-
             width: 196px;
             height: 140px;
-
             left: 0;
             bottom: 0;
 
             object-fit: contain;
             object-position: center bottom;
-
             transform-origin: center bottom;
-
-            animation:
-                couple(1)Move 3s ease-in-out infinite,
-                jiggle 1.2s ease-in-out infinite;
         }
 
-        @keyframes couple(1)Move {
-            0% {
-                left: 0;
-            }
-
-            75% {
-                left: calc(100% - 196px);
-            }
-
-            100% {
-                left: calc(100% - 196px);
-            }
-        }
+        /* ĐUNG ĐƯA NHẸ */
 
         @keyframes jiggle {
-            0% {
+            0%, 100% {
                 transform: rotate(-5deg);
             }
 
             50% {
                 transform: rotate(5deg);
             }
-
-            100% {
-                transform: rotate(-5deg);
-            }
         }
 
-        /* ĐƯỜNG ĐẤT GỒ GHỀ - 2PX */
+        .couple-one {
+            animation: jiggle 1.2s ease-in-out infinite;
+        }
+
+        /* ĐƯỜNG ĐẤT GỒ GHỀ */
 
         .ground {
             display: block;
@@ -134,32 +110,24 @@
             stroke-linejoin: round;
         }
 
-        /* THANH TIẾN ĐỘ */
+        /* THANH LOADING */
 
         .progress-container {
             position: relative;
-
             width: min(280px, 75vw);
             height: 24px;
-
             margin-top: 30px;
-
-            /* Khoảng cách 2px giữa sọc và viền */
             padding: 2px;
 
             border: 2px solid #ff8fab;
             border-radius: 999px;
-
             background: #ffffff;
             overflow: hidden;
         }
 
-        /* SỌC CHÉO TRẮNG - HỒNG */
-
         .progress-fill {
             width: 0%;
             height: 100%;
-
             border-radius: 999px;
 
             background: repeating-linear-gradient(
@@ -169,8 +137,6 @@
                 #f7b6ca 12px,
                 #f7b6ca 24px
             );
-
-            transition: width 0.05s linear;
         }
 
         /* PHẦN TRĂM */
@@ -184,10 +150,8 @@
             justify-content: center;
 
             color: #c96f91;
-
             font-size: 12px;
             font-weight: bold;
-
             text-shadow: 0 0 2px #ffffff;
 
             pointer-events: none;
@@ -198,13 +162,11 @@
 
         .loading-text {
             margin-top: 14px;
-
             color: #e982a3;
 
             font-family: Arial, sans-serif;
             font-size: 16px;
             font-weight: 500;
-
             text-align: center;
             min-height: 22px;
             letter-spacing: 1px;
@@ -219,32 +181,18 @@
                 border-radius: 25px;
             }
 
-            .couple(1)-area,
+            .couple-one-area,
             .progress-container {
                 width: min(240px, 75vw);
             }
 
-            .couple(1)-track {
+            .couple-one-track {
                 height: 110px;
             }
 
-            .couple(1) {
+            .couple-one {
                 width: 168px;
                 height: 110px;
-            }
-
-            @keyframes couple(1)Move {
-                0% {
-                    left: 0;
-                }
-
-                75% {
-                    left: calc(100% - 168px);
-                }
-
-                100% {
-                    left: calc(100% - 168px);
-                }
             }
 
             .progress-container {
@@ -262,16 +210,16 @@
 
     <main class="loading-frame">
 
-        <!-- ẢNH couple(1) -->
+        <!-- ẢNH COUPLE -->
 
-        <div class="couple(1)-area">
-
-            <div class="couple(1)-track">
+        <div class="couple-one-area">
+            <div class="couple-one-track">
 
                 <img
                     src="couple(1).png"
-                    alt="couple(1)"
-                    class="couple(1)"
+                    alt="Couple"
+                    class="couple-one"
+                    id="couple"
                 >
 
             </div>
@@ -310,7 +258,6 @@
                        L 279,7"
                 />
             </svg>
-
         </div>
 
         <!-- THANH LOADING -->
@@ -324,7 +271,6 @@
             aria-valuenow="0"
             id="progressContainer"
         >
-
             <div
                 class="progress-fill"
                 id="progressFill"
@@ -333,18 +279,12 @@
             <div
                 class="progress-percent"
                 id="progressPercent"
-            >
-                0%
-            </div>
-
+            >0%</div>
         </div>
 
         <!-- CHỮ LOADING -->
 
-        <div
-            class="loading-text"
-            id="loadingText"
-        >
+        <div class="loading-text" id="loadingText">
             loading.
         </div>
 
@@ -371,11 +311,10 @@
 
             loadingText.textContent =
                 loadingMessages[messageIndex];
-
         }, 500);
 
 
-        /* THANH TIẾN ĐỘ VÀ PHẦN TRĂM */
+        /* THANH TIẾN ĐỘ VÀ NHÂN VẬT DI CHUYỂN ĐỒNG BỘ */
 
         const progressFill =
             document.getElementById("progressFill");
@@ -386,28 +325,75 @@
         const progressContainer =
             document.getElementById("progressContainer");
 
+        const couple =
+            document.getElementById("couple");
+
+        const coupleTrack =
+            document.querySelector(".couple-one-track");
+
         let progress = 0;
 
-        function updateProgress() {
-            progress += 1;
+        const duration = 3000;
+        const interval = 30;
+        const step = 100 / (duration / interval);
 
-            if (progress > 100) {
-                progress = 0;
+        function updateProgress() {
+            progress += step;
+
+            if (progress >= 100) {
+                progress = 100;
             }
 
             progressFill.style.width =
                 progress + "%";
 
             progressPercent.textContent =
-                progress + "%";
+                Math.floor(progress) + "%";
 
             progressContainer.setAttribute(
                 "aria-valuenow",
-                progress
+                Math.floor(progress)
             );
+
+            /* Nhân vật đi từ trái sang phải theo phần trăm */
+
+            const trackWidth =
+                coupleTrack.clientWidth;
+
+            const coupleWidth =
+                couple.offsetWidth;
+
+            const maxLeft =
+                Math.max(0, trackWidth - coupleWidth);
+
+            couple.style.left =
+                (maxLeft * progress / 100) + "px";
+
+            if (progress >= 100) {
+                clearInterval(progressTimer);
+
+                /* Đợi một chút rồi đưa cả hai về đầu cùng lúc */
+                setTimeout(function () {
+                    progress = 0;
+
+                    progressFill.style.width = "0%";
+                    progressPercent.textContent = "0%";
+
+                    progressContainer.setAttribute(
+                        "aria-valuenow",
+                        "0"
+                    );
+
+                    couple.style.left = "0px";
+
+                    progressTimer =
+                        setInterval(updateProgress, interval);
+                }, 200);
+            }
         }
 
-        setInterval(updateProgress, 30);
+        let progressTimer =
+            setInterval(updateProgress, interval);
     </script>
 
 </body>
