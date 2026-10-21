@@ -11,6 +11,18 @@
       box-sizing: border-box;
     }
 
+    /* Con trỏ chuột Quà Veloria */
+    html,
+    body,
+    body * {
+      cursor: url("./Qu%C3%A0%20Veloria%20.png") 0 0, auto !important;
+    }
+
+    button,
+    a {
+      cursor: url("./Qu%C3%A0%20Veloria%20.png") 0 0, pointer !important;
+    }
+    
     body {
       margin: 0;
       min-height: 100vh;
@@ -179,28 +191,7 @@
         transform: translate(-50%, -50%) scale(1);
       }
     }
-    
-/* 🎀 Con trỏ chuột Quà Veloria */
-body,
-body * {
-  cursor: url("Quà Veloria .png") 16 16, auto;
-}
 
-button,
-a {
-  cursor: url("Quà Veloria .png") 16 16, pointer;
-}
-    .window-titlebar {
-      height: 43px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 0 10px 0 13px;
-      background: linear-gradient(90deg, #ffc5dc, #f6a9cb);
-      border-bottom: 1px solid #e99bbb;
-      user-select: none;
-    }
 
     .window-title {
       display: flex;
